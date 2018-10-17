@@ -4,8 +4,10 @@
 #include <pistache/net.h>
 #include <iostream>
 #include <memory>
+#include "RoutingConsts.hpp"
 using namespace Pistache;
 
+namespace rs = RoutingConsts;
 
 struct Handler
 {
@@ -22,7 +24,7 @@ struct Handler
 
     void setRoutes(Rest::Router& r)
     {
-        Rest::Routes::Get(r, "/email/:e/hash/:h", Rest::Routes::bind(&Handler::CreateUser, this));
+        Rest::Routes::Get(r, rs::create_user_route, Rest::Routes::bind(&Handler::CreateUser, this));
     }
 };
 

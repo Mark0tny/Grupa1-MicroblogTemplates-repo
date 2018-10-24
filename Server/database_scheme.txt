@@ -1,0 +1,104 @@
+CREATE TABLE "Tag" (
+	"id_tag" SERIAL NOT NULL,
+	"name" varchar(255) NOT NULL,
+	CONSTRAINT Tag_pk PRIMARY KEY ("id_tag")
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+CREATE TABLE "Users" (
+	"id_user" SERIAL NOT NULL,
+	"username" varchar(255) NOT NULL,
+	"email" varchar(255) NOT NULL,
+	"password" varchar(255) NOT NULL,
+	"microblogs" integer NOT NULL,
+	"followed_tags" integer NOT NULL,
+	"followed_posts" integer NOT NULL,
+	CONSTRAINT Users_pk PRIMARY KEY ("id_user")
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+CREATE TABLE "post_tag" (
+	"id_post_tag" SERIAL NOT NULL,
+	"id_post" integer NOT NULL,
+	"id_tag" integer NOT NULL,
+	CONSTRAINT post_tag_pk PRIMARY KEY ("id_post_tag")
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+CREATE TABLE "Post" (
+	"id_post" SERIAL NOT NULL,
+	"author" integer NOT NULL,
+	"title" VARCHAR(255) NOT NULL,
+	"time_created" TIMESTAMP NOT NULL,
+	"content" VARCHAR(255) NOT NULL,
+	"picture" bytea NOT NULL,
+	"comments" integer NOT NULL,
+	"views" integer NOT NULL,
+	"tags" integer NOT NULL,
+	"id_microblog" integer NOT NULL,
+	CONSTRAINT Post_pk PRIMARY KEY ("id_post")
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+CREATE TABLE "Comments" (
+	"id_comment" SERIAL NOT NULL,
+	"post_id" integer NOT NULL,
+	"content" VARCHAR(255) NOT NULL,
+	"time_created" TIMESTAMP NOT NULL,
+	"author" integer NOT NULL,
+	CONSTRAINT Comments_pk PRIMARY KEY ("id_comment")
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+CREATE TABLE "Microblog" (
+	"id_microblog" SERIAL NOT NULL,
+	"name" VARCHAR(255) NOT NULL,
+	"author" VARCHAR(255) NOT NULL,
+	"tags" integer NOT NULL,
+	"posts" integer NOT NULL,
+	"followers" integer NOT NULL,
+	"private" BOOLEAN NOT NULL,
+	CONSTRAINT Microblog_pk PRIMARY KEY ("id_microblog")
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+ALTER TABLE "Tag" ADD CONSTRAINT "Tag_fk0" FOREIGN KEY ("id_tag") REFERENCES "post_tag"("id_tag");
+
+ALTER TABLE "Users" ADD CONSTRAINT "Users_fk0" FOREIGN KEY ("id_user") REFERENCES "Comments"("author");
+ALTER TABLE "Users" ADD CONSTRAINT "Users_fk1" FOREIGN KEY ("microblogs") REFERENCES "Microblog"("id_microblog");
+ALTER TABLE "Users" ADD CONSTRAINT "Users_fk2" FOREIGN KEY ("followed_tags") REFERENCES "Tag"("id_tag");
+ALTER TABLE "Users" ADD CONSTRAINT "Users_fk3" FOREIGN KEY ("followed_posts") REFERENCES "Post"("id_post");
+
+ALTER TABLE "post_tag" ADD CONSTRAINT "post_tag_fk0" FOREIGN KEY ("id_post_tag") REFERENCES "Post"("tags");
+
+ALTER TABLE "Post" ADD CONSTRAINT "Post_fk0" FOREIGN KEY ("id_post") REFERENCES "post_tag"("id_post");
+ALTER TABLE "Post" ADD CONSTRAINT "Post_fk1" FOREIGN KEY ("author") REFERENCES "Users"("id_user");
+ALTER TABLE "Post" ADD CONSTRAINT "Post_fk2" FOREIGN KEY ("id_microblog") REFERENCES "Microblog"("id_microblog");
+
+ALTER TABLE "Comments" ADD CONSTRAINT "Comments_fk0" FOREIGN KEY ("id_comment") REFERENCES "Post"("comments");
+ALTER TABLE "Comments" ADD CONSTRAINT "Comments_fk1" FOREIGN KEY ("post_id") REFERENCES "Post"("id_post");
+
+ALTER TABLE "Microblog" ADD CONSTRAINT "Microblog_fk0" FOREIGN KEY ("author") REFERENCES "Users"("id_user");
+ALTER TABLE "Microblog" ADD CONSTRAINT "Microblog_fk1" FOREIGN KEY ("tags") REFERENCES "Tag"("id_tag");
+ALTER TABLE "Microblog" ADD CONSTRAINT "Microblog_fk2" FOREIGN KEY ("posts") REFERENCES "Post"("id_post");
+ALTER TABLE "Microblog" ADD CONSTRAINT "Microblog_fk3" FOREIGN KEY ("followers") REFERENCES "Users"("id_user");
+
+

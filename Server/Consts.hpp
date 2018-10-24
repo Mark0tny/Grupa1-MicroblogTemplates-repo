@@ -1,4 +1,4 @@
-#include <string>
+#pragma once
 
 namespace RoutingConsts
 {
@@ -8,4 +8,14 @@ namespace RoutingConsts
     auto follow_blog = "/userid/:uid/blogid/:bid";
     auto follow_user = "/follower/:followerid/followed/:followedid";
     auto search = "/searchfor/:sf/searchby/:sb/keyword/:k/orderby/:ob";
+}
+
+
+namespace QueriesConsts
+{
+    auto find_user = "find user";
+    auto find_user_query = "SELECT id_user FROM users WHERE email = $1 AND username = $2;";
+    auto create_user = "create user";
+    auto create_user_query = "INSERT INTO users (email, username, password) VALUES($1, $2, $3)";
+
 }

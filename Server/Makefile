@@ -1,14 +1,22 @@
 CC=g++
-CFLAGS = -lpistache -lpthread -std=c++17 -lpqxx -lpq
+CFLAGS = -lpistache -lpthread
+PFLAGS = -lpqxx -lpq
 
-Server:  user.o requestHandler.o Consts.hpp Server.cpp
-	$(CC) Server.cpp -o Server requestHandler.o user.o $(CFLAGS)
+Server: server.o pool.o user.o requestHandler.o
+	$(CC) server.o pool.o user.o requestHandler.o $(PFLAGS) $(CFLAGS) -std=c++17 -o Server
 
-requestHandler.o: classes/RequestHandler.cpp classes/RequestHandler.hpp
-	$(CC) classes/RequestHandler.cpp -c -std=c++17 -o requestHandler.o
+
+server.o:  user.o requestHandler.o pool.o Consts.hpp Server.cpp 
+	$(CC) Server.cpp -c -o server.o -std=c++17
+
+requestHandler.o: classes/RequestHandler.cpp classes/RequestHandler.hpp pool.o classes/ConnectionPool.hpp Consts.hpp
+	$(CC) classes/RequestHandler.cpp -c -std=c++17 -o requestHandler.o 
 
 user.o: classes/User.cpp classes/User.hpp
 	$(CC) classes/User.cpp -c -std=c++17 -o user.o
+
+pool.o: classes/ConnectionPool.cpp classes/ConnectionPool.hpp Consts.hpp
+	$(CC) classes/ConnectionPool.cpp -c -o pool.o -std=c++17
 
 .Phony : clean
 clean:

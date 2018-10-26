@@ -6,7 +6,7 @@
 #include <iostream>
 #include <pqxx/pqxx>
 #include <string>
-
+#include "ConnectionPool.hpp"
 
 namespace pr = Pistache::Rest;
 namespace ph = Pistache::Http;
@@ -14,7 +14,8 @@ namespace ph = Pistache::Http;
 
 struct RequestHandler
 {
-    void connectionSetUp(pqxx::connection &con);
+    ConnectionPool pool;
+    void connectionSetUp(pqxx::lazyconnection &con);
     void CreateUser(const pr::Request& rq, ph::ResponseWriter rw);
     void setRoutes(pr::Router& r);
 };

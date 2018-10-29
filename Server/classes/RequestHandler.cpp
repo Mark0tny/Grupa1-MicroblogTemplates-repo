@@ -13,11 +13,15 @@ void RequestHandler::CreateUser(const Rest::Request& rq, Http::ResponseWriter rw
     std::cout << "Create user request\n";   
     auto result = pool.executeQuery(QueriesConsts::find_user, email, username);
     if(result.has_value() && result->size() > 0)
-        rw.send(Http::Code::Not_Acceptable, "User Already Exists");
+        rw.send(Http::Code::Bad_Request, "User Already Exists");
     else if(result.has_value() && result->size() == 0)
     {
-        pool.executeQuery(QueriesConsts::create_user, email, username, passwd);
-        rw.send(Http::Code::Created, "User Created");
+        auto result = pool.executeQuery(QueriesConsts::create_user, email, username, passwd);
+        if(result.has_value() && result->size() == 1)
+            for(auto&& r : result.value())
+                rw.send(Http::Code::Ok, std::string(r.at(0).c_str()) + ":" + std::string(r.at(1).c_str()));
+        else
+            rw.send(Http::Code::Service_Unavailable, "No Available Connection");
     }
     else
         rw.send(Http::Code::Service_Unavailable, "No Available Connection");
@@ -32,7 +36,7 @@ void RequestHandler::LoginUser(const Rest::Request& rq, Http::ResponseWriter rw)
     if(result.has_value() && result->size() == 1)
         rw.send(Http::Code::Ok, result.value()[0].at(0).c_str());
     else if(result.has_value() && result->size() == 0)
-        rw.send(Http::Code::Not_Found, "Login failed");
+        rw.send(Http::Code::Bad_Request, "Login failed");
     else
         rw.send(Http::Code::Service_Unavailable, "No Available Connection");
 }
@@ -49,7 +53,7 @@ void RequestHandler::CreateMicroBlog(const Rest::Request& rq, Http::ResponseWrit
     if(result.has_value() && result->size() == 1)
         rw.send(Http::Code::Ok, result.value()[0].at(0).c_str());
     else 
-        rw.send(Http::Code::No_Content, "Failed To Create MicroBlog");
+        rw.send(Http::Code::Bad_Request, "Failed To Create MicroBlog");
 
 }
 

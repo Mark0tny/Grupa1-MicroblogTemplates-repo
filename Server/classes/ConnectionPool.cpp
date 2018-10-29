@@ -46,6 +46,7 @@ void ConnectionPool::mapSetup()
     queries.emplace(std::make_pair(find_user, find_user_query));
     queries.emplace(std::make_pair(create_user, create_user_query));
     queries.emplace(std::make_pair(login_user, login_user_query));
+    queries.emplace(std::make_pair(create_microblog, create_microblog_query));
 }
 
 

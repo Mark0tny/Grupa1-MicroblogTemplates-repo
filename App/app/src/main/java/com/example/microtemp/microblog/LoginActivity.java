@@ -35,8 +35,8 @@ public class LoginActivity extends AppCompatActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(LoginActivity.this, "test", Toast.LENGTH_SHORT).show();
-                new MakeNetworkCall().execute("http://212.191.92.88:9080/"+"email/"+email.getText() +"/haslo/"+ password.getText(), "Get");
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -44,8 +44,7 @@ public class LoginActivity extends AppCompatActivity {
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               new MakeNetworkCall().execute("http://212.191.92.88:9080/" +"email/"+email.getText() +"/haslo/"+ password.getText(), "Post");
-                Toast.makeText(LoginActivity.this, "test", Toast.LENGTH_SHORT).show();
+               new MakeNetworkCall().execute("http://212.191.92.88:51020/", "Post");
             }
         });
     }
@@ -62,10 +61,7 @@ public class LoginActivity extends AppCompatActivity {
             cc.setConnectTimeout(5000);
             cc.setRequestMethod("GET");
             cc.setDoInput(true);
-
-
             int response = cc.getResponseCode();
-
             if (response == HttpURLConnection.HTTP_OK) {
                 DataInputStream = cc.getInputStream();
             }
@@ -78,10 +74,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     InputStream ByPostMethod(String ServerURL) {
-
         InputStream DataInputStream = null;
         try {
-            String PostParam = "first_name=android&amp;last_name=pala";
+            String PostParam = "email/"+email.getText()+"/nick/testuser"+"/haslo/"+password.getText();
+            Log.d(LOG_TAG, PostParam);
             URL url = new URL(ServerURL);
             HttpURLConnection cc = (HttpURLConnection)
                     url.openConnection();
@@ -93,7 +89,6 @@ public class LoginActivity extends AppCompatActivity {
             dos.writeBytes(PostParam);
             dos.flush();
             dos.close();
-
             int response = cc.getResponseCode();
             if(response == HttpURLConnection.HTTP_OK) {
                 DataInputStream = cc.getInputStream();
@@ -154,14 +149,11 @@ public class LoginActivity extends AppCompatActivity {
             String URL = arg[0];
             Log.d(LOG_TAG, "URL: " + URL);
             String res = "";
-
-
             if (arg[1].equals("Post")) {
 
                 is = ByPostMethod(URL);
 
             } else {
-
                 is = ByGetMethod(URL);
             }
             if (is != null) {

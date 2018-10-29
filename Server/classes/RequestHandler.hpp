@@ -17,6 +17,7 @@ struct RequestHandler
     ConnectionPool pool;
     void connectionSetUp(pqxx::lazyconnection &con);
     void CreateUser(const pr::Request& rq, ph::ResponseWriter rw);
+    void LoginUser(const pr::Request& rq, ph::ResponseWriter rw);
     void setRoutes(pr::Router& r);
 };
 

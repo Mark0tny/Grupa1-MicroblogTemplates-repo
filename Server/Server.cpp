@@ -11,7 +11,7 @@
 int main()
 {
     
-    auto addr = Pistache::Address(Pistache::Ipv4(127,0,0,1), Pistache::Port(9080));
+    auto addr = Pistache::Address(Pistache::Ipv4(0,0,0,0), Pistache::Port(9080));
     Pistache::Rest::Router router;
     RequestHandler rh;
     rh.setRoutes(router);

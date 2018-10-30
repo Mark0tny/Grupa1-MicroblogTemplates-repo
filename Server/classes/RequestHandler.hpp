@@ -19,6 +19,9 @@ struct RequestHandler
     void CreateUser(const pr::Request& rq, ph::ResponseWriter rw);
     void LoginUser(const pr::Request& rq, ph::ResponseWriter rw);
     void CreateMicroBlog(const pr::Request& rq, ph::ResponseWriter rw);
+    void GetMyBlogs(const pr::Request& rq, ph::ResponseWriter rw);
+    void GetPostsByBlog(const pr::Request& rq, ph::ResponseWriter rw);
+    void AddPost(const pr::Request& rq, ph::ResponseWriter rw);
     void setRoutes(pr::Router& r);
 };
 

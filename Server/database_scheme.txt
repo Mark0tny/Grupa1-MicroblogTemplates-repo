@@ -68,7 +68,7 @@ CREATE TABLE "comments" (
 CREATE TABLE "microblog" (
 	"id_microblog" SERIAL NOT NULL,
 	"name" VARCHAR(255) NOT NULL,
-	"author" VARCHAR(255) NOT NULL,
+	"author" integer NOT NULL,
 	"tags" integer NOT NULL,
 	"posts" integer NOT NULL,
 	"followers" integer NOT NULL,

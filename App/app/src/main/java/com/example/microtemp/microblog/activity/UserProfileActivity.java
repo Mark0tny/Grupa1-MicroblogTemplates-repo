@@ -52,7 +52,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
         URL url = null;
         try {
-            url = new URL("http://212.191.92.88:51020/getmymicroblogs/8");
+            url = new URL("http://212.191.92.88:51020/getmymicroblogs/15");
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

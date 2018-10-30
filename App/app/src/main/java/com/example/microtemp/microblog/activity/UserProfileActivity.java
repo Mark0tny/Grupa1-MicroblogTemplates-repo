@@ -9,21 +9,34 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.example.microtemp.microblog.R;
 import com.example.microtemp.microblog.ui.ListItemMicroblog;
+import com.example.microtemp.microblog.ui.MicroblogRecyclerViewAdapter;
+import com.example.microtemp.microblog.ui.PostRecyclerViewAdapter;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserProfileActivity extends AppCompatActivity {
 
-   private RecyclerView recyclerView;
-   private RecyclerView.Adapter adapter;
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter adapter;
 
-   private List<ListItemMicroblog> microblogList;
+    private List<ListItemMicroblog> microblogList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +48,35 @@ public class UserProfileActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.microblog_recyclerview);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
         microblogList = new ArrayList<>();
+
+        URL url = null;
+        try {
+            url = new URL("http://212.191.92.88:51020/getmymicroblogs/8");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        try {
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            if(con.getResponseCode() == HttpURLConnection.HTTP_OK){
+                BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                String line;
+                while((line = reader.readLine()) != null){
+                    JSONObject obj = new JSONObject(line.substring(0, line.length()));
+                    String author = obj.getString("author");
+                    String title = obj.getString("name");
+                    microblogList.add(new ListItemMicroblog(author, title, " "));
+
+                }
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        adapter = new MicroblogRecyclerViewAdapter(microblogList, this);
+        recyclerView.setAdapter(adapter);
 
         //Dodanie Obiektów do listy adaptera
 

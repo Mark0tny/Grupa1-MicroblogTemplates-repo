@@ -1,4 +1,4 @@
-package com.example.microtemp.microblog;
+package com.example.microtemp.microblog.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.microtemp.microblog.R;
 
 import java.io.BufferedReader;
 import java.io.IOException;

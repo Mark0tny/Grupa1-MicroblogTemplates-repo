@@ -1,4 +1,4 @@
-package com.example.microtemp.microblog;
+package com.example.microtemp.microblog.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import com.android.volley.AuthFailureError;
+import com.example.microtemp.microblog.R;
 
 import java.io.OutputStream;
 import java.net.HttpURLConnection;

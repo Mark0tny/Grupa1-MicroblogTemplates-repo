@@ -1,10 +1,11 @@
-package com.example.microtemp.microblog;
+package com.example.microtemp.microblog.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.microtemp.microblog.R;
 
 public class MainActivity extends AppCompatActivity {
 

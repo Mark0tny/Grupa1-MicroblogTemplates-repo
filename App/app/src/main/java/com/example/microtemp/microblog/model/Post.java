@@ -9,13 +9,13 @@ public class Post {
     private String title;
     private Date timeCreated;
     private String content;
-    private Byte[] picture;
+    private String picture;
     private List<Comment> commentList;
     private int views;
     private List<Tag> tagList;
     private int idMicroblog;
 
-    public Post(int id, int author, String title, Date timeCreated, String content, Byte[] picture) {
+    public Post(int id, int author, String title, Date timeCreated, String content, String picture) {
         this.id = id;
         this.author = author;
         this.title = title;
@@ -71,11 +71,11 @@ public class Post {
         this.content = content;
     }
 
-    public Byte[] getPicture() {
+    public String getPicture() {
         return picture;
     }
 
-    public void setPicture(Byte[] picture) {
+    public void setPicture(String picture) {
         this.picture = picture;
     }
 

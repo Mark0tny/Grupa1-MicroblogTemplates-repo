@@ -21,9 +21,11 @@
     <!-- Buttons -->
     <string name="create">Stwórz</string>
     <string name="fill_up">wypełnij...</string>
+
     <!-- Strings related to navbar -->
     <string name="title_activity_hamburgermenu">hamburgermenu</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="navigation_add">Dodaj Materiał</string>
+    <string name="title_activity_post">PostActivity</string>
 </resources>

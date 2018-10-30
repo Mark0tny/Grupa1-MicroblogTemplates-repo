@@ -30,7 +30,11 @@
         </activity>
         <activity android:name=".activity.RegisterActivity" />
         <activity android:name=".activity.CreateMicroblogActivity" />
-        <activity android:name=".activity.CreatePostActivity"></activity>
+        <activity android:name=".activity.CreatePostActivity" />
+        <activity
+            android:name=".activity.PostActivity"
+            android:label="@string/title_activity_post"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

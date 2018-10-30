@@ -34,7 +34,9 @@
         <activity
             android:name=".activity.PostActivity"
             android:label="@string/title_activity_post"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activity.Settings" />
+        <activity android:name=".activity.SettingsActivity"></activity>
     </application>
 
 </manifest>

@@ -31,7 +31,7 @@ namespace QueriesConsts
     constexpr auto create_user = "create user";
     constexpr auto create_user_query = "INSERT INTO users (email, username, password) VALUES($1, $2, $3) RETURNING id_user, username";
     constexpr auto login_user = "login user";
-    constexpr auto login_user_query = "SELECT id_user FROM users where ( email = $1 OR username = $1) AND password = $2 LIMIT 1 RETURNING id_user, username";
+    constexpr auto login_user_query = "SELECT id_user, username FROM users where ( email = $1 OR username = $1) AND password = $2 LIMIT 1";
     constexpr auto create_microblog = "create microblog";
     constexpr auto create_microblog_query = "INSERT INTO microblog (name, author, private) VALUES($1, $2, $3) RETURNING id_microblog";
     constexpr auto get_my_microblogs = "get users microblogs";

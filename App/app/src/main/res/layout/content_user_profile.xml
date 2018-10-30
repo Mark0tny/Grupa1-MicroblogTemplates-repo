@@ -11,15 +11,13 @@
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
-
-
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_marginBottom="20dp"
         >
 
         <ImageView
@@ -37,6 +35,23 @@
             android:layout_marginLeft="@dimen/fab_margin"
             />
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="20dp"
+        >
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/microblog_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            >
+
+        </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+
 </LinearLayout>
 
 

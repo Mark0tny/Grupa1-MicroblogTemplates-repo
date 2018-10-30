@@ -36,22 +36,15 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="activity_create_microblog.xml" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_create_microblog.xml">
+      <file leaf-file-name="LoginActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/microtemp/microblog/activity/LoginActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="32" column="4" selection-start-line="32" selection-start-column="4" selection-end-line="32" selection-end-column="4" />
+            <state relative-caret-position="205">
+              <caret line="41" column="31" selection-start-line="41" selection-start-column="19" selection-end-line="41" selection-end-column="31" />
               <folding>
-                <element signature="e#1312#1331#0" expanded="true" />
-                <element signature="e#1905#1922#0" expanded="true" />
-                <element signature="e#2874#2893#0" expanded="true" />
-                <element signature="e#3454#3471#0" expanded="true" />
-                <element signature="e#3741#3757#0" expanded="true" />
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
-          </provider>
-          <provider editor-type-id="android-designer2">
-            <state />
           </provider>
         </entry>
       </file>
@@ -67,85 +60,43 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="activity_create_post.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_create_post.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="228">
-              <caret line="109" column="30" selection-end-line="111" selection-end-column="15" />
-              <folding>
-                <element signature="e#2689#2706#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-          <provider editor-type-id="android-designer2">
-            <state />
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="content_user_profile.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_user_profile.xml">
-          <provider editor-type-id="text-editor">
-            <state relative-caret-position="646">
-              <caret line="38" column="19" selection-start-line="38" selection-start-column="19" selection-end-line="38" selection-end-column="19" />
-              <folding>
-                <element signature="e#840#859#0" expanded="true" />
-                <element signature="e#1084#1103#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-          <provider selected="true" editor-type-id="android-designer2">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Microblog.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/microtemp/microblog/model/Microblog.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="109">
-              <caret line="7" column="18" lean-forward="true" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
+            <state relative-caret-position="279">
+              <caret line="50" lean-forward="true" selection-start-line="50" selection-end-line="50" />
               <folding>
-                <element signature="e#558#559#0" expanded="true" />
-                <element signature="e#583#584#0" expanded="true" />
-                <element signature="e#616#617#0" expanded="true" />
-                <element signature="e#644#645#0" expanded="true" />
-                <element signature="e#675#676#0" expanded="true" />
-                <element signature="e#702#703#0" expanded="true" />
-                <element signature="e#742#743#0" expanded="true" />
-                <element signature="e#774#775#0" expanded="true" />
-                <element signature="e#804#805#0" expanded="true" />
-                <element signature="e#833#834#0" expanded="true" />
-                <element signature="e#874#875#0" expanded="true" />
-                <element signature="e#910#911#0" expanded="true" />
-                <element signature="e#947#948#0" expanded="true" />
-                <element signature="e#977#978#0" expanded="true" />
-                <element signature="e#1026#1027#0" expanded="true" />
-                <element signature="e#1064#1065#0" expanded="true" />
-                <element signature="e#1103#1104#0" expanded="true" />
-                <element signature="e#1134#1135#0" expanded="true" />
-                <element signature="e#1186#1187#0" expanded="true" />
-                <element signature="e#1226#1227#0" expanded="true" />
-                <element signature="e#1266#1267#0" expanded="true" />
-                <element signature="e#1298#1299#0" expanded="true" />
-                <element signature="e#1352#1353#0" expanded="true" />
-                <element signature="e#1394#1395#0" expanded="true" />
-                <element signature="e#1428#1429#0" expanded="true" />
-                <element signature="e#1458#1459#0" expanded="true" />
-                <element signature="e#1505#1506#0" expanded="true" />
-                <element signature="e#1543#1544#0" expanded="true" />
+                <element signature="e#1058#1077#0" expanded="true" />
+                <element signature="e#1326#1345#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="activity_login.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="19" column="41" lean-forward="true" selection-start-line="19" selection-start-column="7" selection-end-line="19" selection-end-column="41" />
             </state>
           </provider>
           <provider editor-type-id="android-designer2">
             <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="list_item_microblog.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/list_item_microblog.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="22" column="85" selection-start-line="22" selection-start-column="85" selection-end-line="22" selection-end-column="85" />
+              <folding>
+                <element signature="e#606#641#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer2">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UserProfileActivity.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/microtemp/microblog/activity/UserProfileActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="272">
+              <caret line="41" lean-forward="true" selection-start-line="41" selection-end-line="41" />
+            </state>
           </provider>
         </entry>
       </file>
@@ -154,6 +105,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="layoutResourceFile" />
         <option value="Class" />
       </list>
     </option>
@@ -4496,15 +4448,18 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/microtemp/microblog/model/Post.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/microtemp/microblog/model/Comment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/microtemp/microblog/model/Microblog.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/microtemp/microblog/activity/UserProfileActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/microtemp/microblog/activity/LoginActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/microtemp/microblog/activity/CreateMicroblogActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/microtemp/microblog/activity/CreatePostActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_create_post.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/content_user_profile.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/list_item_posts.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_create_microblog.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/content_user_profile.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/list_item_microblog.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/microtemp/microblog/ui/ListItemMicroblog.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/microtemp/microblog/ui/MicroblogRecyclerViewAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/microtemp/microblog/activity/UserProfileActivity.java" />
       </list>
     </option>
   </component>
@@ -4559,6 +4514,13 @@
             <path>
               <item name="App" type="1abcf292:AndroidViewProjectNode" />
               <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="microblog" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="ui" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="App" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
               <item name="res" type="d4f16f75:AndroidResFolderNode" />
             </path>
             <path>
@@ -4575,6 +4537,8 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="android.project.structure.last.selected" value="app" />
+    <property name="android.project.structure.proportion" value="0.15" />
     <property name="device.picker.selection" value="763b96820804" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../CompetenceProject" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
@@ -5143,23 +5107,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/microtemp/microblog/activity/UserProfileActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="93">
-          <caret line="19" column="1" selection-start-line="19" selection-start-column="1" selection-end-line="19" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/microtemp/microblog/activity/LoginActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="30" column="45" selection-start-line="30" selection-start-column="45" selection-end-line="30" selection-end-column="45" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/microtemp/microblog/activity/CreateMicroblogActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
@@ -5180,16 +5127,6 @@
         </state>
       </provider>
       <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="19" column="41" lean-forward="true" selection-start-line="19" selection-start-column="7" selection-end-line="19" selection-end-column="41" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
         <state />
       </provider>
     </entry>
@@ -5227,10 +5164,74 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_create_post.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="194">
+          <caret line="101" lean-forward="true" selection-start-line="101" selection-end-line="101" />
+          <folding>
+            <element signature="e#2689#2706#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="19" column="41" selection-start-line="19" selection-start-column="7" selection-end-line="19" selection-end-column="41" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_create_microblog.xml">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="296">
+          <caret line="64" selection-start-line="64" selection-end-line="64" />
+          <folding>
+            <element signature="e#1312#1331#0" expanded="true" />
+            <element signature="e#1905#1922#0" expanded="true" />
+            <element signature="e#2874#2893#0" expanded="true" />
+            <element signature="e#3454#3471#0" expanded="true" />
+            <element signature="e#3741#3757#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_user_profile.xml">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="227">
+          <caret line="23" selection-start-line="23" selection-end-line="23" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_user_profile.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="279">
+          <caret line="50" lean-forward="true" selection-start-line="50" selection-end-line="50" />
+          <folding>
+            <element signature="e#1058#1077#0" expanded="true" />
+            <element signature="e#1326#1345#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/microtemp/microblog/model/Microblog.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="109">
-          <caret line="7" column="18" lean-forward="true" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
+        <state relative-caret-position="160">
+          <caret line="10" column="29" selection-start-line="10" selection-start-column="29" selection-end-line="10" selection-end-column="29" />
           <folding>
             <element signature="e#558#559#0" expanded="true" />
             <element signature="e#583#584#0" expanded="true" />
@@ -5264,36 +5265,55 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_user_profile.xml">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="227">
-          <caret line="23" selection-start-line="23" selection-end-line="23" />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_user_profile.xml">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="646">
-          <caret line="38" column="19" selection-start-line="38" selection-start-column="19" selection-end-line="38" selection-end-column="19" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/microtemp/microblog/activity/LoginActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="205">
+          <caret line="41" column="31" selection-start-line="41" selection-start-column="19" selection-end-line="41" selection-end-column="31" />
           <folding>
-            <element signature="e#840#859#0" expanded="true" />
-            <element signature="e#1084#1103#0" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/microtemp/microblog/ui/ListItemMicroblog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="24" lean-forward="true" selection-start-line="12" selection-start-column="24" selection-end-line="12" selection-end-column="24" />
+          <folding>
+            <element signature="e#358#359#0" expanded="true" />
+            <element signature="e#387#388#0" expanded="true" />
+            <element signature="e#431#432#0" expanded="true" />
+            <element signature="e#467#468#0" expanded="true" />
+            <element signature="e#499#500#0" expanded="true" />
+            <element signature="e#527#528#0" expanded="true" />
+            <element signature="e#569#570#0" expanded="true" />
+            <element signature="e#603#604#0" expanded="true" />
+            <element signature="e#634#635#0" expanded="true" />
+            <element signature="e#661#662#0" expanded="true" />
+            <element signature="e#701#702#0" expanded="true" />
+            <element signature="e#733#734#0" expanded="true" />
+          </folding>
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_create_post.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/microtemp/microblog/ui/MicroblogRecyclerViewAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="109" column="30" selection-end-line="111" selection-end-column="15" />
+        <state relative-caret-position="36">
+          <caret line="22" column="31" lean-forward="true" selection-start-line="22" selection-start-column="31" selection-end-line="22" selection-end-column="31" />
           <folding>
-            <element signature="e#2689#2706#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#1264#1265#0" expanded="true" />
+            <element signature="e#1315#1316#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/list_item_microblog.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="22" column="85" selection-start-line="22" selection-start-column="85" selection-end-line="22" selection-end-column="85" />
+          <folding>
+            <element signature="e#606#641#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -5301,21 +5321,11 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_create_microblog.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/microtemp/microblog/activity/UserProfileActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="32" column="4" selection-start-line="32" selection-start-column="4" selection-end-line="32" selection-end-column="4" />
-          <folding>
-            <element signature="e#1312#1331#0" expanded="true" />
-            <element signature="e#1905#1922#0" expanded="true" />
-            <element signature="e#2874#2893#0" expanded="true" />
-            <element signature="e#3454#3471#0" expanded="true" />
-            <element signature="e#3741#3757#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="272">
+          <caret line="41" lean-forward="true" selection-start-line="41" selection-end-line="41" />
         </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
       </provider>
     </entry>
   </component>

@@ -33,8 +33,7 @@ public class CreatePostActivity extends AppCompatActivity {
     }
 
     public void CreateMicroblog(View view) {
-
-
+        
         Intent intent = new Intent(CreatePostActivity.this, UserProfileActivity.class);
         startActivity(intent);
     }

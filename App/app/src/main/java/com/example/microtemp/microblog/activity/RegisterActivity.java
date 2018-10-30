@@ -22,6 +22,8 @@ import com.example.microtemp.microblog.R;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -30,6 +32,8 @@ public class RegisterActivity extends AppCompatActivity {
     private Button registerBtn, registerBackBtn;
     private ProgressBar progressBar;
     private static String Url_Reg = "http://212.191.92.88:51020";
+    private static final Pattern VALID_EMAIL_ADDRESS_REGEX =
+            Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +108,11 @@ public class RegisterActivity extends AppCompatActivity {
             this.email.requestFocus();
             return;
         }
+        if (validateEmail(email)) {
+            this.email.setError("Please enter valid email");
+            this.email.requestFocus();
+            return;
+        }
         if (TextUtils.isEmpty(password)) {
             this.password.setError("Please enter password");
             this.password.requestFocus();
@@ -132,5 +141,10 @@ public class RegisterActivity extends AppCompatActivity {
     public static void hideKeyboardFrom(Context context, View view) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    public static boolean validateEmail(String emailStr) {
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(emailStr);
+        return matcher.find();
     }
 }

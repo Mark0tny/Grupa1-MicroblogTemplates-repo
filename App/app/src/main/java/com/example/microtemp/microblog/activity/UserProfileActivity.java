@@ -52,10 +52,13 @@ public class UserProfileActivity extends AppCompatActivity {
         });
 
 
-        TextView txtViewRespone = (TextView) findViewById(R.id.response);
+        TextView txtViewResponeId = (TextView) findViewById(R.id.responseID);
+        TextView txtViewResponeUsername = (TextView) findViewById(R.id.responseUsername);
         Intent intent = getIntent();
         String data = intent.getStringExtra("response");
-        txtViewRespone.setText(data);
+        String[] response = data.split(":");
+        txtViewResponeId.setText(response[0]);
+        txtViewResponeUsername.setText(response[1]);
 
     }
 

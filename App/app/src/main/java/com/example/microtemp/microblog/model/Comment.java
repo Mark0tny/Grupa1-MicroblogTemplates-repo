@@ -6,14 +6,14 @@ public class Comment {
     private int id;
     private int idPost;
     private String content;
-    private Date timeCrreated;
+    private Date timeCreated;
     private int author;
 
     public Comment(int id, int idPost, String content, Date timeCrreated, int author) {
         this.id = id;
         this.idPost = idPost;
         this.content = content;
-        this.timeCrreated = timeCrreated;
+        this.timeCreated = timeCrreated;
         this.author = author;
     }
 
@@ -41,12 +41,12 @@ public class Comment {
         this.content = content;
     }
 
-    public Date getTimeCrreated() {
-        return timeCrreated;
+    public Date getTimeCreated() {
+        return timeCreated;
     }
 
-    public void setTimeCrreated(Date timeCrreated) {
-        this.timeCrreated = timeCrreated;
+    public void setTimeCrrated(Date timeCrreated) {
+        this.timeCreated = timeCrreated;
     }
 
     public int getAuthor() {

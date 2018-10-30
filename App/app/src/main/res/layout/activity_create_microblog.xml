@@ -27,7 +27,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:inputType="textNoSuggestions"
-            android:text="@string/fill_up" />
+            android:hint="@string/fill_up" />
     </LinearLayout>
 
 
@@ -51,7 +51,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:inputType="textNoSuggestions"
-            android:text="@string/fill_up" />
+            android:hint="@string/fill_up" />
     </LinearLayout>
 
     <Button

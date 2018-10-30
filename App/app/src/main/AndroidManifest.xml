@@ -17,18 +17,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         a
-        <activity android:name=".activity.MainActivity">
-
-        </activity>
-        <activity android:name=".activity.LoginActivity" >
-
+        <activity
+            android:name=".activity.UserProfileActivity"
+            android:label="@string/title_activity_user_profile"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.RegisterActivity"></activity>
+        <activity android:name=".activity.RegisterActivity" />
+        <activity android:name=".activity.CreateMicroblogActivity" />
+        <activity android:name=".activity.CreatePostActivity"></activity>
     </application>
 
 </manifest>

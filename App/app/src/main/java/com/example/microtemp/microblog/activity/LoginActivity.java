@@ -84,9 +84,12 @@ public class LoginActivity extends AppCompatActivity {
                     response.append(inputLine);
                 }
                 in.close();
-
-                Toast.makeText(getApplicationContext(),response.toString(),Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(this, UserProfileActivity.class);
+                i.putExtra("response", response.toString());
+                startActivity(i);
                 Log.d("LOGIN RESPONSE",response.toString());
+
+
             } else {
                 Toast.makeText(getApplicationContext(),"Login failed",Toast.LENGTH_SHORT).show();
             }

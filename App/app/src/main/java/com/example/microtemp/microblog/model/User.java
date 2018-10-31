@@ -6,24 +6,24 @@ public class User {
 
     private int id;
     private String username;
-    private  String password;
+    private String email;
+    private String password;
     private List<Microblog> microblogList;
     private  List<Tag> tagList;
     private List<Post> postList;
 
-    public User(int id, String username, String password) {
+
+    public User(int id, String username, String email, String password) {
         this.id = id;
         this.username = username;
+        this.email = email;
         this.password = password;
     }
 
-    public User(int id, String username, String password, List<Microblog> microblogList, List<Tag> tagList, List<Post> postList) {
+    public User(int id, String username, String email) {
         this.id = id;
         this.username = username;
-        this.password = password;
-        this.microblogList = microblogList;
-        this.tagList = tagList;
-        this.postList = postList;
+        this.email = email;
     }
 
     public int getId() {
@@ -40,6 +40,14 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -79,10 +87,8 @@ public class User {
         return "User{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", microblogList=" + microblogList +
-                ", tagList=" + tagList +
-                ", postList=" + postList +
                 '}';
     }
 }

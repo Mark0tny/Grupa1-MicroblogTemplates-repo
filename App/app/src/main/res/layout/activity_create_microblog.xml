@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.CreatePostActivity"
+    tools:context=".activity.CreateMicroblogActivity"
     android:orientation="vertical">
 
 
@@ -58,10 +58,11 @@
         android:id="@+id/create_microblog"
         style="?android:textAppearanceSmall"
         android:layout_width="match_parent"
-        android:onClick="CreateMicroblog"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:onClick="CreateMicroblog"
         android:text="@string/create"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+       />
 
 </LinearLayout>

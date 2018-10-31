@@ -19,11 +19,9 @@ public class CreatePostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_post);
 
-
     }
 
     public void CreatePost(View view) {
-
         title = findViewById(R.id.edit_post_name);
         content = findViewById(R.id.edit_post_content);
         tags = findViewById(R.id.edit_tag);
@@ -32,9 +30,5 @@ public class CreatePostActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void CreateMicroblog(View view) {
-        
-        Intent intent = new Intent(CreatePostActivity.this, UserProfileActivity.class);
-        startActivity(intent);
-    }
+
 }

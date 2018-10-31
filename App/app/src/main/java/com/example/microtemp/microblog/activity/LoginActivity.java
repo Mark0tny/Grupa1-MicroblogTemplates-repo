@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.microtemp.microblog.R;
+import com.example.microtemp.microblog.ui.SessionManager;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,17 +26,20 @@ public class LoginActivity extends AppCompatActivity {
     public EditText email, password;
     private static String Url_Reg = "http://212.191.92.88:51020";
 
+    SessionManager session;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        session = new SessionManager(getApplicationContext());
 
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new
                     StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
-
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
 
@@ -65,15 +69,18 @@ public class LoginActivity extends AppCompatActivity {
 
         final String email = this.email.getText().toString().trim();
         final String password = this.password.getText().toString().trim();
+
+        session.createLoginSession(email, password);
+
         StringBuilder request = new StringBuilder(Url_Reg);
         request.append("/email/" + email + "/haslo/" + password);
         URL obj = new URL(request.toString());
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
-        try{
+        try {
             con.setRequestMethod("GET");
             int responseCode = con.getResponseCode();
-            Log.d("ResponseCode: ",Integer.toString(responseCode));
+            Log.d("ResponseCode: ", Integer.toString(responseCode));
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 BufferedReader in = new BufferedReader(new InputStreamReader(
                         con.getInputStream()));
@@ -87,13 +94,14 @@ public class LoginActivity extends AppCompatActivity {
                 Intent i = new Intent(this, UserProfileActivity.class);
                 i.putExtra("response", response.toString());
                 startActivity(i);
-                Log.d("LOGIN RESPONSE",response.toString());
+                finish();
+                Log.d("LOGIN RESPONSE", response.toString());
 
 
             } else {
-                Toast.makeText(getApplicationContext(),"Login failed",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Login failed", Toast.LENGTH_SHORT).show();
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

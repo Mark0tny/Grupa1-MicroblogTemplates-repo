@@ -45,6 +45,7 @@ public class UserProfileActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         session = new SessionManager(getApplicationContext());
 
         recyclerView = (RecyclerView) findViewById(R.id.microblog_recyclerview);

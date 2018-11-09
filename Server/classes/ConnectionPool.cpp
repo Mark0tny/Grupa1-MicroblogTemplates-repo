@@ -7,13 +7,13 @@
 ConnectionPool::ConnectionPool()
 {
     mapSetup();
-    std::cout << "Preparing connections\n";
+    std::cout << "Preparing connections...";
     for(int i = 0; i < size; ++i)
         pool.emplace_back(std::make_shared<pqxx::lazyconnection>("hostaddr=127.0.0.1 port=5433 dbname=MicroBlog user=postgres password=blog"));
     for(auto & c : pool)
         for(const auto& [k, v] : queries)
             c->prepare(k, v);
-    std::cout << "Connections prepared\n";
+    std::cout << "Done\n";
 
 }
 
@@ -40,7 +40,7 @@ void ConnectionPool::freeConnection(con_ptr con)
 
 void ConnectionPool::mapSetup()
 {
-    std::cout << "Queries map setup\n";
+    std::cout << "Queries map setup...";
     using namespace QueriesConsts;
     queries.clear();
     queries.emplace(std::make_pair(find_user, find_user_query));
@@ -50,6 +50,7 @@ void ConnectionPool::mapSetup()
     queries.emplace(std::make_pair(get_my_microblogs, get_my_microblogs_query));
     queries.emplace(std::make_pair(add_post, add_post_query));
     queries.emplace(std::make_pair(get_posts_by_id, get_posts_by_id_query));
+    std::cout << "Done\n";
 }
 
 

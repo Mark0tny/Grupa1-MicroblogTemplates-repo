@@ -2,76 +2,38 @@ package com.example.microtemp.microblog.model;
 
 import java.util.List;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@AllArgsConstructor(access=AccessLevel.PUBLIC)
+@ToString
+@EqualsAndHashCode
 public class Microblog {
+    @Getter(value = AccessLevel.PUBLIC)
+    @Setter(value = AccessLevel.PUBLIC)
     private int id;
+    @Getter(value = AccessLevel.PUBLIC)
+    @Setter(value = AccessLevel.PUBLIC)
     private String name;
+    @Getter(value = AccessLevel.PUBLIC)
+    @Setter(value = AccessLevel.PUBLIC)
     private int author;
+    @Getter(value = AccessLevel.PUBLIC)
+    @Setter(value = AccessLevel.PUBLIC)
     private List<Tag> tagList;
+    @Getter(value = AccessLevel.PUBLIC)
+    @Setter(value = AccessLevel.PUBLIC)
     private List<Post> postList;
+    @Getter(value = AccessLevel.PUBLIC)
+    @Setter(value = AccessLevel.PUBLIC)
     private List<User> followers;
+    @Getter(value = AccessLevel.PUBLIC)
+    @Setter(value = AccessLevel.PUBLIC)
     private boolean privacy;
 
-    public Microblog(int id, String name, int author, List<Tag> tagList, boolean privacy) {
-        this.id = id;
-        this.name = name;
-        this.author = author;
-        this.tagList = tagList;
-        this.privacy = privacy;
-    }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(int author) {
-        this.author = author;
-    }
-
-    public List<Tag> getTagList() {
-        return tagList;
-    }
-
-    public void setTagList(List<Tag> tagList) {
-        this.tagList = tagList;
-    }
-
-    public List<Post> getPostList() {
-        return postList;
-    }
-
-    public void setPostList(List<Post> postList) {
-        this.postList = postList;
-    }
-
-    public List<User> getFollowers() {
-        return followers;
-    }
-
-    public void setFollowers(List<User> followers) {
-        this.followers = followers;
-    }
-
-    public boolean isPrivacy() {
-        return privacy;
-    }
-
-    public void setPrivacy(boolean privacy) {
-        this.privacy = privacy;
-    }
 }

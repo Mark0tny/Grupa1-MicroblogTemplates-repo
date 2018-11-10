@@ -3,122 +3,48 @@ package com.example.microtemp.microblog.model;
 import java.util.Date;
 import java.util.List;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@AllArgsConstructor(access=AccessLevel.PUBLIC)
+@ToString
+@EqualsAndHashCode
 public class Post {
+
+    @Getter(value = AccessLevel.PUBLIC)
+    @Setter(value = AccessLevel.PUBLIC)
     private int id;
+    @Getter(value = AccessLevel.PUBLIC)
+    @Setter(value = AccessLevel.PUBLIC)
     private int author;
+    @Getter(value = AccessLevel.PUBLIC)
+    @Setter(value = AccessLevel.PUBLIC)
     private String title;
+    @Getter(value = AccessLevel.PUBLIC)
+    @Setter(value = AccessLevel.PUBLIC)
     private Date timeCreated;
+    @Getter(value = AccessLevel.PUBLIC)
+    @Setter(value = AccessLevel.PUBLIC)
     private String content;
+    @Getter(value = AccessLevel.PUBLIC)
+    @Setter(value = AccessLevel.PUBLIC)
     private String picture;
+    @Getter(value = AccessLevel.PUBLIC)
+    @Setter(value = AccessLevel.PUBLIC)
     private List<Comment> commentList;
+    @Getter(value = AccessLevel.PUBLIC)
+    @Setter(value = AccessLevel.PUBLIC)
     private int views;
+    @Getter(value = AccessLevel.PUBLIC)
+    @Setter(value = AccessLevel.PUBLIC)
     private List<Tag> tagList;
+    @Getter(value = AccessLevel.PUBLIC)
+    @Setter(value = AccessLevel.PUBLIC)
     private int idMicroblog;
 
-    public Post(int id, int author, String title, Date timeCreated, String content, String picture) {
-        this.id = id;
-        this.author = author;
-        this.title = title;
-        this.timeCreated = timeCreated;
-        this.content = content;
-        this.picture = picture;
-    }
 
-    public Post(int id, int author, String title, Date timeCreated) {
-        this.id = id;
-        this.author = author;
-        this.title = title;
-        this.timeCreated = timeCreated;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(int author) {
-        this.author = author;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Date getTimeCreated() {
-        return timeCreated;
-    }
-
-    public void setTimeCreated(Date timeCreated) {
-        this.timeCreated = timeCreated;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getPicture() {
-        return picture;
-    }
-
-    public void setPicture(String picture) {
-        this.picture = picture;
-    }
-
-    public List<Comment> getCommentList() {
-        return commentList;
-    }
-
-    public void setCommentList(List<Comment> commentList) {
-        this.commentList = commentList;
-    }
-
-    public int getViews() {
-        return views;
-    }
-
-    public void setViews(int views) {
-        this.views = views;
-    }
-
-    public List<Tag> getTagList() {
-        return tagList;
-    }
-
-    public void setTagList(List<Tag> tagList) {
-        this.tagList = tagList;
-    }
-
-    public int getIdMicroblog() {
-        return idMicroblog;
-    }
-
-    public void setIdMicroblog(int idMicroblog) {
-        this.idMicroblog = idMicroblog;
-    }
-
-    @Override
-    public String toString() {
-        return "Post{" +
-                "id=" + id +
-                ", author=" + author +
-                ", title='" + title + '\'' +
-                ", timeCreated=" + timeCreated +
-                ", content='" + content + '\'' +
-                '}';
-    }
 }

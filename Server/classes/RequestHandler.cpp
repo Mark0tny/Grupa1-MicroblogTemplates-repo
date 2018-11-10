@@ -1,25 +1,51 @@
 #include "RequestHandler.hpp"
 #include "ConnectionPool.hpp"
 #include "../Consts.hpp"
+#include <nlohmann/json.hpp>
+#include <type_traits>
+#include <algorithm>
 
 
 using namespace Pistache;
+using namespace std::literals;
+using json = nlohmann::json;
+
+
+constexpr auto string_dumper_t = [](const json& m) {
+
+        return [&map = m](const auto& key) -> std::string {
+            return map.at(key).dump();
+        };
+};
+constexpr auto id_dumper_t = [](const json& m) {
+        return [&map = m](const auto& key) -> unsigned long long {
+            return map.at(key).template get<unsigned long long>();
+        };
+};
+
 
 void RequestHandler::CreateUser(const Rest::Request& rq, Http::ResponseWriter rw)
 {
-    auto username = rq.param(":n").as<std::string>();
-    auto email = rq.param(":e").as<std::string>();
-    auto passwd = rq.param(":h").as<std::string>();
-    std::cout << "Create user request\n";   
-    auto result = pool.executeQuery(QueriesConsts::find_user, email, username);
+    json login_data = json::parse(rq.body());
+    auto dumper = string_dumper_t(login_data);
+    std::cout << "Create user request\n";
+    auto result = pool.executeQuery(QueriesConsts::find_user, dumper("email"), dumper("username"));
     if(result.has_value() && result->size() > 0)
         rw.send(Http::Code::Bad_Request, "User Already Exists");
     else if(result.has_value() && result->size() == 0)
     {
-        auto result = pool.executeQuery(QueriesConsts::create_user, email, username, passwd);
+        auto result = pool.executeQuery(QueriesConsts::create_user, dumper("email"), dumper("username"), dumper("password"));
         if(result.has_value() && result->size() == 1)
-            for(auto&& r : result.value())
-                rw.send(Http::Code::Ok, std::string(r.at(0).c_str()) + ":" + std::string(r.at(1).c_str()));
+        {
+            rw.headers().add<Http::Header::ContentType>(MIME(Application, Json));
+
+            json user = {
+                {"id_user" ,result->at(0).at(0).as<unsigned long long>()},
+                {"username", result->at(0).at(1).c_str()}
+            };
+            rw.send(Http::Code::Ok, user.dump());
+            std::cout << user.dump() << "\n";
+        }
         else
             rw.send(Http::Code::Service_Unavailable, "No Available Connection");
     }
@@ -30,12 +56,19 @@ void RequestHandler::CreateUser(const Rest::Request& rq, Http::ResponseWriter rw
 
 void RequestHandler::LoginUser(const Rest::Request& rq, Http::ResponseWriter rw)
 {
-    auto login = rq.param(":e").as<std::string>();
-    auto passwd = rq.param(":h").as<std::string>();
-    auto result = pool.executeQuery(QueriesConsts::login_user, login, passwd);
+
+    json login = json::parse(rq.body());
+    auto dumper = string_dumper_t(login);
+    auto result = pool.executeQuery(QueriesConsts::login_user, dumper("login"), dumper("password"));
     if(result.has_value() && result->size() == 1)
-        for(auto&& r : result.value())
-                rw.send(Http::Code::Ok, std::string(r.at(0).c_str()) + ":" + std::string(r.at(1).c_str()));        
+    {
+        json user = {
+            {"id_user" ,result->at(0).at(0).c_str()},
+            {"username", result->at(0).at(1).c_str()}
+            };
+        rw.send(Http::Code::Ok, user.dump());        
+
+    }
     else if(result.has_value() && result->size() == 0)
         rw.send(Http::Code::Bad_Request, "Login failed");
     else
@@ -44,15 +77,16 @@ void RequestHandler::LoginUser(const Rest::Request& rq, Http::ResponseWriter rw)
 
 void RequestHandler::CreateMicroBlog(const Rest::Request& rq, Http::ResponseWriter rw)
 {
-    auto name = rq.param(":name").as<std::string>();
-    auto id = rq.param(":id").as<unsigned long>();
-    auto p = rq.param(":p").as<std::string>();
-    bool priv = p == std::string("private") ? true : false;
-
-    auto result = pool.executeQuery(QueriesConsts::create_microblog, name, id, priv);
+    json microblog_data = json::parse(rq.body());
+    auto dumper = string_dumper_t(microblog_data);
+    auto iddumper = id_dumper_t(microblog_data);
+    auto result = pool.executeQuery(QueriesConsts::create_microblog, dumper("title"), 
+                                    iddumper("id"), dumper("private") != "private" );
 
     if(result.has_value() && result->size() == 1)
-        rw.send(Http::Code::Ok, result.value()[0].at(0).c_str());
+    {
+        rw.send(Http::Code::Ok, "MicroBlog Created");
+    }
     else 
         rw.send(Http::Code::Bad_Request, "Failed To Create MicroBlog");
 
@@ -60,23 +94,21 @@ void RequestHandler::CreateMicroBlog(const Rest::Request& rq, Http::ResponseWrit
 
 void RequestHandler::GetMyBlogs(const Rest::Request& rq, Http::ResponseWriter rw)
 {
-    using namespace std::literals;
-    auto author = rq.param(":id").as<unsigned long>();
-
+    auto id = json::parse(rq.body());
+    auto dumper = id_dumper_t(id);
     std::cout << "Fetching microblogs\n";
-    auto result = pool.executeQuery(QueriesConsts::get_my_microblogs, author);
+    auto result = pool.executeQuery(QueriesConsts::get_my_microblogs, dumper("id"));
     if(result.has_value() && result->size() > 0)
     {
-        using namespace std::literals;
-        rw.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
+        rw.headers().add<Http::Header::ContentType>(MIME(Application, Json));
         auto stream = rw.stream(Http::Code::Ok);
 
-        std::string jsons = result.value().at(0).at(0).as<std::string>();
-        jsons = jsons.substr(1, jsons.size() - 2);
-
-        std::istringstream iss(jsons);
-        for(std::string line; std::getline(iss, line);)
-            stream << std::move(std::string(line + "\n"s).c_str());
+        json json_array = json::parse(result->at(0).at(0).as<std::string>());
+        for(int i=0; i < json_array.size(); ++i)
+        {
+            stream << json_array[i].dump().c_str();
+            std::cout << json_array[i].dump() << '\n';
+        }
 
         stream.ends();
     }
@@ -87,22 +119,24 @@ void RequestHandler::GetMyBlogs(const Rest::Request& rq, Http::ResponseWriter rw
 
 void RequestHandler::GetPostsByBlog(const Rest::Request& rq, Http::ResponseWriter rw)
 {
-    auto id = rq.param(":blogid").as<unsigned long>();
-    std::cout << "Fetching posts\n";
+    //auto id = rq.param(":blogid").as<unsigned long>();
+    json blog_id = json::parse(rq.body());
+    auto dumper = id_dumper_t(blog_id);
+    std::cout << "Fetching posts\n for id:" << dumper("id") << "\n";
 
-    using namespace std::literals;
-    auto result = pool.executeQuery(QueriesConsts::get_posts_by_id, id);
+    auto result = pool.executeQuery(QueriesConsts::get_posts_by_id, dumper("id"));
     if(result.has_value() && result->size() > 0)
     {
-        rw.headers().add<Pistache::Http::Header::ContentType>(MIME(Application, Json));
+        rw.headers().add<Http::Header::ContentType>(MIME(Application, Json));
         auto stream = rw.stream(Http::Code::Ok);
-        
-        std::string jsons = result.value().at(0).at(0).as<std::string>();
-        jsons = jsons.substr(1, jsons.size() - 2);
 
-        std::istringstream iss(jsons);
-        for(std::string line; std::getline(iss, line);)
-            stream << std::move(std::string(line + "\n"s).c_str());
+        json json_array = json::parse(result->at(0).at(0).as<std::string>());
+        for(int i=0; i < json_array.size(); ++i)
+        {
+            stream << json_array[i].dump().c_str();
+            std::cout << json_array[i].dump() << '\n';
+        }
+
         stream.ends();
     }
     else 
@@ -113,12 +147,12 @@ void RequestHandler::GetPostsByBlog(const Rest::Request& rq, Http::ResponseWrite
 
 void RequestHandler::AddPost(const pr::Request& rq, ph::ResponseWriter rw)
 {
-    auto id = rq.param(":id").as<unsigned long>();
-    auto author = rq.param(":a").as<unsigned long>();
-    auto title = rq.param(":t").as<std::string>();
-    auto content = rq.param(":c").as<std::string>();
+    json post_data = json::parse(rq.body());
+    auto str_dumper = string_dumper_t(post_data);
+    auto iddumper = id_dumper_t(post_data);
 
-    auto result = pool.executeQuery(QueriesConsts::add_post, author, title, content, id);
+    auto result = pool.executeQuery(QueriesConsts::add_post, iddumper("post_id"), str_dumper("title"), 
+                                    str_dumper("content"), iddumper("author_id"));
 
     if(result.has_value() && result->size() > 0)
         rw.send(Http::Code::Ok, "Post Added");
@@ -132,13 +166,13 @@ void RequestHandler::AddPost(const pr::Request& rq, ph::ResponseWriter rw)
 
 void RequestHandler::setRoutes(Rest::Router& r)
 {
-    std::cout << "Routing setup\n";
+    std::cout << "Routing setup...\n";
     Rest::Routes::Post(r, RoutingConsts::create_user_route, Rest::Routes::bind(&RequestHandler::CreateUser, this));
-    Rest::Routes::Get(r, RoutingConsts::login_user, Rest::Routes::bind(&RequestHandler::LoginUser, this));
+    Rest::Routes::Post(r, RoutingConsts::login_user, Rest::Routes::bind(&RequestHandler::LoginUser, this));
     Rest::Routes::Post(r, RoutingConsts::create_microblog, Rest::Routes::bind(&RequestHandler::CreateMicroBlog, this));
-    Rest::Routes::Get(r, RoutingConsts::get_my_blogs, Rest::Routes::bind(&RequestHandler::GetMyBlogs, this));
+    Rest::Routes::Post(r, RoutingConsts::get_my_blogs, Rest::Routes::bind(&RequestHandler::GetMyBlogs, this));
     Rest::Routes::Post(r, RoutingConsts::add_post, Rest::Routes::bind(&RequestHandler::AddPost, this));
-    Rest::Routes::Get(r, RoutingConsts::get_posts_by_id, Rest::Routes::bind(&RequestHandler::GetPostsByBlog, this));
-    
+    Rest::Routes::Post(r, RoutingConsts::get_posts_by_id, Rest::Routes::bind(&RequestHandler::GetPostsByBlog, this));
+    std::cout << "Done\n";
 
 }

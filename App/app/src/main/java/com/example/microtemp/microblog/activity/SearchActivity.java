@@ -2,6 +2,7 @@ package com.example.microtemp.microblog.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import com.example.microtemp.microblog.R;
 
 public class SearchActivity extends AppCompatActivity {
 

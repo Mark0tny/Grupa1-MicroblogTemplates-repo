@@ -11,16 +11,16 @@
 
 namespace RoutingConsts
 {
-    constexpr auto create_user_route = "/email/:e/nick/:n/haslo/:h";
-    constexpr auto login_user = "/email/:e/haslo/:h";
-    constexpr auto create_microblog = "/create/microblog/:name/author/:id/private/:p";
-    constexpr auto update_user = "/email/:e/nick/:n/haslo/:h";
-    constexpr auto follow_blog = "/userid/:uid/blogid/:bid";
-    constexpr auto follow_user = "/follower/:followerid/followed/:followedid";
-    constexpr auto search = "/searchfor/:sf/searchby/:sb/keyword/:k/orderby/:ob";
-    constexpr auto get_my_blogs = "/getmymicroblogs/:id";
-    constexpr auto get_posts_by_id = "/getposts/:blogid";
-    constexpr auto add_post = "/addpost/microblog/:id/author/:a/title/:t/content/:c";
+    constexpr auto create_user_route = "/createuser";
+    constexpr auto login_user = "/login";
+    constexpr auto create_microblog = "/createmicroblog";
+    constexpr auto update_user = "/updateuser";
+    constexpr auto follow_blog = "/followblog";
+    constexpr auto follow_user = "/followuser";
+    constexpr auto search = "/search";
+    constexpr auto get_my_blogs = "/getmymicroblogs";
+    constexpr auto get_posts_by_id = "/getposts";
+    constexpr auto add_post = "/addpost";
 }
 
 

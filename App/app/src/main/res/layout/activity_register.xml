@@ -39,6 +39,7 @@
                     android:id="@+id/email_register"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:completionHint="@string/mail_register"
                     android:hint="@string/mail_register"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
@@ -50,16 +51,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <EditText
-                android:id="@+id/nickname_register"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/nickname_register"
-                android:imeActionId="6"
-                android:imeOptions="actionUnspecified"
-                android:inputType="textPassword"
-                android:maxLines="1"
-                android:singleLine="true" />
+                <EditText
+                    android:id="@+id/nickname_register"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/nickname_register"
+                    android:imeActionId="6"
+                    android:imeOptions="actionUnspecified"
+                    android:inputType="text|textPersonName"
+                    android:maxLines="1"
+                    android:singleLine="true" />
 
     </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout

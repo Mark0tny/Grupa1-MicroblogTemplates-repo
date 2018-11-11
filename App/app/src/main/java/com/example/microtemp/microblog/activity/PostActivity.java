@@ -7,6 +7,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.microtemp.microblog.R;
 
@@ -29,6 +30,14 @@ public class PostActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        TextView txtViewResponeId = (TextView) findViewById(R.id.responseID);
+        TextView txtViewResponeUsername = (TextView) findViewById(R.id.responseUsername);
+        Intent intent = getIntent();
+        String data = intent.getStringExtra("response");
+        String[] response = data.split(":");
+        txtViewResponeId.setText(response[0]);
+        txtViewResponeUsername.setText(response[1]);
     }
 
 }

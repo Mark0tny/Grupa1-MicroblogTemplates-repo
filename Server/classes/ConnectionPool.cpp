@@ -50,6 +50,7 @@ void ConnectionPool::mapSetup()
     queries.emplace(std::make_pair(get_my_microblogs, get_my_microblogs_query));
     queries.emplace(std::make_pair(add_post, add_post_query));
     queries.emplace(std::make_pair(get_posts_by_id, get_posts_by_id_query));
+    queries.emplace(std::make_pair(add_comment, add_comment_query));
     std::cout << "Done\n";
 }
 

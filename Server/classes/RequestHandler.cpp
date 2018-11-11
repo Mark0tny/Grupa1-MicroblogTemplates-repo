@@ -109,7 +109,7 @@ void RequestHandler::GetMyBlogs(const Rest::Request& rq, Http::ResponseWriter rw
             stream << json_array[i].dump().c_str();
             std::cout << json_array[i].dump() << '\n';
         }
-
+    
         stream.ends();
     }
     else 
@@ -119,7 +119,6 @@ void RequestHandler::GetMyBlogs(const Rest::Request& rq, Http::ResponseWriter rw
 
 void RequestHandler::GetPostsByBlog(const Rest::Request& rq, Http::ResponseWriter rw)
 {
-    //auto id = rq.param(":blogid").as<unsigned long>();
     json blog_id = json::parse(rq.body());
     auto dumper = id_dumper_t(blog_id);
     std::cout << "Fetching posts\n for id:" << dumper("id") << "\n";
@@ -160,19 +159,36 @@ void RequestHandler::AddPost(const pr::Request& rq, ph::ResponseWriter rw)
         rw.send(Http::Code::Bad_Request, "Not Able To Add Post");
     else
         rw.send(Http::Code::Service_Unavailable, "No Available Connection");
-
-
 }
+
+void RequestHandler::AddComment(const pr::Request& rq, ph::ResponseWriter rw)
+{
+    json comment_data = json::parse(rq.body());
+    auto str_dumper = string_dumper_t(comment_data);
+    auto id_dumper = id_dumper_t(comment_data);
+
+    auto result = pool.executeQuery(QueriesConsts::add_comment, id_dumper("post_id"), str_dumper("content"), id_dumper("author"));
+    if(result.has_value() && result->size() > 0)
+        rw.send(Http::Code::Ok, "Comment Added");
+    else if(result.has_value())
+        rw.send(Http::Code::Bad_Request, "Not Able To Add Comment");
+    else
+        rw.send(Http::Code::Service_Unavailable, "No Available Connection");
+}
+
+
 
 void RequestHandler::setRoutes(Rest::Router& r)
 {
-    std::cout << "Routing setup...\n";
+    std::cout << "Routing setup...";
     Rest::Routes::Post(r, RoutingConsts::create_user_route, Rest::Routes::bind(&RequestHandler::CreateUser, this));
     Rest::Routes::Post(r, RoutingConsts::login_user, Rest::Routes::bind(&RequestHandler::LoginUser, this));
     Rest::Routes::Post(r, RoutingConsts::create_microblog, Rest::Routes::bind(&RequestHandler::CreateMicroBlog, this));
     Rest::Routes::Post(r, RoutingConsts::get_my_blogs, Rest::Routes::bind(&RequestHandler::GetMyBlogs, this));
     Rest::Routes::Post(r, RoutingConsts::add_post, Rest::Routes::bind(&RequestHandler::AddPost, this));
     Rest::Routes::Post(r, RoutingConsts::get_posts_by_id, Rest::Routes::bind(&RequestHandler::GetPostsByBlog, this));
+    Rest::Routes::Post(r, RoutingConsts::add_comment, Rest::Routes::bind(&RequestHandler::AddComment, this));
+
     std::cout << "Done\n";
 
 }

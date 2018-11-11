@@ -22,6 +22,7 @@ namespace RoutingConsts
     constexpr auto get_posts_by_id = "/getposts";
     constexpr auto add_post = "/addpost";
     constexpr auto add_comment = "/addcomment";
+    constexpr auto upvote = "/upvote";
 }
 
 
@@ -43,4 +44,7 @@ namespace QueriesConsts
     constexpr auto add_post_query = "INSERT INTO post (author, title, time_created, content, id_microblog) VALUES($1, $2, current_timestamp, $3, $4) RETURNING id_post";
     constexpr auto add_comment = "add comment";
     constexpr auto add_comment_query = "INSERT INTO comments (post_id, content, author, time_created) VALUES($1, $2, $3, current_timestamp) RETURNING id_comment";
+    constexpr auto upvote = "upvote";
+    constexpr auto upvote_query = "UPDATE post SET views = views + 1 WHERE id_post = $1 RETURNING views";
 }
+

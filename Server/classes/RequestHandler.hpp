@@ -23,6 +23,7 @@ struct RequestHandler
     void GetPostsByBlog(const pr::Request& rq, ph::ResponseWriter rw);
     void AddPost(const pr::Request& rq, ph::ResponseWriter rw);
     void AddComment(const pr::Request& rq, ph::ResponseWriter rw);
+    void Upvote(const pr::Request& rq, ph::ResponseWriter rw);
     void setRoutes(pr::Router& r);
 };
 

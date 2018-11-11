@@ -176,6 +176,20 @@ void RequestHandler::AddComment(const pr::Request& rq, ph::ResponseWriter rw)
         rw.send(Http::Code::Service_Unavailable, "No Available Connection");
 }
 
+void RequestHandler::Upvote(const pr::Request& rq, ph::ResponseWriter rw)
+{
+    json upvote = json::parse(rq.body());
+    auto dumper = id_dumper_t(upvote);
+
+    auto result = pool.executeQuery(QueriesConsts::upvote, dumper("id_post"));
+    if(result.has_value() && result->size() > 0)
+        rw.send(Http::Code::Ok, "Upvoted");
+    else if(result.has_value())
+        rw.send(Http::Code::Bad_Request, "Could Not Upvote");
+    else
+        rw.send(Http::Code::Service_Unavailable, "No Available Connection");
+}
+
 
 
 void RequestHandler::setRoutes(Rest::Router& r)
@@ -188,6 +202,7 @@ void RequestHandler::setRoutes(Rest::Router& r)
     Rest::Routes::Post(r, RoutingConsts::add_post, Rest::Routes::bind(&RequestHandler::AddPost, this));
     Rest::Routes::Post(r, RoutingConsts::get_posts_by_id, Rest::Routes::bind(&RequestHandler::GetPostsByBlog, this));
     Rest::Routes::Post(r, RoutingConsts::add_comment, Rest::Routes::bind(&RequestHandler::AddComment, this));
+    Rest::Routes::Post(r, RoutingConsts::upvote, Rest::Routes::bind(&RequestHandler::Upvote, this));
 
     std::cout << "Done\n";
 

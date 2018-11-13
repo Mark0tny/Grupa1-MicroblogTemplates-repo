@@ -4,9 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.StrictMode;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -15,15 +13,24 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.example.microtemp.microblog.R;
+import com.example.microtemp.microblog.api.RetrofitClient;
+import com.example.microtemp.microblog.api.RetrofitResponse;
 
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -31,7 +38,6 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText username, email, password;
     private Button registerBtn, registerBackBtn;
     private ProgressBar progressBar;
-    private static String Url_Reg = "http://212.191.92.88:51020";
     private static final Pattern VALID_EMAIL_ADDRESS_REGEX =
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
@@ -57,26 +63,19 @@ public class RegisterActivity extends AppCompatActivity {
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    Registration();
 
-                    hideKeyboardFrom(getApplicationContext(), v);
-                    Snackbar snackbar = Snackbar.make(v, "Rejestracja powiodła się", Snackbar.LENGTH_LONG);
-                    snackbar.show();
+                Registration();
 
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-
-                            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                            startActivity(intent);
-                        }
-                    }, 2000);
+                hideKeyboardFrom(getApplicationContext(), v);
+//                    new Handler().postDelayed(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+//                            startActivity(intent);
+//                        }
+//                    }, 2000);
 
 
-                } catch (AuthFailureError authFailureError) {
-                    authFailureError.printStackTrace();
-                }
             }
         });
 
@@ -92,7 +91,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private void Registration() throws AuthFailureError {
+    private void Registration() {
 
         final String email = this.email.getText().toString().trim();
         final String nick = this.username.getText().toString().trim();
@@ -101,14 +100,14 @@ public class RegisterActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(nick)) {
             username.setError("Please enter username");
             username.requestFocus();
-            return ;
+            return;
         }
         if (TextUtils.isEmpty(email)) {
             this.email.setError("Please enter email");
             this.email.requestFocus();
             return;
         }
-        if (validateEmail(email)) {
+        if (!validateEmail(email)) {
             this.email.setError("Please enter valid email");
             this.email.requestFocus();
             return;
@@ -119,24 +118,31 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
+        retrofit2.Call<RetrofitResponse> call = RetrofitClient
+                .getmInstance()
+                .getAPI()
+                .createUser(email, nick, password);
 
-        StringBuilder request = new StringBuilder(Url_Reg);
-        request.append("/email/" + email + "/nick/" + nick + "/haslo/" + password);
-        try {
-            URL url = new URL(request.toString());
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("POST");
-            con.setDoOutput(true);
-            OutputStream os = con.getOutputStream();
-            os.flush();
-            os.close();
+       call.enqueue(new Callback<RetrofitResponse>() {
+           @Override
+           public void onResponse(Call<RetrofitResponse> call, Response<RetrofitResponse> response) {
 
+               if(response.code() == 200){
+                   RetrofitResponse retrofitResponse = response.body();
+                   Toast.makeText(getApplicationContext(),retrofitResponse.getMsg(),Toast.LENGTH_LONG).show();
+               }else if(response.code()== 400){
+                   Toast.makeText(getApplicationContext(),"User already exist",Toast.LENGTH_LONG).show();
+               }
+           }
 
-            Log.d("RESPONSE", con.getResponseMessage());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        }
+           @Override
+           public void onFailure(Call<RetrofitResponse> call, Throwable t) {
+
+           }
+       });
+
+    }
+
 
     public static void hideKeyboardFrom(Context context, View view) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
@@ -144,7 +150,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public static boolean validateEmail(String emailStr) {
-        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(emailStr);
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
         return matcher.find();
     }
 }

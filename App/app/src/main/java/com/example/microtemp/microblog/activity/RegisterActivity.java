@@ -126,12 +126,20 @@ public class RegisterActivity extends AppCompatActivity {
        call.enqueue(new Callback<RetrofitResponse>() {
            @Override
            public void onResponse(Call<RetrofitResponse> call, Response<RetrofitResponse> response) {
-
+               RetrofitResponse retrofitResponse;
                if(response.code() == 200){
-                   RetrofitResponse retrofitResponse = response.body();
+                   retrofitResponse = response.body();
                    Toast.makeText(getApplicationContext(),retrofitResponse.getMsg(),Toast.LENGTH_LONG).show();
                }else if(response.code()== 400){
                    Toast.makeText(getApplicationContext(),"User already exist",Toast.LENGTH_LONG).show();
+               }else{
+                   try {
+                       String errorBody = response.errorBody().string();
+                       Toast.makeText(getApplicationContext(),errorBody,Toast.LENGTH_LONG).show();
+                   } catch (IOException e) {
+                       e.printStackTrace();
+                   }
+
                }
            }
 

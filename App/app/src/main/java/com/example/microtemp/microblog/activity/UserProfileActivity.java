@@ -46,28 +46,21 @@ public class UserProfileActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-        session = new SessionManager(getApplicationContext());
 
         recyclerView = (RecyclerView) findViewById(R.id.microblog_recyclerview);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         microblogList = new ArrayList<>();
 
-        session.checkLogin();
-        HashMap<String, String> user = session.getUserDetails();
 
-        String name = user.get(SessionManager.KEY_NAME);
-        String email = user.get(SessionManager.KEY_EMAIL);
+
 
         TextView txtViewResponeId = (TextView) findViewById(R.id.responseID);
         TextView txtViewResponeUsername = (TextView) findViewById(R.id.responseUsername);
         Intent intent = getIntent();
         String data = intent.getStringExtra("response");
         String[] response = data.split(":");
-       /* txtViewResponeId.setText(response[0]);
-        txtViewResponeUsername.setText(response[1]);*/
-        txtViewResponeId.setText(name);
-        txtViewResponeUsername.setText(email);
+
 
 
         URL url = null;
@@ -114,7 +107,6 @@ public class UserProfileActivity extends AppCompatActivity {
         fab.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                session.logoutUser();
                 finish();
                 return false;
             }

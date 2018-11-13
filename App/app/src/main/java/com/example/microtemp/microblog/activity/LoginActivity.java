@@ -88,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
                 .getmInstance()
                 .getAPI()
                 .login(email, password);
-        Toast.makeText(getApplicationContext(), call.request().body().toString(), Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), call.request().toString(), Toast.LENGTH_LONG).show();
 
         call.enqueue(new Callback<LoginResponse>() {
             @Override

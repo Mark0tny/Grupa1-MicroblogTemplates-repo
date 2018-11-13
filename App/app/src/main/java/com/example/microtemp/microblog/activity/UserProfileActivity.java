@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.example.microtemp.microblog.R;
 import com.example.microtemp.microblog.ui.ListItemMicroblog;
 import com.example.microtemp.microblog.ui.MicroblogRecyclerViewAdapter;
-import com.example.microtemp.microblog.ui.SessionManager;
+import com.example.microtemp.microblog.api.SessionManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -2,72 +2,65 @@ package com.example.microtemp.microblog.api;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 
-import com.example.microtemp.microblog.activity.LoginActivity;
-
-import java.util.HashMap;
+import com.example.microtemp.microblog.model.User;
 
 public class SessionManager {
 
-    SharedPreferences pref;
-    Editor editor;
-    Context _context;
+    private static SessionManager pref;
+    private Context context;
     int PRIVATE_MODE = 0;
 
-    public static final String PREF_NAME = "AndroidHivePref";
+    public static final String PREF_NAME = "UserPref";
     public static final String IS_LOGIN = "IsLoggedIn";
     public static final String KEY_NAME = "name";
     public static final String KEY_EMAIL = "email";
 
-    public SessionManager(Context context) {
-        this._context = context;
-        pref = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
-        editor = pref.edit();
+    private SessionManager(Context context) {
+        this.context = context;
     }
 
-    public void createLoginSession(String name, String email) {
-        editor.putBoolean(IS_LOGIN, true);
-        editor.putString(KEY_NAME, name);
-        editor.putString(KEY_EMAIL, email);
-        editor.commit();
-    }
-
-    public void checkLogin() {
-
-        if (!this.isLoggedIn()) {
-            Intent i = new Intent(_context, LoginActivity.class);
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-
-            _context.startActivity(i);
+    public static synchronized SessionManager getInstance(Context context) {
+        if (pref == null) {
+            pref = new SessionManager(context);
         }
-
+        return pref;
     }
 
-    public HashMap<String, String> getUserDetails() {
-        HashMap<String, String> user = new HashMap<String, String>();
-        user.put(KEY_NAME, pref.getString(KEY_NAME, null));
-        user.put(KEY_EMAIL, pref.getString(KEY_EMAIL, null));
+    public void saveUser(User user) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREF_NAME, context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        return user;
+        editor.putInt("id", user.getId());
+        editor.putString("email", user.getEmail());
+        editor.putString("username", user.getUsername());
+
+        editor.apply();
+
     }
-
-    public void logoutUser() {
-
-        editor.clear();
-        editor.commit();
-        Intent i = new Intent(_context, LoginActivity.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        _context.startActivity(i);
-    }
-
 
     public boolean isLoggedIn() {
-        return pref.getBoolean(IS_LOGIN, false);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREF_NAME, context.MODE_PRIVATE);
+        return sharedPreferences.getInt("id", -1) != -1;
     }
+
+    public User getUser() {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREF_NAME, context.MODE_PRIVATE);
+        return new User(
+                sharedPreferences.getInt("id", -1),
+                sharedPreferences.getString("email", null),
+                sharedPreferences.getString("username", null),
+                sharedPreferences.getString("password", null), null, null, null
+        );
+    }
+
+    //logout
+    public void clear() {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREF_NAME, context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+    }
+
 }

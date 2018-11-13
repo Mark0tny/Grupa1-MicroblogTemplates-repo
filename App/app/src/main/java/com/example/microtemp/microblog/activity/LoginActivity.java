@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.microtemp.microblog.R;
 import com.example.microtemp.microblog.api.LoginResponse;
@@ -87,6 +88,7 @@ public class LoginActivity extends AppCompatActivity {
                 .getmInstance()
                 .getAPI()
                 .login(email, password);
+        Toast.makeText(getApplicationContext(), call.request().body().toString(), Toast.LENGTH_LONG).show();
 
         call.enqueue(new Callback<LoginResponse>() {
             @Override
@@ -95,7 +97,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (response != null) {
                     LoginResponse loginResponse = response.body();
                     Log.d("RESPONSE CODE", Integer.toString(response.code()));
-                    // Toast.makeText(getApplicationContext(), loginResponse.getMsg(), Toast.LENGTH_LONG).show();
+                   //Toast.makeText(getApplicationContext(), loginResponse.getMsg(), Toast.LENGTH_LONG).show();
                 } else {
                     //Toast.makeText(getApplicationContext(), response.code(), Toast.LENGTH_LONG).show();
                 }

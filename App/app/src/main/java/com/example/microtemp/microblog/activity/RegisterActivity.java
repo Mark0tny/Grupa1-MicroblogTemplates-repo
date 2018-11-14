@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -17,17 +18,11 @@ import android.widget.Toast;
 
 import com.example.microtemp.microblog.R;
 import com.example.microtemp.microblog.api.RetrofitClient;
-import com.example.microtemp.microblog.api.RetrofitResponse;
+import com.google.gson.JsonObject;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,6 +33,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText username, email, password;
     private Button registerBtn, registerBackBtn;
     private ProgressBar progressBar;
+    boolean regSucces = false;
     private static final Pattern VALID_EMAIL_ADDRESS_REGEX =
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
@@ -63,21 +59,13 @@ public class RegisterActivity extends AppCompatActivity {
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Registration();
-
                 hideKeyboardFrom(getApplicationContext(), v);
-//                    new Handler().postDelayed(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-//                            startActivity(intent);
-//                        }
-//                    }, 2000);
 
 
             }
         });
+
 
         registerBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,12 +78,19 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
-
     private void Registration() {
+
+        progressBar.setVisibility(View.VISIBLE);
 
         final String email = this.email.getText().toString().trim();
         final String nick = this.username.getText().toString().trim();
         final String password = this.password.getText().toString().trim();
+
+        JsonObject jsonUser = new JsonObject();
+        jsonUser.addProperty("username", nick);
+        jsonUser.addProperty("email", email);
+        jsonUser.addProperty("password", password);
+        Log.d("JSON BODY", jsonUser.toString());
 
         if (TextUtils.isEmpty(nick)) {
             username.setError("Please enter username");
@@ -118,39 +113,34 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        retrofit2.Call<RetrofitResponse> call = RetrofitClient
+        retrofit2.Call<JsonObject> call = RetrofitClient
                 .getmInstance()
                 .getAPI()
-                .createUser(email, nick, password);
+                .createUser(jsonUser);
 
-       call.enqueue(new Callback<RetrofitResponse>() {
-           @Override
-           public void onResponse(Call<RetrofitResponse> call, Response<RetrofitResponse> response) {
-               RetrofitResponse retrofitResponse;
-               if(response.code() == 200){
-                   retrofitResponse = response.body();
-                   Toast.makeText(getApplicationContext(),retrofitResponse.getMsg(),Toast.LENGTH_LONG).show();
-               }else if(response.code()== 400){
-                   Toast.makeText(getApplicationContext(),"User already exist",Toast.LENGTH_LONG).show();
-               }else{
-                   try {
-                       String errorBody = response.errorBody().string();
-                       Toast.makeText(getApplicationContext(),errorBody,Toast.LENGTH_LONG).show();
-                   } catch (IOException e) {
-                       e.printStackTrace();
-                   }
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    if (response.code() == 200) {
+                        Toast.makeText(getApplicationContext(), "Registration SUCCESS", Toast.LENGTH_LONG).show();
+                        regSucces = true;
+                        nextActivity();
+                    }
+                } else if (response.code() == 400) {
+                    Toast.makeText(getApplicationContext(), "User Already Exists", Toast.LENGTH_LONG).show();
+                    regSucces = false;
+                    progressBar.setVisibility(View.INVISIBLE);
+                }
+            }
 
-               }
-           }
-
-           @Override
-           public void onFailure(Call<RetrofitResponse> call, Throwable t) {
-
-           }
-       });
-
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                Log.d("FAILURE 400", t.getMessage());
+            }
+        });
     }
-
 
     public static void hideKeyboardFrom(Context context, View view) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
@@ -161,4 +151,18 @@ public class RegisterActivity extends AppCompatActivity {
         Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
         return matcher.find();
     }
+
+    public void nextActivity(){
+        if(regSucces) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    progressBar.setVisibility(View.INVISIBLE);
+                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                }
+            }, 2000);
+        }
+    }
+
 }

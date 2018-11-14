@@ -14,8 +14,7 @@ public interface API {
     );
 
     @POST("/login")
-    Call<LoginResponse> login(
-            @Field("email") String email,
-            @Field("password") String password
+    Call<JsonObject> login(
+            @Body JsonObject jsonUser
     );
 }

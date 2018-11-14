@@ -27,13 +27,6 @@
                 android:layout_weight="1"
                 app:srcCompat="@mipmap/ic_launcher"
                 tools:srcCompat="@tools:sample/avatars" />
-
-            <TextView
-                android:id="@+id/responseID"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/fab_margin" />
-
             <TextView
                 android:id="@+id/responseUsername"
                 android:layout_width="match_parent"

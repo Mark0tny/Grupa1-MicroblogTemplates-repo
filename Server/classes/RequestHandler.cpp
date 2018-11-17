@@ -81,7 +81,7 @@ void RequestHandler::CreateMicroBlog(const Rest::Request& rq, Http::ResponseWrit
     auto dumper = string_dumper_t(microblog_data);
     auto iddumper = id_dumper_t(microblog_data);
     auto result = pool.executeQuery(QueriesConsts::create_microblog, dumper("title"), 
-                                    iddumper("id"), dumper("private") != "private" );
+                                    iddumper("id"),dumper("tags"), dumper("private") != "private" );
 
     if(result.has_value() && result->size() == 1)
     {
@@ -150,8 +150,8 @@ void RequestHandler::AddPost(const pr::Request& rq, ph::ResponseWriter rw)
     auto str_dumper = string_dumper_t(post_data);
     auto iddumper = id_dumper_t(post_data);
 
-    auto result = pool.executeQuery(QueriesConsts::add_post, iddumper("post_id"), str_dumper("title"), 
-                                    str_dumper("content"), iddumper("author_id"));
+    auto result = pool.executeQuery(QueriesConsts::add_post,iddumper("author_id"), str_dumper("title"), 
+                                    str_dumper("content"), iddumper("blog_id"), str_dumper("tags"));
 
     if(result.has_value() && result->size() > 0)
         rw.send(Http::Code::Ok, "Post Added");

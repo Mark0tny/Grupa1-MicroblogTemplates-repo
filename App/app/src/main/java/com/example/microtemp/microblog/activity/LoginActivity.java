@@ -1,7 +1,6 @@
 package com.example.microtemp.microblog.activity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
@@ -19,7 +18,6 @@ import com.example.microtemp.microblog.api.RetrofitClient;
 import com.example.microtemp.microblog.api.SessionManager;
 import com.example.microtemp.microblog.model.User;
 import com.google.gson.JsonObject;
-
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -49,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
-        progressBar =findViewById(R.id.login_progress);
+        progressBar = findViewById(R.id.login_progress);
 
         loginBtn = findViewById(R.id.sign_in_button);
         loginBtn.setOnClickListener(new View.OnClickListener() {
@@ -110,17 +108,17 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
                     if (response.code() == 200) {
-                            Log.d("Response", response.body().toString());
+                        Log.d("Response", response.body().toString());
                         try {
                             JSONObject jsonObject = new JSONObject(response.body().toString());
-                            String id_user = jsonObject.getString("id_user");
-                            String username = jsonObject.getString("username");
+                            String id_user = jsonObject.getString("id_user").replace('"', ' ');
+                            String username = jsonObject.getString("username").replace('"', ' ');
                             User user = new User();
                             user.setId(Integer.parseInt(id_user));
                             user.setUsername(username);
                             user.setPassword(password);
                             SessionManager.getInstance(LoginActivity.this).saveUser(user);
-
+                            Log.d("PREFERENCES VALUE", user.getUsername() + "ID: " + user.getId());
                             nextActivity();
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -136,6 +134,7 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "ERROR", Toast.LENGTH_LONG).show();
                 }
             }
+
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
 
@@ -144,26 +143,26 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
-        if (SessionManager.getInstance(this).isLoggedIn()){
+        if (SessionManager.getInstance(this).isLoggedIn()) {
             Intent intent = new Intent(LoginActivity.this, UserProfileActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
     }
 
-    public void nextActivity(){
+    public void nextActivity() {
 
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    progressBar.setVisibility(View.INVISIBLE);
-                    Intent intent = new Intent(LoginActivity.this, UserProfileActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
-                }
-            }, 1000);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progressBar.setVisibility(View.INVISIBLE);
+                Intent intent = new Intent(LoginActivity.this, UserProfileActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }
+        }, 1000);
     }
 
 

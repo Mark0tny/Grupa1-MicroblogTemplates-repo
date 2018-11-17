@@ -11,22 +11,12 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.microtemp.microblog.R;
+import com.example.microtemp.microblog.api.SessionManager;
 import com.example.microtemp.microblog.model.User;
 import com.example.microtemp.microblog.ui.ListItemMicroblog;
 import com.example.microtemp.microblog.ui.MicroblogRecyclerViewAdapter;
-import com.example.microtemp.microblog.api.SessionManager;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class UserProfileActivity extends AppCompatActivity {
@@ -53,7 +43,7 @@ public class UserProfileActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         TextView txtViewResponeUsername = (TextView) findViewById(R.id.responseUsername);
-        txtViewResponeUsername.setText("Witaj " +user.getEmail());
+        txtViewResponeUsername.setText("Witaj " + user.getEmail());
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);

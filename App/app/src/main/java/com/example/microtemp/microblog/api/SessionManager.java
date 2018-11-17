@@ -12,6 +12,7 @@ public class SessionManager {
     private Context context;
 
     public static final String PREF_NAME = "UserPref";
+
     private SessionManager(Context context) {
         this.context = context;
     }
@@ -28,7 +29,8 @@ public class SessionManager {
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.putInt("id_user", user.getId());
-        editor.putString("login", user.getEmail());
+        editor.putString("email", user.getEmail());
+        editor.putString("username", user.getUsername());
         editor.putString("password", user.getPassword());
 
         editor.apply();
@@ -43,8 +45,9 @@ public class SessionManager {
     public User getUser() {
         SharedPreferences sharedPreferences = context.getSharedPreferences(PREF_NAME, context.MODE_PRIVATE);
         return new User(
-                sharedPreferences.getInt("id_user", -1),null,
-                sharedPreferences.getString("login", null),
+                sharedPreferences.getInt("id_user", -1),
+                sharedPreferences.getString("email", null),
+                sharedPreferences.getString("username", null),
                 sharedPreferences.getString("password", null), null, null, null
         );
     }

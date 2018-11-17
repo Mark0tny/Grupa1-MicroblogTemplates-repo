@@ -37,8 +37,8 @@
 
 
     <string-array name="privacy">
-        <item>Publiczny</item>
-        <item>Prywatny</item>
+        <item>Public</item>
+        <item>Private</item>
     </string-array>>
 
 </resources>

@@ -2,6 +2,7 @@ package com.example.microtemp.microblog.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -12,11 +13,16 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.microtemp.microblog.R;
-import com.example.microtemp.microblog.model.Post;
+import com.example.microtemp.microblog.api.RetrofitClient;
+import com.example.microtemp.microblog.api.SessionManager;
+import com.example.microtemp.microblog.model.User;
+import com.google.gson.JsonObject;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CreateMicroblogActivity extends AppCompatActivity {
 
@@ -34,8 +40,7 @@ public class CreateMicroblogActivity extends AppCompatActivity {
         tags = findViewById(R.id.edit_tag);
         create = findViewById(R.id.create_microblog);
         spinner = findViewById(R.id.privacy_spinner);
-
-        ArrayAdapter<String> privacyAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,getResources().getStringArray(R.array.privacy));
+        ArrayAdapter<String> privacyAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.privacy));
         privacyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(privacyAdapter);
 
@@ -47,42 +52,52 @@ public class CreateMicroblogActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(CreateMicroblogActivity.this, UserProfileActivity.class);
+                        startActivity(intent);
+                    }
+                }, 1000);
             }
         });
     }
 
-
     private void createMicroBlog() throws IOException {
-
+        User user = SessionManager.getInstance(this).getUser();
         final String title = this.title.getText().toString().trim();
         final String tags = this.tags.getText().toString().trim();
-        StringBuilder request = new StringBuilder("http://212.191.92.88:51020");
-        request.append("/create/microblog/" + title + "/author/" + 15 + "/private/" + "public");
-        URL obj = new URL(request.toString());
-        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+        final String privacy = this.spinner.getSelectedItem().toString().toLowerCase().trim();
 
-        try {
-            con.setRequestMethod("POST");
-            int responseCode = con.getResponseCode();
-            Log.d("ResponseCode: ", Integer.toString(responseCode));
-            if (responseCode == HttpURLConnection.HTTP_OK) {
+        JsonObject jsonMicroblog = new JsonObject();
+        jsonMicroblog.addProperty("title", title);
+        jsonMicroblog.addProperty("id", user.getId());
+        jsonMicroblog.addProperty("tags", tags);
+        jsonMicroblog.addProperty("private", privacy);
+        Log.d("JSON BODY", jsonMicroblog.toString());
 
-                String response = con.getResponseMessage();
-
-                Toast.makeText(getApplicationContext(), "Blog Created!", Toast.LENGTH_SHORT).show();
-
-
-            } else {
-                Toast.makeText(getApplicationContext(), "Login failed", Toast.LENGTH_SHORT).show();
+        retrofit2.Call<JsonObject> call = RetrofitClient
+                .getmInstance()
+                .getAPI()
+                .createmicroblog(jsonMicroblog);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(getApplicationContext(), "Microblog created", Toast.LENGTH_LONG).show();
+                    Log.d("GOOD", Integer.toString(response.code()));
+                } else {
+                    Toast.makeText(getApplicationContext(), Integer.toString(response.code()), Toast.LENGTH_LONG).show();
+                    Log.d("ERROR", Integer.toString(response.code()));
+                }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+
+            }
+        });
     }
 
-    public void CreateMicroblog(View view) {
-        Intent intent = new Intent(CreateMicroblogActivity.this, Post.class);
-        startActivity(intent);
-    }
 
 }

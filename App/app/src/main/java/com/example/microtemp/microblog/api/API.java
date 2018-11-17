@@ -1,9 +1,9 @@
 package com.example.microtemp.microblog.api;
 
 import com.google.gson.JsonObject;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.Field;
 import retrofit2.http.POST;
 
 public interface API {
@@ -16,5 +16,10 @@ public interface API {
     @POST("/login")
     Call<JsonObject> login(
             @Body JsonObject jsonUser
+    );
+
+    @POST("/createmicroblog")
+    Call<JsonObject> createmicroblog(
+            @Body JsonObject jsonMicrolog
     );
 }

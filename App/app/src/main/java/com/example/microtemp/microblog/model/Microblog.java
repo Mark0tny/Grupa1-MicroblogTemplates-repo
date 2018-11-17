@@ -33,7 +33,7 @@ public class Microblog {
     private List<User> followers;
     @Getter(value = AccessLevel.PUBLIC)
     @Setter(value = AccessLevel.PUBLIC)
-    private boolean privacy;
+    private String privacy;
 
 
 }

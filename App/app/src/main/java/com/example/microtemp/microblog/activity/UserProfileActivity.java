@@ -39,6 +39,7 @@ public class UserProfileActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         microblogList = new ArrayList<>();
 
+
         adapter = new MicroblogRecyclerViewAdapter(microblogList, this);
         recyclerView.setAdapter(adapter);
 

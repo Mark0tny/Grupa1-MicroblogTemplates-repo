@@ -8,7 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
 
-        
+
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -37,5 +37,7 @@
             app:backgroundTint="@color/colorPrimaryDark"
             app:srcCompat="@android:drawable/ic_input_add" />
     </android.support.design.widget.CoordinatorLayout>
-    <include layout="@layout/activity_hamburger_menu" />
+
+    <!--<include layout="@layout/activity_hamburger_menu" />-->
+
 </android.support.v4.widget.DrawerLayout>

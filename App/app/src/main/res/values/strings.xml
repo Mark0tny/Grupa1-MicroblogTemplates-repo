@@ -35,4 +35,10 @@
 
     <!-- Strings related to Settings -->
 
+
+    <string-array name="privacy">
+        <item>Publiczny</item>
+        <item>Prywatny</item>
+    </string-array>>
+
 </resources>

@@ -37,7 +37,7 @@ namespace QueriesConsts
     constexpr auto create_microblog = "create microblog";
     constexpr auto create_microblog_query = "INSERT INTO microblog (name, author, tags, private) VALUES($1, $2, $3, $4) RETURNING id_microblog";
     constexpr auto get_my_microblogs = "get users microblogs";
-    constexpr auto get_my_microblogs_query = "WITH T AS (SELECT id_microblog, name, author, private FROM microblog WHERE author = $1) SELECT json_agg(T) FROM T";
+    constexpr auto get_my_microblogs_query = "WITH T AS (SELECT id_microblog, name, author, tags, private FROM microblog WHERE author = $1) SELECT json_agg(T) FROM T";
     constexpr auto get_posts_by_id = "get posts by id";
     constexpr auto get_posts_by_id_query ="WITH T AS (SELECT id_post, author, title, content  FROM post p join users u on p.author = u.id_user where p.author = $1 ORDER BY time_created ASC) SELECT json_agg(T) FROM T";
     constexpr auto add_post = "add post";

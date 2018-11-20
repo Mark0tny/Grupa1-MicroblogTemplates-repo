@@ -101,16 +101,10 @@ void RequestHandler::GetMyBlogs(const Rest::Request& rq, Http::ResponseWriter rw
     if(result.has_value() && result->size() > 0)
     {
         rw.headers().add<Http::Header::ContentType>(MIME(Application, Json));
-        auto stream = rw.stream(Http::Code::Ok);
 
         json json_array = json::parse(result->at(0).at(0).as<std::string>());
-        for(int i=0; i < json_array.size(); ++i)
-        {
-            stream << json_array[i].dump().c_str();
-            std::cout << json_array[i].dump() << '\n';
-        }
-    
-        stream.ends();
+        
+        rw.send(Http::Code::Ok, json_array.dump().c_str());
     }
     else 
         rw.send(Http::Code::Service_Unavailable, "No Available Connection");
@@ -127,16 +121,10 @@ void RequestHandler::GetPostsByBlog(const Rest::Request& rq, Http::ResponseWrite
     if(result.has_value() && result->size() > 0)
     {
         rw.headers().add<Http::Header::ContentType>(MIME(Application, Json));
-        auto stream = rw.stream(Http::Code::Ok);
 
         json json_array = json::parse(result->at(0).at(0).as<std::string>());
-        for(int i=0; i < json_array.size(); ++i)
-        {
-            stream << json_array[i].dump().c_str();
-            std::cout << json_array[i].dump() << '\n';
-        }
 
-        stream.ends();
+        rw.send(Http::Code::Ok, json_array.dump().c_str());
     }
     else 
         rw.send(Http::Code::Service_Unavailable, "No Available Connection");

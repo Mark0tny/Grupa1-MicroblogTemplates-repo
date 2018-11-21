@@ -15,10 +15,10 @@ import java.util.List;
 public class MicroblogRecyclerViewAdapter extends RecyclerView.Adapter<MicroblogRecyclerViewAdapter.ViewHolder> {
 
 
-    private List<ListItemMicroblog> listItemMicroblogList;
+    private List<GetMicroblogResponse> listItemMicroblogList;
     private Context context;
 
-    public MicroblogRecyclerViewAdapter(List<ListItemMicroblog> listItemMicroblogList, Context context) {
+    public MicroblogRecyclerViewAdapter(List<GetMicroblogResponse> listItemMicroblogList, Context context) {
         this.listItemMicroblogList = listItemMicroblogList;
         this.context = context;
     }
@@ -26,17 +26,17 @@ public class MicroblogRecyclerViewAdapter extends RecyclerView.Adapter<Microblog
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_microblog,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_microblog, parent, false);
 
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ListItemMicroblog listItemMicroblog = listItemMicroblogList.get(position);
+        GetMicroblogResponse listItemMicroblog = listItemMicroblogList.get(position);
 
-        holder.textViewAuthor.setText(listItemMicroblog.getAuthor());
-        holder.textViewTitle.setText(listItemMicroblog.getTitle());
+        holder.textViewAuthor.setText(Integer.toString(listItemMicroblog.getAuthor()));
+        holder.textViewTitle.setText(listItemMicroblog.getName());
         holder.textViewTags.setText(listItemMicroblog.getTags());
     }
 
@@ -54,9 +54,9 @@ public class MicroblogRecyclerViewAdapter extends RecyclerView.Adapter<Microblog
         public ViewHolder(View itemView) {
             super(itemView);
 
-            textViewAuthor = (TextView) itemView.findViewById(R.id.textViewAuthor);
-            textViewTitle = (TextView) itemView.findViewById(R.id.textViewTitle);
-            textViewTags = (TextView) itemView.findViewById(R.id.textViewTags);
+            textViewAuthor = itemView.findViewById(R.id.textViewAuthor);
+            textViewTitle = itemView.findViewById(R.id.textViewTitle);
+            textViewTags = itemView.findViewById(R.id.textViewTags);
         }
     }
 }

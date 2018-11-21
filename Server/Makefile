@@ -1,4 +1,4 @@
-CC=g++
+CC=g++-8
 CFLAGS = -lpistache -lpthread
 PFLAGS = -lpqxx -lpq
 

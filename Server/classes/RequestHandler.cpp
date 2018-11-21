@@ -26,7 +26,7 @@ constexpr auto id_dumper_t = [](const json& m) {
 
 void RequestHandler::CreateUser(const Rest::Request& rq, Http::ResponseWriter rw)
 {
-    json login_data = json::parse(rq.body());
+    json login_data = json::parse(std::move(rq.body()));
     auto dumper = string_dumper_t(login_data);
     std::cout << "Create user request\n";
     auto result = pool.executeQuery(QueriesConsts::find_user, dumper("email"), dumper("username"));
@@ -57,7 +57,7 @@ void RequestHandler::CreateUser(const Rest::Request& rq, Http::ResponseWriter rw
 void RequestHandler::LoginUser(const Rest::Request& rq, Http::ResponseWriter rw)
 {
 
-    json login = json::parse(rq.body());
+    json login = json::parse(std::move(rq.body()));
     auto dumper = string_dumper_t(login);
     auto result = pool.executeQuery(QueriesConsts::login_user, dumper("login"), dumper("password"));
     if(result.has_value() && result->size() == 1)
@@ -77,7 +77,7 @@ void RequestHandler::LoginUser(const Rest::Request& rq, Http::ResponseWriter rw)
 
 void RequestHandler::CreateMicroBlog(const Rest::Request& rq, Http::ResponseWriter rw)
 {
-    json microblog_data = json::parse(rq.body());
+    json microblog_data = json::parse(std::move(rq.body()));
     auto dumper = string_dumper_t(microblog_data);
     auto iddumper = id_dumper_t(microblog_data);
     auto result = pool.executeQuery(QueriesConsts::create_microblog, dumper("title"), 
@@ -94,7 +94,7 @@ void RequestHandler::CreateMicroBlog(const Rest::Request& rq, Http::ResponseWrit
 
 void RequestHandler::GetMyBlogs(const Rest::Request& rq, Http::ResponseWriter rw)
 {
-    auto id = json::parse(rq.body());
+    auto id = json::parse(std::move(rq.body()));
     auto dumper = id_dumper_t(id);
     std::cout << "Fetching microblogs\n";
     auto result = pool.executeQuery(QueriesConsts::get_my_microblogs, dumper("id"));
@@ -113,7 +113,7 @@ void RequestHandler::GetMyBlogs(const Rest::Request& rq, Http::ResponseWriter rw
 
 void RequestHandler::GetPostsByBlog(const Rest::Request& rq, Http::ResponseWriter rw)
 {
-    json blog_id = json::parse(rq.body());
+    json blog_id = json::parse(std::move(rq.body()));
     auto dumper = id_dumper_t(blog_id);
     std::cout << "Fetching posts\n for id:" << dumper("id") << "\n";
 
@@ -134,7 +134,7 @@ void RequestHandler::GetPostsByBlog(const Rest::Request& rq, Http::ResponseWrite
 
 void RequestHandler::AddPost(const pr::Request& rq, ph::ResponseWriter rw)
 {
-    json post_data = json::parse(rq.body());
+    json post_data = json::parse(std::move(rq.body()));
     auto str_dumper = string_dumper_t(post_data);
     auto iddumper = id_dumper_t(post_data);
 
@@ -151,7 +151,7 @@ void RequestHandler::AddPost(const pr::Request& rq, ph::ResponseWriter rw)
 
 void RequestHandler::AddComment(const pr::Request& rq, ph::ResponseWriter rw)
 {
-    json comment_data = json::parse(rq.body());
+    json comment_data = json::parse(std::move(rq.body()));
     auto str_dumper = string_dumper_t(comment_data);
     auto id_dumper = id_dumper_t(comment_data);
 
@@ -166,7 +166,7 @@ void RequestHandler::AddComment(const pr::Request& rq, ph::ResponseWriter rw)
 
 void RequestHandler::Upvote(const pr::Request& rq, ph::ResponseWriter rw)
 {
-    json upvote = json::parse(rq.body());
+    json upvote = json::parse(std::move(rq.body()));
     auto dumper = id_dumper_t(upvote);
 
     auto result = pool.executeQuery(QueriesConsts::upvote, dumper("id_post"));
@@ -180,7 +180,7 @@ void RequestHandler::Upvote(const pr::Request& rq, ph::ResponseWriter rw)
 
 void RequestHandler::Follow(const pr::Request& rq, ph::ResponseWriter rw)
 {
-    auto dumper = id_dumper_t(json::parse(rq.body()));
+    auto dumper = id_dumper_t(json::parse(std::move(rq.body())));
 
     auto result = pool.executeQuery(QueriesConsts::follow, dumper("userid"), dumper("blogid"));
 

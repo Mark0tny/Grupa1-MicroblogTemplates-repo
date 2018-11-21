@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -90,13 +91,29 @@ public class UserProfileActivity extends AppCompatActivity {
         });
     }
 
-    public void recyclerViewInit(List<GetMicroblogResponse> microblogList) {
+    public void recyclerViewInit(final List<GetMicroblogResponse> microblogList) {
         recyclerView = (RecyclerView) findViewById(R.id.microblog_recyclerview);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setNestedScrollingEnabled(false);
         adapter = new MicroblogRecyclerViewAdapter(microblogList, getApplicationContext());
         recyclerView.setAdapter(adapter);
+
+        recyclerView.addOnItemTouchListener(
+                new MicroblogRecyclerViewAdapter.
+                        RecyclerItemClickListener(this, recyclerView, new MicroblogRecyclerViewAdapter.RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                       
+                    }
+
+                    @Override
+                    public void onShowPress(View view, int position) {
+
+                    }
+
+                }));
+
     }
 
 }

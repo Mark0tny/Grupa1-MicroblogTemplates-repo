@@ -52,7 +52,8 @@ void ConnectionPool::mapSetup()
         {get_posts_by_id, get_posts_by_id_query},
         {add_comment, add_comment_query},
         {upvote, upvote_query},
-        {follow, follow_query}
+        {follow, follow_query},
+        {followed, followed_query}
     };
 
     std::cout << "Done\n";

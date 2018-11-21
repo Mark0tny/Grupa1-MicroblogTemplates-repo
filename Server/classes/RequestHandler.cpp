@@ -4,7 +4,7 @@
 #include <nlohmann/json.hpp>
 #include <type_traits>
 #include <algorithm>
-
+#include <utility>
 
 using namespace Pistache;
 using namespace std::literals;
@@ -192,6 +192,25 @@ void RequestHandler::Follow(const pr::Request& rq, ph::ResponseWriter rw)
         rw.send(Http::Code::Service_Unavailable, "No Available Connection");
 }
 
+void RequestHandler::Followed(const pr::Request& rq, ph::ResponseWriter rw)
+{
+    auto dumper = id_dumper_t(json::parse(std::move(rq.body())));
+
+    auto result = pool.executeQuery(QueriesConsts::followed, dumper("userid"));
+    if(result.has_value() && result->size() > 0)
+    {
+        rw.headers().add<Http::Header::ContentType>(MIME(Application, Json));
+
+        json json_array = json::parse(result->at(0).at(0).as<std::string>());
+
+        rw.send(Http::Code::Ok, json_array.dump().c_str());
+    }
+    else if(result.has_value())
+        rw.send(Http::Code::Bad_Request, "Could Not Find Followed Blogs");
+    else
+        rw.send(Http::Code::Service_Unavailable, "No Available Connection");
+
+}
 
 
 void RequestHandler::setRoutes(Rest::Router& r)
@@ -206,6 +225,8 @@ void RequestHandler::setRoutes(Rest::Router& r)
     Rest::Routes::Post(r, RoutingConsts::add_comment, Rest::Routes::bind(&RequestHandler::AddComment, this));
     Rest::Routes::Post(r, RoutingConsts::upvote, Rest::Routes::bind(&RequestHandler::Upvote, this));
     Rest::Routes::Post(r, RoutingConsts::follow, Rest::Routes::bind(&RequestHandler::Follow, this));
+    Rest::Routes::Post(r, RoutingConsts::get_followed_blogs, Rest::Routes::bind(&RequestHandler::Followed, this));
+
 
 
     std::cout << "Done\n";

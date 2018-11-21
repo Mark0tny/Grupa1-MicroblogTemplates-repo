@@ -25,6 +25,7 @@ struct RequestHandler
     void AddComment(const pr::Request& rq, ph::ResponseWriter rw);
     void Upvote(const pr::Request& rq, ph::ResponseWriter rw);
     void Follow(const pr::Request& rq, ph::ResponseWriter rw);
+    void Followed(const pr::Request& rq, ph::ResponseWriter rw);
     void setRoutes(pr::Router& r);
 };
 

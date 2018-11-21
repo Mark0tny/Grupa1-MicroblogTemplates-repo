@@ -23,6 +23,7 @@ namespace RoutingConsts
     constexpr auto add_comment = "/addcomment";
     constexpr auto upvote = "/upvote";
     constexpr auto follow = "/follow";
+    constexpr auto get_followed_blogs = "/followed";
 }
 
 
@@ -48,5 +49,7 @@ namespace QueriesConsts
     constexpr auto upvote_query = "UPDATE post SET views = views + 1 WHERE id_post = $1 RETURNING views";
     constexpr auto follow = "follow";
     constexpr auto follow_query = "INSERT INTO follow (userid, blogid) VALUES ($1, $2) RETURNING blogid";
+    constexpr auto followed = "followed";
+    constexpr auto followed_query = "WITH T AS (SELECT * FROM microblog m inner join follow f on m.id_microblog = f.blogid where f.userid = $1) SELECT json_agg(T) FROM T";
 }
 

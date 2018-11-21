@@ -15,14 +15,14 @@ namespace RoutingConsts
     constexpr auto login_user = "/login";
     constexpr auto create_microblog = "/createmicroblog";
     constexpr auto update_user = "/updateuser";
-    constexpr auto follow_blog = "/followblog";
-    constexpr auto follow_user = "/followuser";
+
     constexpr auto search = "/search";
     constexpr auto get_my_blogs = "/getmymicroblogs";
     constexpr auto get_posts_by_id = "/getposts";
     constexpr auto add_post = "/addpost";
     constexpr auto add_comment = "/addcomment";
     constexpr auto upvote = "/upvote";
+    constexpr auto follow = "/follow";
 }
 
 
@@ -41,10 +41,12 @@ namespace QueriesConsts
     constexpr auto get_posts_by_id = "get posts by id";
     constexpr auto get_posts_by_id_query ="WITH T AS (SELECT id_post, author, title, content  FROM post p join users u on p.author = u.id_user where p.author = $1 ORDER BY time_created ASC) SELECT json_agg(T) FROM T";
     constexpr auto add_post = "add post";
-    constexpr auto add_post_query = "INSERT INTO post (author, title, time_created, content, id_microblog, tags) VALUES($1, $2, current_timestamp, $3, $4, $5) RETURNING id_post";
+    constexpr auto add_post_query = "INSERT INTO post (author, title, time_created, content, id_microblog, tags, views) VALUES($1, $2, current_timestamp, $3, $4, $5, 0) RETURNING id_post";
     constexpr auto add_comment = "add comment";
     constexpr auto add_comment_query = "INSERT INTO comments (post_id, content, author, time_created) VALUES($1, $2, $3, current_timestamp) RETURNING id_comment";
     constexpr auto upvote = "upvote";
     constexpr auto upvote_query = "UPDATE post SET views = views + 1 WHERE id_post = $1 RETURNING views";
+    constexpr auto follow = "follow";
+    constexpr auto follow_query = "INSERT INTO follow (userid, blogid) VALUES ($1, $2) RETURNING blogid";
 }
 

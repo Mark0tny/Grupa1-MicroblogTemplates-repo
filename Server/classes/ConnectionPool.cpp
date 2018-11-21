@@ -27,7 +27,6 @@ std::optional<con_ptr> ConnectionPool::getConnection()
         retval.emplace(pool.front());
         pool.pop_front();  
     }
-
     return retval;
 }
 
@@ -52,9 +51,10 @@ void ConnectionPool::mapSetup()
         {add_post, add_post_query},
         {get_posts_by_id, get_posts_by_id_query},
         {add_comment, add_comment_query},
-        {upvote, upvote_query}
+        {upvote, upvote_query},
+        {follow, follow_query}
     };
-    
+
     std::cout << "Done\n";
 }
 

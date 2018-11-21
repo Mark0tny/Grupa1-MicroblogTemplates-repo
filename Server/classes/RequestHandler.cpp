@@ -178,6 +178,20 @@ void RequestHandler::Upvote(const pr::Request& rq, ph::ResponseWriter rw)
         rw.send(Http::Code::Service_Unavailable, "No Available Connection");
 }
 
+void RequestHandler::Follow(const pr::Request& rq, ph::ResponseWriter rw)
+{
+    auto dumper = id_dumper_t(json::parse(rq.body()));
+
+    auto result = pool.executeQuery(QueriesConsts::follow, dumper("userid"), dumper("blogid"));
+
+    if(result.has_value() && result->size() > 0)
+        rw.send(Http::Code::Ok, "Followed");
+    else if(result.has_value())
+        rw.send(Http::Code::Bad_Request, "Could Not Follow");
+    else
+        rw.send(Http::Code::Service_Unavailable, "No Available Connection");
+}
+
 
 
 void RequestHandler::setRoutes(Rest::Router& r)
@@ -191,6 +205,8 @@ void RequestHandler::setRoutes(Rest::Router& r)
     Rest::Routes::Post(r, RoutingConsts::get_posts_by_id, Rest::Routes::bind(&RequestHandler::GetPostsByBlog, this));
     Rest::Routes::Post(r, RoutingConsts::add_comment, Rest::Routes::bind(&RequestHandler::AddComment, this));
     Rest::Routes::Post(r, RoutingConsts::upvote, Rest::Routes::bind(&RequestHandler::Upvote, this));
+    Rest::Routes::Post(r, RoutingConsts::follow, Rest::Routes::bind(&RequestHandler::Follow, this));
+
 
     std::cout << "Done\n";
 

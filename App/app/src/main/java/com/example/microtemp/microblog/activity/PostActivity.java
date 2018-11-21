@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -20,24 +21,23 @@ public class PostActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        Intent intent = getIntent();
+        final Integer id = intent.getIntExtra("id",0);
+        final String data = intent.getStringExtra("name");
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
                 Intent intent = new Intent(PostActivity.this, CreatePostActivity.class);
+                intent.putExtra("id_microblog",id);
                 startActivity(intent);
             }
         });
 
-        TextView txtViewResponeId = (TextView) findViewById(R.id.responseID);
-        TextView txtViewResponeUsername = (TextView) findViewById(R.id.responseUsername);
-        Intent intent = getIntent();
-        String data = intent.getStringExtra("response");
-        String[] response = data.split(":");
-        txtViewResponeId.setText(response[0]);
-        txtViewResponeUsername.setText(response[1]);
+        TextView txtViewResponeUsername = findViewById(R.id.responseMicroblogName);
+
+        txtViewResponeUsername.setText(data);
     }
 
 }

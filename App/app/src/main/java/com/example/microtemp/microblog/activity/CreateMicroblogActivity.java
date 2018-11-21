@@ -40,6 +40,7 @@ public class CreateMicroblogActivity extends AppCompatActivity {
         tags = findViewById(R.id.edit_tag);
         create = findViewById(R.id.create_microblog);
         spinner = findViewById(R.id.privacy_spinner);
+
         ArrayAdapter<String> privacyAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.privacy));
         privacyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(privacyAdapter);
@@ -94,7 +95,7 @@ public class CreateMicroblogActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-
+                Log.d("ERROR",t.getMessage());
             }
         });
     }

@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,7 +48,7 @@ public class UserProfileActivity extends AppCompatActivity {
         TextView txtViewResponeUsername = (TextView) findViewById(R.id.responseUsername);
         txtViewResponeUsername.setText("Witaj " + user.getEmail());
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_profile);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,6 +83,7 @@ public class UserProfileActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "ERROR", Toast.LENGTH_LONG).show();
                 }
             }
+
             @Override
             public void onFailure(Call<List<GetMicroblogResponse>> call, Throwable t) {
                 Log.d("ERROR", t.toString());
@@ -104,7 +104,10 @@ public class UserProfileActivity extends AppCompatActivity {
                         RecyclerItemClickListener(this, recyclerView, new MicroblogRecyclerViewAdapter.RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                       
+                        Intent intent = new Intent(UserProfileActivity.this, PostActivity.class);
+                        intent.putExtra("name", microblogList.get(position).getName());
+                        intent.putExtra("id", microblogList.get(position).getIdMicroblog());
+                        startActivity(intent);
                     }
 
                     @Override

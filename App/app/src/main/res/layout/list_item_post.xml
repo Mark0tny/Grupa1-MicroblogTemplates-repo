@@ -26,6 +26,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Title"
+                    android:textColor="@color/colorPrimaryDark"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline" />
 
                 <TextView
@@ -33,13 +34,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Author"
+                    android:textColor="@color/colorPrimaryDark"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
 
                 <TextView
                     android:id="@+id/textViewTagsp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Tags" />
+                    android:text="Tags"
+                    android:textColor="@color/colorPrimaryDark"
+                    />
 
             </LinearLayout>
 
@@ -60,6 +64,7 @@
                     android:id="@+id/textViewViews"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimaryDark"
                     android:text="Views" />
             </LinearLayout>
 

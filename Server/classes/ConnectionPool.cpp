@@ -43,15 +43,18 @@ void ConnectionPool::mapSetup()
     std::cout << "Queries map setup...";
     using namespace QueriesConsts;
     queries.clear();
-    queries.emplace(std::make_pair(find_user, find_user_query));
-    queries.emplace(std::make_pair(create_user, create_user_query));
-    queries.emplace(std::make_pair(login_user, login_user_query));
-    queries.emplace(std::make_pair(create_microblog, create_microblog_query));
-    queries.emplace(std::make_pair(get_my_microblogs, get_my_microblogs_query));
-    queries.emplace(std::make_pair(add_post, add_post_query));
-    queries.emplace(std::make_pair(get_posts_by_id, get_posts_by_id_query));
-    queries.emplace(std::make_pair(add_comment, add_comment_query));
-    queries.emplace(std::make_pair(upvote, upvote_query));
+    queries = {
+        {find_user, find_user_query},
+        {create_user, create_user_query},
+        {login_user, login_user_query},
+        {create_microblog, create_microblog_query},
+        {get_my_microblogs, get_my_microblogs_query},
+        {add_post, add_post_query},
+        {get_posts_by_id, get_posts_by_id_query},
+        {add_comment, add_comment_query},
+        {upvote, upvote_query}
+    };
+    
     std::cout << "Done\n";
 }
 

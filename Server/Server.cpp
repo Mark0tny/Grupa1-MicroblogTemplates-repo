@@ -18,6 +18,8 @@ int main()
     Pistache::Http::Endpoint server(addr);
     server.init();
     server.setHandler(router.handler());
+    std::cout << "Listening\n";
     server.serve();
+
     return 0;
 }

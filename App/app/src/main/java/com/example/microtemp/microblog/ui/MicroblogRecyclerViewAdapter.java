@@ -25,11 +25,6 @@ public class MicroblogRecyclerViewAdapter extends RecyclerView.Adapter<Microblog
         this.context = context;
     }
 
-    public MicroblogRecyclerViewAdapter() {
-
-    }
-
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

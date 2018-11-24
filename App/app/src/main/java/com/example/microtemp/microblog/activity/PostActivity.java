@@ -16,6 +16,8 @@ import android.widget.Toast;
 import com.example.microtemp.microblog.R;
 import com.example.microtemp.microblog.api.RetrofitClient;
 import com.example.microtemp.microblog.api.SessionManager;
+import com.example.microtemp.microblog.model.Comment;
+import com.example.microtemp.microblog.model.Post;
 import com.example.microtemp.microblog.model.User;
 import com.example.microtemp.microblog.ui.GetMicroblogResponse;
 import com.example.microtemp.microblog.ui.GetPostResponse;
@@ -48,7 +50,7 @@ public class PostActivity extends AppCompatActivity {
 
         User user = SessionManager.getInstance(this).getUser();
         JsonObject jsonPost = new JsonObject();
-        jsonPost.addProperty("id", user.getId());
+        jsonPost.addProperty("id",id);
         loadPost(jsonPost);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -111,7 +113,8 @@ public class PostActivity extends AppCompatActivity {
                         RecyclerItemClickListener(this, recyclerView, new PostRecyclerViewAdapter.RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        Toast.makeText(getApplicationContext(), "Clicked", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(PostActivity.this, CommentActivity.class);
+                        startActivity(intent);
                     }
 
                     @Override

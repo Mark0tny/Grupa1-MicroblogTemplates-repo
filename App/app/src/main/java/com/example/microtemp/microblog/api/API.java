@@ -1,4 +1,5 @@
 package com.example.microtemp.microblog.api;
+import com.example.microtemp.microblog.model.Comment;
 import com.example.microtemp.microblog.ui.GetMicroblogResponse;
 import com.example.microtemp.microblog.ui.GetPostResponse;
 import com.google.gson.JsonObject;
@@ -41,6 +42,11 @@ public interface API {
 
     @POST("/addcomment")
     Call<JsonObject> createComment(
+            @Body JsonObject jsonComment
+    );
+
+    @POST("/getcomments")
+    Call<List<Comment>> getComments(
             @Body JsonObject jsonComment
     );
 

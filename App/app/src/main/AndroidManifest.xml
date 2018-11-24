@@ -37,7 +37,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activity.Settings" />
         <activity android:name=".activity.SettingsActivity" />
-        <activity android:name=".activity.SearchActivity"></activity>
+        <activity android:name=".activity.SearchActivity" />
+        <activity android:name=".activity.CommentActivity"></activity>
     </application>
 
 </manifest>

@@ -39,6 +39,7 @@
     <string-array name="privacy">
         <item>Public</item>
         <item>Private</item>
-    </string-array>>
+    </string-array>
+    >
 
 </resources>

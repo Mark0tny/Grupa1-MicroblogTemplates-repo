@@ -1,7 +1,6 @@
 package com.example.microtemp.microblog.ui;
 
 import android.content.Context;
-import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.GestureDetector;
@@ -9,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.microtemp.microblog.R;
@@ -31,7 +30,7 @@ public class PostRecyclerViewAdapter extends RecyclerView.Adapter<PostRecyclerVi
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_post,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_post, parent, false);
 
         return new ViewHolder(view);
     }
@@ -42,10 +41,11 @@ public class PostRecyclerViewAdapter extends RecyclerView.Adapter<PostRecyclerVi
 
         holder.textViewAuthor.setText(Integer.toString(listItemPost.getAuthor()));
         holder.textViewTitle.setText(listItemPost.getTitle());
-        holder.textViewTags.setText(listItemPost.getContent());
-        holder.textViewViews.setText("0");
-        //holder.textViewViews.setText(listItemPost.getViews());
-        /* holder.imageView.setImageIcon(R.mipmap.ic_launcher.i); */
+        // holder.textViewTags.setText(listItemPost.getTags());
+        // holder.textViewTime.setText(listItemPost.getTime());
+        holder.textViewContent.setText(listItemPost.getContent());
+        //holder.textViewLikes.setText(listItemPost.getLikes());
+        //holder.textViewComments.setText(listItemPost.Comments());
 
     }
 
@@ -57,19 +57,42 @@ public class PostRecyclerViewAdapter extends RecyclerView.Adapter<PostRecyclerVi
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView textViewAuthor;
+        public TextView textViewTime;
         public TextView textViewTitle;
         public TextView textViewTags;
-        public ImageView imageView;
-        public TextView textViewViews;
+        public TextView textViewContent;
+        public TextView textViewLikes;
+        public TextView textViewComments;
+
+        public Button buttonLike;
+        public Button buttonComments;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-            textViewAuthor = (TextView) itemView.findViewById(R.id.textViewAuthorp);
-            textViewTitle = (TextView) itemView.findViewById(R.id.textViewTitlep);
-            textViewTags = (TextView) itemView.findViewById(R.id.textViewTagsp);
-            textViewViews = (TextView) itemView.findViewById(R.id.textViewViews);
-            imageView = itemView.findViewById(R.id.image);
+            textViewAuthor = itemView.findViewById(R.id.textViewAuthorp);
+            textViewTime = itemView.findViewById(R.id.time_post);
+            textViewTitle = itemView.findViewById(R.id.textViewTitlep);
+            textViewTags = itemView.findViewById(R.id.textViewTagsp);
+            textViewContent = itemView.findViewById(R.id.text_post_content);
+            textViewLikes = itemView.findViewById(R.id.text_like_count);
+            textViewComments = itemView.findViewById(R.id.comm_count);
+            buttonLike = itemView.findViewById(R.id.addlike);
+            buttonComments = itemView.findViewById(R.id.addcomment);
+
+            buttonLike.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+
+            buttonComments.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
 
         }
     }

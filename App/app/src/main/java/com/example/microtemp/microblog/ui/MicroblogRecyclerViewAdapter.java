@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.microtemp.microblog.R;
@@ -52,6 +53,9 @@ public class MicroblogRecyclerViewAdapter extends RecyclerView.Adapter<Microblog
         public TextView textViewAuthor;
         public TextView textViewTitle;
         public TextView textViewTags;
+        public TextView textViewFollowers;
+        public Button buttonFollow;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -59,6 +63,15 @@ public class MicroblogRecyclerViewAdapter extends RecyclerView.Adapter<Microblog
             textViewAuthor = itemView.findViewById(R.id.textViewAuthor);
             textViewTitle = itemView.findViewById(R.id.textViewTitle);
             textViewTags = itemView.findViewById(R.id.textViewTags);
+            textViewFollowers = itemView.findViewById(R.id.follow_count);
+            buttonFollow =itemView.findViewById(R.id.follow_blog);
+
+            buttonFollow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    
+                }
+            });
         }
     }
 

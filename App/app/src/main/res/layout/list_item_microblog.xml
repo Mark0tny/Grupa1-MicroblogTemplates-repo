@@ -57,20 +57,23 @@
                     android:id="@+id/textFollowers"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Followers" />
+                    android:text="Followers"
+                    android:textColor="@color/colorPrimaryDark"/>
 
                 <TextView
-                    android:id="@+id/textView3"
+                    android:id="@+id/follow_count"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="TextView" />
+                    android:text="f_count"
+                    android:textColor="@color/colorPrimaryDark"/>
 
                 <Button
                     android:id="@+id/follow_blog"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Follow" />
+                    android:text="Follow"
+                    />
             </LinearLayout>
         </LinearLayout>
 

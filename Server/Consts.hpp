@@ -1,7 +1,6 @@
 #pragma once
 #include <string>
 
-
 //Code OK - 200
 //Code Bad_Request - 400
 //Code Service_Unavailable - 503
@@ -24,6 +23,7 @@ namespace RoutingConsts
     constexpr auto upvote = "/upvote";
     constexpr auto follow = "/follow";
     constexpr auto get_followed_blogs = "/followed";
+    constexpr auto get_followers = "/followers";
 }
 
 
@@ -51,5 +51,8 @@ namespace QueriesConsts
     constexpr auto follow_query = "INSERT INTO follow (userid, blogid) VALUES ($1, $2) RETURNING blogid";
     constexpr auto followed = "followed";
     constexpr auto followed_query = "WITH T AS (SELECT * FROM microblog m inner join follow f on m.id_microblog = f.blogid where f.userid = $1) SELECT json_agg(T) FROM T";
+    constexpr auto get_followers = "get_followers";
+    constexpr auto get_followers_query = "SELECT COALESCE (json_agg(t), '[]'::json) FROM (SELECT username FROM users u inner join follow f on f.userid = u.id_user where f.blogid = $1) t";
+    
+    
 }
-

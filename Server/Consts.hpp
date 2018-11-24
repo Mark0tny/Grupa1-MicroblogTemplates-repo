@@ -40,7 +40,7 @@ namespace QueriesConsts
     constexpr auto get_my_microblogs = "get users microblogs";
     constexpr auto get_my_microblogs_query = "WITH T AS (SELECT id_microblog, name, author, tags, private FROM microblog WHERE author = $1) SELECT json_agg(T) FROM T";
     constexpr auto get_posts_by_id = "get posts by id";
-    constexpr auto get_posts_by_id_query ="WITH T AS (SELECT id_post, author, title, content  FROM post p join users u on p.author = u.id_user where p.author = $1 ORDER BY time_created ASC) SELECT json_agg(T) FROM T";
+    constexpr auto get_posts_by_id_query ="SELECT COALESCE (json_agg(t), '[]'::json) FROM (SELECT id_post, author, title, content  FROM post p join users u on p.author = u.id_user where p.id_microblog = $1 ORDER BY time_created ASC) t";
     constexpr auto add_post = "add post";
     constexpr auto add_post_query = "INSERT INTO post (author, title, time_created, content, id_microblog, tags, views) VALUES($1, $2, current_timestamp, $3, $4, $5, 0) RETURNING id_post";
     constexpr auto add_comment = "add comment";
@@ -56,3 +56,5 @@ namespace QueriesConsts
     
     
 }
+
+

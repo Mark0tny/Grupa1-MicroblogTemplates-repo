@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-
+using namespace std::literals;
 //Code OK - 200
 //Code Bad_Request - 400
 //Code Service_Unavailable - 503
@@ -40,7 +40,12 @@ namespace QueriesConsts
     constexpr auto get_my_microblogs = "get users microblogs";
     constexpr auto get_my_microblogs_query = "WITH T AS (SELECT id_microblog, name, author, tags, private FROM microblog WHERE author = $1) SELECT json_agg(T) FROM T";
     constexpr auto get_posts_by_id = "get posts by id";
-    constexpr auto get_posts_by_id_query ="SELECT COALESCE (json_agg(t), '[]'::json) FROM (SELECT id_post, author, title, content  FROM post p join users u on p.author = u.id_user where p.id_microblog = $1 ORDER BY time_created ASC) t";
+    constexpr auto get_posts_by_id_query = R"(SELECT COALESCE (json_agg(t), '[]'::json) FROM (SELECT u.username, p.views, p.tags, COUNT(c.id_comment), p.time_created, p.id_post, p.id_microblog
+                                            FROM post p join users u on p.author = u.id_user
+                                            join comments c on c.post_id = p.id_post
+                                            WHERE p.id_post = $1
+                                            GROUP BY u.username, p.views, p.tags, p.time_created, p.id_post, p.id_microblog
+                                            ) t)";
     constexpr auto add_post = "add post";
     constexpr auto add_post_query = "INSERT INTO post (author, title, time_created, content, id_microblog, tags, views) VALUES($1, $2, current_timestamp, $3, $4, $5, 0) RETURNING id_post";
     constexpr auto add_comment = "add comment";
@@ -56,5 +61,7 @@ namespace QueriesConsts
     
     
 }
+
+
 
 

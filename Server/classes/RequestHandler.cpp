@@ -272,6 +272,31 @@ void RequestHandler::Search(const pr::Request& rq, ph::ResponseWriter rw)
         rw.send(Http::Code::Service_Unavailable, "No Available Connectiom");
 }
 
+void RequestHandler::GetPost(const pr::Request& rq, ph::ResponseWriter rw)
+{
+    auto dumper = id_dumper_t(json::parse(std::move(rq.body())));
+
+    auto result = pool.executeQuery(QueriesConsts::get_post, dumper("id"));
+    if(result.has_value() && result->size() > 0)
+    {
+        rw.headers().add<Http::Header::ContentType>(MIME(Application, Json));
+
+        try
+        {
+            json json_array = json::parse(result->at(0).at(0).as<std::string>());
+            rw.send(Http::Code::Ok, json_array.dump().c_str());
+        } catch(json::exception& e) {
+            std::cerr << e.what() << '\n';
+            rw.send(Http::Code::Bad_Request, "No Results");        
+        }
+    }
+    else if(result.has_value())
+        rw.send(Http::Code::Bad_Request, "No Results");
+    else
+        rw.send(Http::Code::Service_Unavailable, "No Available Connectiom");
+
+}
+
 
 
 
@@ -290,6 +315,8 @@ void RequestHandler::setRoutes(Rest::Router& r)
     Rest::Routes::Post(r, RoutingConsts::get_followed_blogs, Rest::Routes::bind(&RequestHandler::Followed, this));
     Rest::Routes::Post(r, RoutingConsts::get_followers, Rest::Routes::bind(&RequestHandler::GetFollowers, this));
     Rest::Routes::Post(r, RoutingConsts::search, Rest::Routes::bind(&RequestHandler::Search, this));
+    Rest::Routes::Post(r, RoutingConsts::get_post, Rest::Routes::bind(&RequestHandler::GetPost, this));
+
 
 
 

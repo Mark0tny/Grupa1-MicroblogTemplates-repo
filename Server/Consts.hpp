@@ -24,6 +24,7 @@ namespace RoutingConsts
     constexpr auto follow = "/follow";
     constexpr auto get_followed_blogs = "/followed";
     constexpr auto get_followers = "/followers";
+    constexpr auto get_post = "/getpost";
 }
 
 
@@ -82,5 +83,10 @@ namespace QueriesConsts
             GROUP BY u.username, p.views, p.tags, p.time_created, p.id_post, p.id_microblog
             ORDER BY p.time_created
         ) t)";
+    constexpr auto get_post = "get post";
+    constexpr auto get_post_query = R"(SELECT COALESCE (json_agg(t), '[]'::json) FROM (
+        SELECT * FROM post where id_post = $1
+        ORDER BY time_created
+    ) t)";
     
 }

@@ -26,7 +26,7 @@ public class GetMicroblogResponse {
     private String tags;
     @SerializedName("time_created")
     @Expose
-    private Object timeCreated;
+    private String timeCreated;
     @SerializedName("username")
     @Expose
     private String username;

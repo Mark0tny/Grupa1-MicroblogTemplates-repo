@@ -17,6 +17,7 @@ import com.example.microtemp.microblog.api.RetrofitClient;
 import com.example.microtemp.microblog.api.SessionManager;
 import com.example.microtemp.microblog.model.User;
 import com.example.microtemp.microblog.ui.GetMicroblogResponse;
+import com.example.microtemp.microblog.ui.GetPostResponse;
 import com.example.microtemp.microblog.ui.MicroblogRecyclerViewAdapter;
 import com.google.gson.JsonObject;
 
@@ -40,6 +41,8 @@ public class UserProfileActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         User user = SessionManager.getInstance(this).getUser();
+
+        Log.d("USER ID",Integer.toString(user.getId()));
         JsonObject jsonMicroblog = new JsonObject();
         jsonMicroblog.addProperty("id", user.getId());
 
@@ -77,8 +80,11 @@ public class UserProfileActivity extends AppCompatActivity {
             public void onResponse(Call<List<GetMicroblogResponse>> call, Response<List<GetMicroblogResponse>> response) {
                 if (response.isSuccessful()) {
                     microblogList = response.body();
+                    for (GetMicroblogResponse mess : microblogList
+                            ) {
+                        Log.d("LIST TIEM",mess.getName());
+                    }
                     recyclerViewInit(microblogList);
-
                 } else {
                     Toast.makeText(getApplicationContext(), "ERROR", Toast.LENGTH_LONG).show();
                 }

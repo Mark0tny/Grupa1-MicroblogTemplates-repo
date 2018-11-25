@@ -48,10 +48,10 @@ public class SessionManager {
                 sharedPreferences.getInt("id_user", -1),
                 sharedPreferences.getString("email", null),
                 sharedPreferences.getString("username", null),
-                sharedPreferences.getString("password", null), null, null, null
+                sharedPreferences.getString("password", null),null,null,null
         );
-    }
 
+    }
     //logout
     public void clear() {
         SharedPreferences sharedPreferences = context.getSharedPreferences(PREF_NAME, context.MODE_PRIVATE);

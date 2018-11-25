@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.example.microtemp.microblog.R;
 
 import java.util.List;
+import java.util.Objects;
 
 public class MicroblogRecyclerViewAdapter extends RecyclerView.Adapter<MicroblogRecyclerViewAdapter.ViewHolder> {
 
@@ -38,9 +39,11 @@ public class MicroblogRecyclerViewAdapter extends RecyclerView.Adapter<Microblog
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         GetMicroblogResponse listItemMicroblog = listItemMicroblogList.get(position);
 
-        holder.textViewAuthor.setText(Integer.toString(listItemMicroblog.getAuthor()));
+        holder.textViewAuthor.setText(listItemMicroblog.getUsername());
         holder.textViewTitle.setText(listItemMicroblog.getName());
         holder.textViewTags.setText(listItemMicroblog.getTags());
+        holder.textViewTime.setText(listItemMicroblog.getTimeCreated());
+        //Objects.requireNonNull(holder).textViewFollowers.setText(listItemMicroblogList.size());
     }
 
     @Override
@@ -54,6 +57,7 @@ public class MicroblogRecyclerViewAdapter extends RecyclerView.Adapter<Microblog
         public TextView textViewTitle;
         public TextView textViewTags;
         public TextView textViewFollowers;
+        public TextView textViewTime;
         public Button buttonFollow;
 
 
@@ -63,6 +67,7 @@ public class MicroblogRecyclerViewAdapter extends RecyclerView.Adapter<Microblog
             textViewAuthor = itemView.findViewById(R.id.textViewAuthor);
             textViewTitle = itemView.findViewById(R.id.textViewTitle);
             textViewTags = itemView.findViewById(R.id.textViewTags);
+            textViewTime = itemView.findViewById(R.id.time_blog);
             textViewFollowers = itemView.findViewById(R.id.follow_count);
             buttonFollow =itemView.findViewById(R.id.follow_blog);
 

@@ -25,6 +25,7 @@ namespace RoutingConsts
     constexpr auto get_followed_blogs = "/followed";
     constexpr auto get_followers = "/followers";
     constexpr auto get_post = "/getpost";
+    constexpr auto get_comments = "/comments";
 }
 
 
@@ -88,5 +89,9 @@ namespace QueriesConsts
         SELECT * FROM post where id_post = $1
         ORDER BY time_created
     ) t)";
-    
+    constexpr auto get_comments = "get comments";
+    constexpr auto get_comments_query = R"(SELECT COALESCE (json_agg(t), '[]'::json) FROM (
+            SELECT * FROM comments WHERE post_id = $1
+            ORDER BY time_created
+            ) t)";
 }

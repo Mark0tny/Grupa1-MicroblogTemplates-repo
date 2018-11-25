@@ -29,6 +29,8 @@ struct RequestHandler
     void GetFollowers(const pr::Request& rq, ph::ResponseWriter rw);
     void Search(const pr::Request& rq, ph::ResponseWriter rw);
     void GetPost(const pr::Request& rq, ph::ResponseWriter rw);
+    void GetComments(const pr::Request& rq, ph::ResponseWriter rw);
+
 
     void setRoutes(pr::Router& r);
 };

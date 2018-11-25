@@ -57,7 +57,8 @@ void ConnectionPool::mapSetup()
         {get_followers, get_followers_query},
         {search_blogs, search_blogs_query},
         {search_posts, search_posts_query},
-        {get_post, get_post_query}
+        {get_post, get_post_query},
+        {get_comments, get_comments_query}
 
     };
 

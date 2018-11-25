@@ -46,7 +46,7 @@ public interface API {
             @Body JsonObject jsonComment
     );
 
-    @POST("/getcomments")
+    @POST("/comments")
     Call<List<Comment>> getComments(
             @Body JsonObject jsonComment
     );

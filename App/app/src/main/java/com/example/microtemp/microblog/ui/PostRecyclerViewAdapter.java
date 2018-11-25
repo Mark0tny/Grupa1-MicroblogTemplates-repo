@@ -39,13 +39,13 @@ public class PostRecyclerViewAdapter extends RecyclerView.Adapter<PostRecyclerVi
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         GetPostResponse listItemPost = listItemPosts.get(position);
 
-        holder.textViewAuthor.setText(Integer.toString(listItemPost.getAuthor()));
-        holder.textViewTitle.setText(listItemPost.getTitle());
-        // holder.textViewTags.setText(listItemPost.getTags());
-        // holder.textViewTime.setText(listItemPost.getTime());
-        holder.textViewContent.setText(listItemPost.getContent());
-        //holder.textViewLikes.setText(listItemPost.getLikes());
-        //holder.textViewComments.setText(listItemPost.Comments());
+        holder.textViewAuthor.setText(listItemPost.getUsername().replaceAll("\"", ""));
+        holder.textViewTitle.setText(listItemPost.getUsername().replaceAll("\"", ""));
+        holder.textViewTags.setText(listItemPost.getTags().replaceAll("\"", ""));
+        holder.textViewTime.setText(listItemPost.getTimeCreated().replaceAll("\"", ""));
+        holder.textViewContent.setText(listItemPost.getTags().replaceAll("\"", ""));
+        holder.textViewLikes.setText(Integer.toString(listItemPost.getViews()));
+        holder.textViewComments.setText(Integer.toString(listItemPost.getCount()));
 
     }
 

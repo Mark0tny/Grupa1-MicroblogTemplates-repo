@@ -82,11 +82,6 @@ public class LoginActivity extends AppCompatActivity {
             this.email.requestFocus();
             return;
         }
-        if (!validateEmail(email)) {
-            this.email.setError("Please enter valid email");
-            this.email.requestFocus();
-            return;
-        }
         if (TextUtils.isEmpty(password)) {
             this.password.setError("Please enter password");
             this.password.requestFocus();

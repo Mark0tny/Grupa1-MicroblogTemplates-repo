@@ -41,30 +41,19 @@ public class CommentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment);
 
-        Intent intent = getIntent();
-        final Integer id = intent.getIntExtra("id_post",0);
-        User user = SessionManager.getInstance(this).getUser();
-
         buttonAddComment = findViewById(R.id.comment_post_btn);
         commentContent = findViewById(R.id.comment_field);
+        loadComments(initGetComments());
 
-        final JsonObject jsonAddComment = new JsonObject();
-        jsonAddComment.addProperty("post_id",id);
-        jsonAddComment.addProperty("content",commentContent.getText().toString().trim());
-        jsonAddComment.addProperty("author",user.getId());
-
-        JsonObject jsonCommentList = new JsonObject();
-        jsonCommentList.addProperty("post_id",id);
-        loadComments(jsonCommentList);
 
 
         buttonAddComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(!TextUtils.isEmpty(commentContent.getText().toString().trim())){
-                    addComment(jsonAddComment);
+                    addComment(initAddComent(),initGetComments());
                 }else{
-                    commentContent.setError("Please enter password");
+                    commentContent.setError("Field can not be empty");
                     commentContent.requestFocus();
                     return;
 
@@ -73,7 +62,7 @@ public class CommentActivity extends AppCompatActivity {
         });
     }
 
-    private void addComment(JsonObject jsonAddComment) {
+    private void addComment(JsonObject jsonAddComment,JsonObject jsonCommentList) {
         retrofit2.Call<JsonObject> call = RetrofitClient
                 .getmInstance()
                 .getAPI()
@@ -82,23 +71,18 @@ public class CommentActivity extends AppCompatActivity {
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                if (response.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), "Comment added", Toast.LENGTH_LONG).show();
-                    Log.d("GOOD", Integer.toString(response.code()));
-                } else {
-                    Toast.makeText(getApplicationContext(), Integer.toString(response.code()), Toast.LENGTH_LONG).show();
-                    Log.d("ERROR", Integer.toString(response.code()));
-                }
+
+                Toast.makeText(getApplicationContext(), "Comment added", Toast.LENGTH_LONG).show();
+                Log.d("GOOD", Integer.toString(response.code()));
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-
+                Log.d("ERROR", t.getMessage());
             }
         });
-
+        loadComments(jsonCommentList);
     }
-
     public void loadComments(JsonObject jsonCommentList){
         retrofit2.Call<List<Comment>> call = RetrofitClient
                 .getmInstance()
@@ -115,12 +99,13 @@ public class CommentActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "ERROR", Toast.LENGTH_LONG).show();
                 }
             }
-
             @Override
             public void onFailure(Call<List<Comment>> call, Throwable t) {
 
             }
         });
+
+
     }
 
 
@@ -134,22 +119,26 @@ public class CommentActivity extends AppCompatActivity {
         adapter = new CommentsRecyclerViewAdapter(commentList, getApplicationContext());
         recyclerView.setAdapter(adapter);
 
-        recyclerView.addOnItemTouchListener(
-                new PostRecyclerViewAdapter.
-                        RecyclerItemClickListener(this, recyclerView, new PostRecyclerViewAdapter.RecyclerItemClickListener.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                    }
-
-                    @Override
-                    public void onShowPress(View view, int position) {
-
-                    }
-
-                }));
-
     }
 
+    public JsonObject initAddComent(){
+        Intent intent = getIntent();
+        final Integer id = intent.getIntExtra("id_post",0);
+        User user = SessionManager.getInstance(this).getUser();
+        JsonObject jsonAddComment = new JsonObject();
+        jsonAddComment.addProperty("post_id",id);
+        jsonAddComment.addProperty("content",commentContent.getText().toString().trim());
+        jsonAddComment.addProperty("author",user.getId());
+        return  jsonAddComment;
 
+
+    }
+    public JsonObject initGetComments(){
+        Intent intent = getIntent();
+        final Integer id = intent.getIntExtra("id_post",0);
+        JsonObject jsonCommentList = new JsonObject();
+        jsonCommentList.addProperty("id",id);
+        return jsonCommentList;
+    }
 
 }

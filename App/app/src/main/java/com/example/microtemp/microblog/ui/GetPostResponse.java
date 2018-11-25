@@ -12,16 +12,25 @@ import lombok.ToString;
 @EqualsAndHashCode
 public class GetPostResponse {
 
-    @SerializedName("author")
+    @SerializedName("count")
     @Expose
-    private Integer author;
-    @SerializedName("content")
+    private Integer count;
+    @SerializedName("id_microblog")
     @Expose
-    private String content;
+    private Integer idMicroblog;
     @SerializedName("id_post")
     @Expose
     private Integer idPost;
-    @SerializedName("title")
+    @SerializedName("tags")
     @Expose
-    private String title;
+    private String tags;
+    @SerializedName("time_created")
+    @Expose
+    private String timeCreated;
+    @SerializedName("username")
+    @Expose
+    private String username;
+    @SerializedName("views")
+    @Expose
+    private Integer views;
 }

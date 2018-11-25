@@ -39,9 +39,9 @@ public class MicroblogRecyclerViewAdapter extends RecyclerView.Adapter<Microblog
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         GetMicroblogResponse listItemMicroblog = listItemMicroblogList.get(position);
 
-        holder.textViewAuthor.setText(listItemMicroblog.getUsername());
-        holder.textViewTitle.setText(listItemMicroblog.getName());
-        holder.textViewTags.setText(listItemMicroblog.getTags());
+        holder.textViewAuthor.setText(listItemMicroblog.getUsername().replaceAll("\"", ""));
+        holder.textViewTitle.setText(listItemMicroblog.getName().replaceAll("\"", ""));
+        holder.textViewTags.setText(listItemMicroblog.getTags().replaceAll("\"", ""));
         holder.textViewTime.setText(listItemMicroblog.getTimeCreated());
         //Objects.requireNonNull(holder).textViewFollowers.setText(listItemMicroblogList.size());
     }

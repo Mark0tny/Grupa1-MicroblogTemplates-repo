@@ -71,9 +71,10 @@ public class CommentActivity extends AppCompatActivity {
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-
-                Toast.makeText(getApplicationContext(), "Comment added", Toast.LENGTH_LONG).show();
-                Log.d("GOOD", Integer.toString(response.code()));
+                if (response.isSuccessful()) {
+                    Toast.makeText(getApplicationContext(), "Comment added", Toast.LENGTH_LONG).show();
+                    Log.d("GOOD", Integer.toString(response.code()));
+                }
             }
 
             @Override

@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.example.microtemp.microblog.R;
 
 import java.util.List;
-import java.util.Objects;
 
 public class MicroblogRecyclerViewAdapter extends RecyclerView.Adapter<MicroblogRecyclerViewAdapter.ViewHolder> {
 
@@ -69,7 +68,7 @@ public class MicroblogRecyclerViewAdapter extends RecyclerView.Adapter<Microblog
             textViewTags = itemView.findViewById(R.id.textViewTags);
             textViewTime = itemView.findViewById(R.id.time_blog);
             textViewFollowers = itemView.findViewById(R.id.follow_count);
-            buttonFollow =itemView.findViewById(R.id.follow_blog);
+            buttonFollow = itemView.findViewById(R.id.follow_blog);
 
             buttonFollow.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -82,7 +81,6 @@ public class MicroblogRecyclerViewAdapter extends RecyclerView.Adapter<Microblog
 
     public static class RecyclerItemClickListener implements RecyclerView.OnItemTouchListener {
         private OnItemClickListener mListener;
-
 
 
         public interface OnItemClickListener {

@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:layout_marginBottom="10dp">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -42,7 +43,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="TextView"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
+                        android:layout_marginLeft="10dp"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                         android:textColor="@color/colorPrimaryDark" />
 
                 </LinearLayout>
@@ -69,6 +71,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_marginLeft="5dp"
                 android:gravity="left"
                 android:orientation="vertical">
 
@@ -86,6 +89,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:layout_marginLeft="15dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -97,14 +101,14 @@
 
                     <TextView
                         android:id="@+id/text_like_count"
-                        android:layout_width="wrap_content"
+                        android:layout_width="76dp"
                         android:layout_height="wrap_content"
                         android:text="likes"
                         android:textColor="@color/colorPrimaryDark" />
 
                     <Button
                         android:id="@+id/addlike"
-                        android:layout_width="wrap_content"
+                        android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Like" />
@@ -112,6 +116,7 @@
 
                 <LinearLayout
                     android:id="@+id/comm"
+                    android:layout_marginLeft="15dp"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="right"
@@ -127,7 +132,7 @@
 
                     <Button
                         android:id="@+id/addcomment"
-                        android:layout_width="wrap_content"
+                        android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:text="Add Comment" />
                 </LinearLayout>

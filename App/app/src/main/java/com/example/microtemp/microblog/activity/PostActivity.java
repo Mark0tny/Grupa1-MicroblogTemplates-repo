@@ -3,7 +3,6 @@ package com.example.microtemp.microblog.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,12 +15,8 @@ import android.widget.Toast;
 import com.example.microtemp.microblog.R;
 import com.example.microtemp.microblog.api.RetrofitClient;
 import com.example.microtemp.microblog.api.SessionManager;
-import com.example.microtemp.microblog.model.Comment;
-import com.example.microtemp.microblog.model.Post;
 import com.example.microtemp.microblog.model.User;
-import com.example.microtemp.microblog.ui.GetMicroblogResponse;
 import com.example.microtemp.microblog.ui.GetPostResponse;
-import com.example.microtemp.microblog.ui.MicroblogRecyclerViewAdapter;
 import com.example.microtemp.microblog.ui.PostRecyclerViewAdapter;
 import com.google.gson.JsonObject;
 
@@ -45,12 +40,12 @@ public class PostActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         Intent intent = getIntent();
-        final Integer id = intent.getIntExtra("id",0);
+        final Integer id = intent.getIntExtra("id", 0);
         final String data = intent.getStringExtra("name");
 
         User user = SessionManager.getInstance(this).getUser();
         JsonObject jsonPost = new JsonObject();
-        jsonPost.addProperty("id",id);
+        jsonPost.addProperty("id", id);
         loadPost(jsonPost);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -58,15 +53,13 @@ public class PostActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(PostActivity.this, CreatePostActivity.class);
-                intent.putExtra("id_microblog",id);
+                intent.putExtra("id_microblog", id);
                 startActivity(intent);
             }
         });
-
         TextView txtViewResponeUsername = findViewById(R.id.responseMicroblogName);
         txtViewResponeUsername.setText(data);
     }
-
 
     public void loadPost(JsonObject jsonPost) {
 
@@ -81,11 +74,11 @@ public class PostActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     postList = response.body();
                     recyclerViewInit(postList);
-
                 } else {
                     Toast.makeText(getApplicationContext(), "ERROR", Toast.LENGTH_LONG).show();
                 }
             }
+
             @Override
             public void onFailure(Call<List<GetPostResponse>> call, Throwable t) {
                 Log.d("ERROR", t.toString());
@@ -101,24 +94,6 @@ public class PostActivity extends AppCompatActivity {
         recyclerView.setNestedScrollingEnabled(false);
         adapter = new PostRecyclerViewAdapter(postList, getApplicationContext());
         recyclerView.setAdapter(adapter);
-
-        recyclerView.addOnItemTouchListener(
-                new PostRecyclerViewAdapter.
-                        RecyclerItemClickListener(this, recyclerView, new PostRecyclerViewAdapter.RecyclerItemClickListener.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                        Intent intent = new Intent(PostActivity.this, CommentActivity.class);
-                        intent.putExtra("id_post",postList.get(position).getIdPost());
-                        startActivity(intent);
-                    }
-
-                    @Override
-                    public void onShowPress(View view, int position) {
-
-                    }
-
-                }));
-
     }
 
 }

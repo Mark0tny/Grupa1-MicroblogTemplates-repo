@@ -1,8 +1,10 @@
 package com.example.microtemp.microblog.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -10,10 +12,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.microtemp.microblog.R;
+import com.example.microtemp.microblog.activity.CommentActivity;
+import com.example.microtemp.microblog.api.RetrofitClient;
+import com.google.gson.JsonObject;
 
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 public class PostRecyclerViewAdapter extends RecyclerView.Adapter<PostRecyclerViewAdapter.ViewHolder> {
 
@@ -36,7 +47,7 @@ public class PostRecyclerViewAdapter extends RecyclerView.Adapter<PostRecyclerVi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         GetPostResponse listItemPost = listItemPosts.get(position);
 
         holder.textViewAuthor.setText(listItemPost.getUsername().replaceAll("\"", ""));
@@ -47,6 +58,22 @@ public class PostRecyclerViewAdapter extends RecyclerView.Adapter<PostRecyclerVi
         holder.textViewLikes.setText(Integer.toString(listItemPost.getViews()));
         holder.textViewComments.setText(Integer.toString(listItemPost.getCount()));
 
+        holder.buttonComments.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, CommentActivity.class);
+                intent.putExtra("id_post", listItemPosts.get(position).getIdPost());
+                context.startActivity(intent);
+            }
+        });
+
+        holder.buttonLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addLikeCall(listItemPosts.get(position).getIdPost());
+                holder.buttonLike.setEnabled(false);
+            }
+        });
     }
 
     @Override
@@ -80,19 +107,6 @@ public class PostRecyclerViewAdapter extends RecyclerView.Adapter<PostRecyclerVi
             buttonLike = itemView.findViewById(R.id.addlike);
             buttonComments = itemView.findViewById(R.id.addcomment);
 
-            buttonLike.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
-
-            buttonComments.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
 
         }
     }
@@ -144,4 +158,27 @@ public class PostRecyclerViewAdapter extends RecyclerView.Adapter<PostRecyclerVi
         public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
         }
     }
+
+    public void addLikeCall(Integer postID) {
+
+        JsonObject jsonLike = new JsonObject();
+        jsonLike.addProperty("id_post", postID);
+
+        retrofit2.Call<JsonObject> call = RetrofitClient
+                .getmInstance()
+                .getAPI()
+                .likePost(jsonLike);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Toast.makeText(context, "Post LIKE", Toast.LENGTH_LONG).show();
+                Log.d("GOOD", t.getMessage());
+            }
+        });
+    }
+
 }

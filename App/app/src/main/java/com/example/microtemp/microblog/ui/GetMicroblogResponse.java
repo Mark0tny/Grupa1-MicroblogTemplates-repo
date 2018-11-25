@@ -12,19 +12,22 @@ import lombok.ToString;
 @EqualsAndHashCode
 public class GetMicroblogResponse {
 
-    @SerializedName("author")
-    @Expose
-    private Integer author;
     @SerializedName("id_microblog")
     @Expose
     private Integer idMicroblog;
+    @SerializedName("id_user")
+    @Expose
+    private Integer idUser;
     @SerializedName("name")
     @Expose
     private String name;
-    @SerializedName("private")
-    @Expose
-    private String privacy;
     @SerializedName("tags")
     @Expose
     private String tags;
+    @SerializedName("time_created")
+    @Expose
+    private Object timeCreated;
+    @SerializedName("username")
+    @Expose
+    private String username;
 }

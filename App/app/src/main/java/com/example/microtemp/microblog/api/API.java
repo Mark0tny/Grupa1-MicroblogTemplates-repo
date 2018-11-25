@@ -1,5 +1,6 @@
 package com.example.microtemp.microblog.api;
 import com.example.microtemp.microblog.model.Comment;
+import com.example.microtemp.microblog.model.User;
 import com.example.microtemp.microblog.ui.GetMicroblogResponse;
 import com.example.microtemp.microblog.ui.GetPostResponse;
 import com.google.gson.JsonObject;
@@ -49,6 +50,29 @@ public interface API {
     Call<List<Comment>> getComments(
             @Body JsonObject jsonComment
     );
+
+    @POST("/upvote")
+    Call<JsonObject> likePost(
+            @Body JsonObject jsonLike
+    );
+
+    @POST("/follow")
+    Call<JsonObject> followBlog(
+            @Body JsonObject jsonFollow
+    );
+
+    @POST("/followed")
+    Call<JsonObject> getfollowedblogs(
+            @Body JsonObject jsonFollow
+    );
+
+    @POST("/followers")
+    Call<List<User>> getfollowers(
+            @Body JsonObject jsonUsers
+    );
+
+
+
 
 
 }

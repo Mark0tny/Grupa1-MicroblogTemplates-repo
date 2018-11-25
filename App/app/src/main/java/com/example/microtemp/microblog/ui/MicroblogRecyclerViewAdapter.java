@@ -69,7 +69,7 @@ public class MicroblogRecyclerViewAdapter extends RecyclerView.Adapter<Microblog
             buttonFollow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    
+
                 }
             });
         }

@@ -80,12 +80,6 @@ public class PostActivity extends AppCompatActivity {
             public void onResponse(Call<List<GetPostResponse>> call, Response<List<GetPostResponse>> response) {
                 if (response.isSuccessful()) {
                     postList = response.body();
-
-                    for (GetPostResponse res:postList
-                         ) {
-                        Log.d("POSTLISTITEM",res.getTitle());
-
-                    }
                     recyclerViewInit(postList);
 
                 } else {
@@ -99,7 +93,7 @@ public class PostActivity extends AppCompatActivity {
         });
     }
 
-    public void recyclerViewInit(List<GetPostResponse> postList) {
+    public void recyclerViewInit(final List<GetPostResponse> postList) {
 
         recyclerView = findViewById(R.id.post_recyclerview);
         recyclerView.setHasFixedSize(true);
@@ -114,6 +108,7 @@ public class PostActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(View view, int position) {
                         Intent intent = new Intent(PostActivity.this, CommentActivity.class);
+                        intent.putExtra("id_post",postList.get(position).getIdPost());
                         startActivity(intent);
                     }
 

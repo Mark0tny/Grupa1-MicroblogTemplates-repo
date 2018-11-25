@@ -40,7 +40,7 @@ namespace QueriesConsts
     
     constexpr auto get_my_microblogs = "get users microblogs";
     constexpr auto get_my_microblogs_query = R"(SELECT COALESCE (json_agg(t), '[]'::json) FROM (
-                                                SELECT m.name, u.username, m.time_created, m.id_microblog, u.id_user
+                                                SELECT m.name, u.username, m.time_created, m.id_microblog, u.id_user, m.tags
                                                 FROM microblog m
                                                 join users u on u.id_user = m.author
                                                 WHERE u.id_user = $1) t)";

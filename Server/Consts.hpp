@@ -66,10 +66,21 @@ namespace QueriesConsts
     constexpr auto followed_query = "WITH T AS (SELECT * FROM microblog m inner join follow f on m.id_microblog = f.blogid where f.userid = $1) SELECT json_agg(T) FROM T";
     constexpr auto get_followers = "get_followers";
     constexpr auto get_followers_query = "SELECT COALESCE (json_agg(t), '[]'::json) FROM (SELECT username FROM users u inner join follow f on f.userid = u.id_user where f.blogid = $1) t";
-    constexpr auto search = "search";
-    constexpr auto search_query = "SELECT COALESCE (json_agg(t), '[]'::json) FROM (SELECT * FROM $1::text WHERE $2::text = $3::text) t";
+    constexpr auto search_blogs = "search blogs";
+    constexpr auto search_blogs_query = R"(SELECT COALESCE (json_agg(t), '[]'::json) FROM (
+            SELECT m.name, u.username, m.time_created, m.tags, m.id_microblog, m.author  
+            FROM microblog m join users u on u.id_user = m.author 
+            WHERE u.username like $1 OR m.name like $1 OR m.tags like $1 
+            ORDER BY m.time_created
+        ) t)";
+    constexpr auto search_posts = "search posts";
+    constexpr auto search_posts_query = R"(SELECT COALESCE (json_agg(t), '[]'::json) FROM (
+            SELECT u.username, p.views, p.tags, COUNT(c.id_comment), p.time_created, p.id_post, p.id_microblog
+            FROM post p join users u on p.author = u.id_user
+            left join comments c on c.post_id = p.id_post
+            WHERE u.username like $1 OR p.title like $1 OR p.tags like $1 or p.content like $1
+            GROUP BY u.username, p.views, p.tags, p.time_created, p.id_post, p.id_microblog
+            ORDER BY p.time_created
+        ) t)";
     
 }
-
-
-

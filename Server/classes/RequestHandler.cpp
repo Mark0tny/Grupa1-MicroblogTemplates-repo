@@ -241,8 +241,17 @@ void RequestHandler::Search(const pr::Request& rq, ph::ResponseWriter rw)
 {
     json comment_data = json::parse(std::move(rq.body()));
     auto dumper = string_dumper_t(comment_data);
+    auto tbl = dumper("tbl");
+    tbl.erase(remove(tbl.begin(), tbl.end(), '\"'), tbl.end());
+    auto key  = dumper("key");
+    key.erase(remove( key.begin(), key.end(), '\"' ), key.end());
+    auto query = ""s;
+    if(tbl == "blog")
+        query = QueriesConsts::search_blogs;
+    else
+        query = QueriesConsts::search_posts;
 
-    auto result = pool.executeQuery(QueriesConsts::search, dumper("from"), dumper("where"), dumper("equals"));
+    auto result = pool.executeQuery(query, std::move("%"s + key + "%"s));
 
     if(result.has_value() && result->size() > 0)
     {
@@ -251,7 +260,6 @@ void RequestHandler::Search(const pr::Request& rq, ph::ResponseWriter rw)
         try
         {
             json json_array = json::parse(result->at(0).at(0).as<std::string>());
-            std::cout << json_array.dump() << '\n';
             rw.send(Http::Code::Ok, json_array.dump().c_str());
         } catch(json::exception& e) {
             std::cerr << e.what() << '\n';

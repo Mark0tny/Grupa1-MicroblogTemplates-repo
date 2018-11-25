@@ -54,7 +54,8 @@ void ConnectionPool::mapSetup()
         {upvote, upvote_query},
         {follow, follow_query},
         {followed, followed_query},
-        {get_followers, get_followers_query}
+        {get_followers, get_followers_query},
+        {search, search_query}
     };
 
     std::cout << "Done\n";

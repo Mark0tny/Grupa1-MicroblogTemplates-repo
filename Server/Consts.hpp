@@ -36,7 +36,7 @@ namespace QueriesConsts
     constexpr auto login_user = "login user";
     constexpr auto login_user_query = "SELECT id_user, username FROM users where ( email = $1 OR username = $1) AND password = $2 LIMIT 1";
     constexpr auto create_microblog = "create microblog";
-    constexpr auto create_microblog_query = "INSERT INTO microblog (name, author, tags, private) VALUES($1, $2, $3, $4) RETURNING id_microblog";
+    constexpr auto create_microblog_query = "INSERT INTO microblog (name, author, tags, private, time_created) VALUES($1, $2, $3, $4, current_timestamp) RETURNING id_microblog";
     
     constexpr auto get_my_microblogs = "get users microblogs";
     constexpr auto get_my_microblogs_query = R"(SELECT COALESCE (json_agg(t), '[]'::json) FROM (
@@ -47,11 +47,11 @@ namespace QueriesConsts
     
     constexpr auto get_posts_by_id = "get posts by id";
     constexpr auto get_posts_by_id_query = R"(SELECT COALESCE (json_agg(t), '[]'::json) FROM (
-                                            SELECT u.username, p.views, p.tags, COUNT(c.id_comment), p.time_created, p.id_post, p.id_microblog
-                                            FROM post p join users u on p.author = u.id_user
-                                            join comments c on c.post_id = p.id_post
-                                            WHERE p.id_microblog = $1
-                                            GROUP BY u.username, p.views, p.tags, p.time_created, p.id_post, p.id_microblog
+                                                SELECT u.username, p.views, p.tags, COUNT(c.id_comment), p.time_created, p.id_post, p.id_microblog
+                                                FROM post p join users u on p.author = u.id_user
+                                                left join comments c on c.post_id = p.id_post
+                                                WHERE p.id_microblog = $1
+                                                GROUP BY u.username, p.views, p.tags, p.time_created, p.id_post, p.id_microblog
                                             ) t)";
     
     constexpr auto add_post = "add post";
@@ -66,10 +66,10 @@ namespace QueriesConsts
     constexpr auto followed_query = "WITH T AS (SELECT * FROM microblog m inner join follow f on m.id_microblog = f.blogid where f.userid = $1) SELECT json_agg(T) FROM T";
     constexpr auto get_followers = "get_followers";
     constexpr auto get_followers_query = "SELECT COALESCE (json_agg(t), '[]'::json) FROM (SELECT username FROM users u inner join follow f on f.userid = u.id_user where f.blogid = $1) t";
-    
+    constexpr auto search = "search";
+    constexpr auto search_query = "SELECT COALESCE (json_agg(t), '[]'::json) FROM (SELECT * FROM $1::text WHERE $2::text = $3::text) t";
     
 }
-
 
 
 

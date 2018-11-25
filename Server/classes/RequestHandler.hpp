@@ -27,6 +27,7 @@ struct RequestHandler
     void Follow(const pr::Request& rq, ph::ResponseWriter rw);
     void Followed(const pr::Request& rq, ph::ResponseWriter rw);
     void GetFollowers(const pr::Request& rq, ph::ResponseWriter rw);
+    void Search(const pr::Request& rq, ph::ResponseWriter rw);
     void setRoutes(pr::Router& r);
 };
 

@@ -50,7 +50,7 @@ namespace QueriesConsts
                                             SELECT u.username, p.views, p.tags, COUNT(c.id_comment), p.time_created, p.id_post, p.id_microblog
                                             FROM post p join users u on p.author = u.id_user
                                             join comments c on c.post_id = p.id_post
-                                            WHERE p.id_post = $1
+                                            WHERE p.id_microblog = $1
                                             GROUP BY u.username, p.views, p.tags, p.time_created, p.id_post, p.id_microblog
                                             ) t)";
     

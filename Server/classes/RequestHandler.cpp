@@ -173,7 +173,8 @@ void RequestHandler::Upvote(const pr::Request& rq, ph::ResponseWriter rw)
 
 void RequestHandler::Follow(const pr::Request& rq, ph::ResponseWriter rw)
 {
-    auto dumper = id_dumper_t(json::parse(std::move(rq.body())));
+    json upvote = json::parse(std::move(rq.body()));
+    auto dumper = id_dumper_t(upvote);
     std::cout << QueriesConsts::follow  <<'\n';
 
     auto result = pool.executeQuery(QueriesConsts::follow, dumper("userid"), dumper("blogid"));

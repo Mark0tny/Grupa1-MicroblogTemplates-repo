@@ -13,14 +13,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.microtemp.microblog.R;
 import com.example.microtemp.microblog.activity.CommentActivity;
 import com.example.microtemp.microblog.api.RetrofitClient;
 import com.google.gson.JsonObject;
-
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -119,7 +116,6 @@ public class PostRecyclerViewAdapter extends RecyclerView.Adapter<PostRecyclerVi
 
             public void onShowPress(View view, int position);
         }
-
         GestureDetector mGestureDetector;
 
         public RecyclerItemClickListener(Context context, final RecyclerView recyclerView, PostRecyclerViewAdapter.RecyclerItemClickListener.OnItemClickListener listener) {
@@ -139,7 +135,6 @@ public class PostRecyclerViewAdapter extends RecyclerView.Adapter<PostRecyclerVi
                 }
             });
         }
-
         @Override
         public boolean onInterceptTouchEvent(RecyclerView view, MotionEvent e) {
             View childView = view.findChildViewUnder(e.getX(), e.getY());

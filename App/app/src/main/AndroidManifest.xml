@@ -38,7 +38,8 @@
         <activity android:name=".activity.Settings" />
         <activity android:name=".activity.SettingsActivity" />
         <activity android:name=".activity.SearchActivity" />
-        <activity android:name=".activity.CommentActivity"></activity>
+        <activity android:name=".activity.CommentActivity" />
+        <activity android:name=".activity.FollowersActivity"></activity>
     </application>
 
 </manifest>

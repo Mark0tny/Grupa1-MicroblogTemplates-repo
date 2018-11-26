@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.microtemp.microblog.R;
+import com.example.microtemp.microblog.model.User;
 
 import java.util.List;
 
@@ -19,6 +20,7 @@ public class MicroblogRecyclerViewAdapter extends RecyclerView.Adapter<Microblog
 
 
     private List<GetMicroblogResponse> listItemMicroblogList;
+    private List<User> userList;
     private Context context;
 
     public MicroblogRecyclerViewAdapter(List<GetMicroblogResponse> listItemMicroblogList, Context context) {
@@ -127,5 +129,7 @@ public class MicroblogRecyclerViewAdapter extends RecyclerView.Adapter<Microblog
         public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
         }
     }
+
+
 
 }

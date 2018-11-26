@@ -93,7 +93,6 @@ public class PostRecyclerViewAdapter extends RecyclerView.Adapter<PostRecyclerVi
 
         public ViewHolder(View itemView) {
             super(itemView);
-
             textViewAuthor = itemView.findViewById(R.id.textViewAuthorp);
             textViewTime = itemView.findViewById(R.id.time_post);
             textViewTitle = itemView.findViewById(R.id.textViewTitlep);
@@ -103,8 +102,6 @@ public class PostRecyclerViewAdapter extends RecyclerView.Adapter<PostRecyclerVi
             textViewComments = itemView.findViewById(R.id.comm_count);
             buttonLike = itemView.findViewById(R.id.addlike);
             buttonComments = itemView.findViewById(R.id.addcomment);
-
-
         }
     }
     public static class RecyclerItemClickListener implements RecyclerView.OnItemTouchListener {

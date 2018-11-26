@@ -40,8 +40,8 @@ public class CommentsRecyclerViewAdapter extends RecyclerView.Adapter<CommentsRe
         Comment listComments = commentList.get(position);
 
         holder.textViewAuthor.setText(Integer.toString(listComments.getAuthor()));
-        holder.textViewTime.setText(listComments.getTimeCreated());
-        holder.textViewComment.setText(listComments.getContent());
+        holder.textViewTime.setText(listComments.getTimeCreated().replaceAll("\"", ""));
+        holder.textViewComment.setText(listComments.getContent().replaceAll("\"", ""));
     }
 
     @Override

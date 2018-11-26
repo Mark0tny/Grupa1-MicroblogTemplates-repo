@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -70,6 +71,17 @@ public class CreateMicroblogActivity extends AppCompatActivity {
         final String tags = this.tags.getText().toString().trim();
         final String privacy = this.spinner.getSelectedItem().toString().toLowerCase().trim();
 
+        if (TextUtils.isEmpty(title)) {
+            this.title.setError("Please enter tiitle");
+            this.title.requestFocus();
+            return;
+        }
+        if (TextUtils.isEmpty(tags)) {
+            this.tags.setError("Please enter tags");
+            this.tags.requestFocus();
+            return;
+        }
+
         JsonObject jsonMicroblog = new JsonObject();
         jsonMicroblog.addProperty("title", title);
         jsonMicroblog.addProperty("id", user.getId());
@@ -95,7 +107,7 @@ public class CreateMicroblogActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.d("ERROR",t.getMessage());
+                Log.d("ERROR", t.getMessage());
             }
         });
     }

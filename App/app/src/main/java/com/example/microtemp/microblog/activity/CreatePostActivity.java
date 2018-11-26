@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -41,6 +42,23 @@ public class CreatePostActivity extends AppCompatActivity {
         final String title = this.title.getText().toString().trim();
         final String content = this.content.getText().toString().trim();
         final String tags = this.tags.getText().toString().trim();
+
+        if (TextUtils.isEmpty(title)) {
+            this.title.setError("Please enter tiitle");
+            this.title.requestFocus();
+            return;
+        } if (TextUtils.isEmpty(content)) {
+            this.content.setError("Please enter content");
+            this.content.requestFocus();
+            return;
+        } if (TextUtils.isEmpty(tags)) {
+            this.tags.setError("Please enter tags");
+            this.tags.requestFocus();
+            return;
+        }
+
+
+
         User user = SessionManager.getInstance(this).getUser();
         Intent intent = getIntent();
         final Integer id = intent.getIntExtra("id_microblog",0);

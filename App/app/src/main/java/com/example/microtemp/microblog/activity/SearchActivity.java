@@ -116,9 +116,6 @@ public class SearchActivity extends AppCompatActivity {
                         RecyclerItemClickListener(this, recyclerView, new PostRecyclerViewAdapter.RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        Intent intent = new Intent(SearchActivity.this, PostActivity.class);
-                        intent.putExtra("id", postList.get(position).getIdPost());
-                        startActivity(intent);
                     }
 
                     @Override
@@ -142,20 +139,13 @@ public class SearchActivity extends AppCompatActivity {
                         RecyclerItemClickListener(this, recyclerView, new MicroblogRecyclerViewAdapter.RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        Intent intent = new Intent(SearchActivity.this, PostActivity.class);
-                        intent.putExtra("name", blogList.get(position).getName());
-                        intent.putExtra("id", blogList.get(position).getIdMicroblog());
-                        startActivity(intent);
                     }
 
                     @Override
                     public void onShowPress(View view, int position) {
-
                     }
 
                 }));
-
-
 
     }
 

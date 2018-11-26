@@ -39,7 +39,7 @@ public class CommentsRecyclerViewAdapter extends RecyclerView.Adapter<CommentsRe
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Comment listComments = commentList.get(position);
 
-        holder.textViewAuthor.setText(Integer.toString(listComments.getAuthor()));
+        holder.textViewAuthor.setText(listComments.getUsername().replaceAll("\"", ""));
         holder.textViewTime.setText(listComments.getTimeCreated().replaceAll("\"", ""));
         holder.textViewComment.setText(listComments.getContent().replaceAll("\"", ""));
     }

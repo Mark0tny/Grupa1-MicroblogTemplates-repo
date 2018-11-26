@@ -177,7 +177,6 @@ public class UserProfileActivity extends AppCompatActivity {
             });
         }
         View header = navigation_view.getHeaderView(0);
-        navigation_view.addHeaderView(header);
         TextView name = header.findViewById(R.id.Log_username);
         User user = SessionManager.getInstance(this).getUser();
         name.setText(user.getUsername());

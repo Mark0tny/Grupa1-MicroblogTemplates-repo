@@ -38,10 +38,10 @@ public class Comment {
     @Getter(value = AccessLevel.PUBLIC)
     @Setter(value = AccessLevel.PUBLIC)
     private String timeCreated;
-    @SerializedName("author")
+    @SerializedName("username")
     @Expose
     @Getter(value = AccessLevel.PUBLIC)
     @Setter(value = AccessLevel.PUBLIC)
-    private int author;
+    private String username;
 
 }

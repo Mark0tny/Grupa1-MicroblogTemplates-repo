@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.microtemp.microblog.R;
 import com.example.microtemp.microblog.activity.CommentActivity;
 import com.example.microtemp.microblog.api.RetrofitClient;
+import com.example.microtemp.microblog.api.GetPostResponse;
 import com.google.gson.JsonObject;
 import java.util.List;
 import retrofit2.Call;

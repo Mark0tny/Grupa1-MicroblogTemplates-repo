@@ -18,6 +18,7 @@ import com.example.microtemp.microblog.R;
 import com.example.microtemp.microblog.activity.FollowersActivity;
 import com.example.microtemp.microblog.api.RetrofitClient;
 import com.example.microtemp.microblog.api.SessionManager;
+import com.example.microtemp.microblog.api.GetMicroblogResponse;
 import com.example.microtemp.microblog.model.User;
 import com.google.gson.JsonObject;
 

@@ -1,6 +1,5 @@
 package com.example.microtemp.microblog.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,8 +14,8 @@ import android.widget.Toast;
 
 import com.example.microtemp.microblog.R;
 import com.example.microtemp.microblog.api.RetrofitClient;
-import com.example.microtemp.microblog.ui.GetMicroblogResponse;
-import com.example.microtemp.microblog.ui.GetPostResponse;
+import com.example.microtemp.microblog.api.GetMicroblogResponse;
+import com.example.microtemp.microblog.api.GetPostResponse;
 import com.example.microtemp.microblog.ui.MicroblogRecyclerViewAdapter;
 import com.example.microtemp.microblog.ui.PostRecyclerViewAdapter;
 import com.google.gson.JsonObject;

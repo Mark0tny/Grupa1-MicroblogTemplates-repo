@@ -18,8 +18,6 @@ import com.example.microtemp.microblog.api.SessionManager;
 import com.example.microtemp.microblog.model.Comment;
 import com.example.microtemp.microblog.model.User;
 import com.example.microtemp.microblog.ui.CommentsRecyclerViewAdapter;
-import com.example.microtemp.microblog.ui.GetPostResponse;
-import com.example.microtemp.microblog.ui.PostRecyclerViewAdapter;
 import com.google.gson.JsonObject;
 
 import java.util.List;

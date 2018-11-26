@@ -16,7 +16,7 @@ import com.example.microtemp.microblog.R;
 import com.example.microtemp.microblog.api.RetrofitClient;
 import com.example.microtemp.microblog.api.SessionManager;
 import com.example.microtemp.microblog.model.User;
-import com.example.microtemp.microblog.ui.GetPostResponse;
+import com.example.microtemp.microblog.api.GetPostResponse;
 import com.example.microtemp.microblog.ui.PostRecyclerViewAdapter;
 import com.google.gson.JsonObject;
 

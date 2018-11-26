@@ -1,11 +1,7 @@
 package com.example.microtemp.microblog.api;
 import com.example.microtemp.microblog.model.Comment;
 import com.example.microtemp.microblog.model.User;
-import com.example.microtemp.microblog.ui.GetMicroblogResponse;
-import com.example.microtemp.microblog.ui.GetPostResponse;
 import com.google.gson.JsonObject;
-
-import org.json.JSONObject;
 
 import java.util.List;
 import retrofit2.Call;

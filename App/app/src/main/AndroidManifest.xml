@@ -39,7 +39,11 @@
         <activity android:name=".activity.SettingsActivity" />
         <activity android:name=".activity.SearchActivity" />
         <activity android:name=".activity.CommentActivity" />
-        <activity android:name=".activity.FollowersActivity"></activity>
+        <activity android:name=".activity.FollowersActivity" />
+        <activity
+            android:name=".activity.NavActivity"
+            android:label="@string/title_activity_nav"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

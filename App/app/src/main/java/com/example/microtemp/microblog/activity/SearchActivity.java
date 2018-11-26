@@ -1,8 +1,8 @@
 package com.example.microtemp.microblog.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -37,6 +37,7 @@ public class SearchActivity extends AppCompatActivity {
     private static EditText editText;
     List<GetPostResponse> postList = null;
     List<GetMicroblogResponse> blogList = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,10 +67,9 @@ public class SearchActivity extends AppCompatActivity {
 
                 Log.d("JSON", jsonPost.toString());
 
-                if(choice.equals("post")) {
+                if (choice.equals("post")) {
                     loadPost(jsonPost);
-                }
-                else if(choice.equals("blog")) {
+                } else if (choice.equals("blog")) {
                     loadMicroblogs(jsonPost);
                 }
             }
@@ -97,6 +97,7 @@ public class SearchActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "ERROR", Toast.LENGTH_LONG).show();
                 }
             }
+
             @Override
             public void onFailure(Call<List<GetPostResponse>> call, Throwable t) {
                 Log.d("ERROR", t.toString());
@@ -126,8 +127,8 @@ public class SearchActivity extends AppCompatActivity {
                 }));
 
 
-
     }
+
     public void recyclerViewInitBlog(final List<GetMicroblogResponse> blogList) {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
@@ -163,7 +164,7 @@ public class SearchActivity extends AppCompatActivity {
                     blogList = response.body();
                     for (GetMicroblogResponse mess : blogList
                             ) {
-                        Log.d("LIST TIEM",mess.getName());
+                        Log.d("LIST TIEM", mess.getName());
                     }
                     recyclerViewInitBlog(blogList);
                 } else {
@@ -176,5 +177,10 @@ public class SearchActivity extends AppCompatActivity {
                 Log.d("ERROR", t.toString());
             }
         });
+    }
+
+
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

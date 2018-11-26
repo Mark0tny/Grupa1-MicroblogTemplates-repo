@@ -3,11 +3,17 @@ package com.example.microtemp.microblog.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +34,10 @@ import retrofit2.Response;
 
 public class UserProfileActivity extends AppCompatActivity {
 
+    private NavigationView navigation_view;
+    private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private Menu drawerMenu;
     private static RecyclerView recyclerView;
     private static RecyclerView.Adapter adapter;
     List<GetMicroblogResponse> microblogList = null;
@@ -66,6 +76,16 @@ public class UserProfileActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        initNavBar();
+
+    }
+
+    public void logout() {
+        SessionManager.getInstance(this).clear();
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 
 
@@ -126,4 +146,46 @@ public class UserProfileActivity extends AppCompatActivity {
 
     }
 
+
+    public void initNavBar(){
+
+        navigation_view = findViewById(R.id.nav_view);
+        mDrawerLayout = findViewById(R.id.drawer_layout);
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, 0, 0);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        drawerMenu = navigation_view.getMenu();
+        for(int i = 0; i < drawerMenu.size(); i++) {
+            drawerMenu.getItem(i).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    int id = item.getItemId();
+
+                    if (id == R.id.nav_add) {
+
+                    } else if (id == R.id.nav_search) {
+                        Intent intent = new Intent(UserProfileActivity.this, SearchActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    } else if (id == R.id.nav_exit) {
+                        finish();
+                        System.exit(0);
+                    } else if (id == R.id.nav_logout) {
+                        logout();
+                    }
+                    return false;
+                }
+            });
+        }
+        View header = navigation_view.getHeaderView(0);
+        navigation_view.addHeaderView(header);
+        TextView name = header.findViewById(R.id.Log_username);
+        User user = SessionManager.getInstance(this).getUser();
+        name.setText(user.getUsername());
+
+
+    }
+    public void onBackPressed() {
+        //super.onBackPressed();
+        logout();
+    }
 }

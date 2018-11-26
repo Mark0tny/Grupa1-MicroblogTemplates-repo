@@ -8,8 +8,8 @@
             android:id="@+id/nav_add"
             android:title="@string/navigation_add" />
         <item
-            android:id="@+id/nav_settings"
-            android:title="@string/app_settings" />
+            android:id="@+id/nav_search"
+            android:title="@string/app_search" />
         <item
             android:id="@+id/nav_exit"
             android:title="@string/app_exit" />
@@ -17,7 +17,5 @@
             android:id="@+id/nav_logout"
             android:title="@string/app_logout" />
     </group>
-
-
 
 </menu>

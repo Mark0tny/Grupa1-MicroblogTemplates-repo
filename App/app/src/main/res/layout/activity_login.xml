@@ -80,7 +80,8 @@
                 android:text="@string/action_register"
                 android:textStyle="bold" />
 
-
         </LinearLayout>
     </ScrollView>
+
+
 </LinearLayout>

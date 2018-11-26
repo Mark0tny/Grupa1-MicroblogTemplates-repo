@@ -58,7 +58,14 @@ void ConnectionPool::mapSetup()
         {search_blogs, search_blogs_query},
         {search_posts, search_posts_query},
         {get_post, get_post_query},
-        {get_comments, get_comments_query}
+        {get_comments, get_comments_query},
+        {delete_post, delete_post_query},
+        {delete_blog, delete_blog_query},
+        {delete_blogs_posts, delete_blogs_posts_query},
+        {delete_posts_comments, delete_posts_comments_query},
+        {delete_comments, delete_comments_query},
+        {is_blog_author, is_blog_author_query},
+        {is_post_author, is_post_author_query}
 
     };
 

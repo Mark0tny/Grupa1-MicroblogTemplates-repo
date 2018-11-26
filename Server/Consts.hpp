@@ -26,6 +26,8 @@ namespace RoutingConsts
     constexpr auto get_followers = "/followers";
     constexpr auto get_post = "/getpost";
     constexpr auto get_comments = "/comments";
+    constexpr auto delete_post = "/deletepost";
+    constexpr auto delete_blog = "/deleteblog";
 }
 
 
@@ -86,8 +88,8 @@ namespace QueriesConsts
         ) t)";
     constexpr auto get_post = "get post";
     constexpr auto get_post_query = R"(SELECT COALESCE (json_agg(t), '[]'::json) FROM (
-        SELECT u.username, p.views, p.tags, p.time_created::timestamp(0), p.id_post, p.id_microblog
-        FROM post
+        SELECT u.username, p.content, p.views, p.tags, p.time_created::timestamp(0), p.id_post, p.id_microblog
+        FROM post p
         JOIN users u ON u.id_user = p.author 
         WHERE id_post = $1
         ORDER BY time_created
@@ -100,4 +102,20 @@ namespace QueriesConsts
         WHERE c.post_id = $1
         ORDER BY c.time_created::timestamp(0)
         ) t)";
+    constexpr auto delete_post = "delete post";
+    constexpr auto delete_post_query = "DELETE FROM post where id_post = $1";
+    constexpr auto delete_comments = "delete comments";
+    constexpr auto delete_comments_query = "DELETE FROM comments WHERE post_id = $1";
+
+    constexpr auto delete_blogs_posts = "delete blogs posts";
+    constexpr auto delete_blogs_posts_query = "DELETE FROM post where id_microblog = $1";
+    constexpr auto delete_posts_comments = "delete posts comments";
+    constexpr auto delete_posts_comments_query = "DELETE FROM comments WHERE post_id IN (SELECT id_post FROM post where id_microblog = $1)";
+    constexpr auto delete_blog = "delete blog";
+    constexpr auto delete_blog_query = "DELETE FROM microblog WHERE id_microblog = $1";
+    constexpr auto is_blog_author = "is blog author";
+    constexpr auto is_blog_author_query = "SELECT COUNT(*) FROM users u join microblog m on m.author = u.id_user WHERE id_user = $1";
+    constexpr auto is_post_author = "is post author";
+    constexpr auto is_post_author_query = "SELECT COUNT(*) FROM users u join post m on m.author = u.id_user WHERE id_user = $1";
+
 }

@@ -249,7 +249,53 @@ void RequestHandler::GetComments(const pr::Request& rq, ph::ResponseWriter rw)
 
 }
 
+void RequestHandler::DeletePost(const pr::Request& rq, ph::ResponseWriter rw)
+{
+    json delet = json::parse(std::move(rq.body()));
+    auto dumper = id_dumper_t(delet);
+    std::cout << QueriesConsts::delete_post << '\n';
+    auto r = pool.executeQuery(QueriesConsts::is_post_author, dumper("userid"));
 
+    if(r.has_value() && r->size() > 0)
+    {
+        auto r1 = pool.executeQuery(QueriesConsts::delete_comments, dumper("postid"));
+        auto r2 = pool.executeQuery(QueriesConsts::delete_post, dumper("postid"));
+        if(r1.has_value() && r2.has_value() && r1->size() > 0 && r2->size() > 0)
+            rw.send(Http::Code::Ok, "Removed");
+        else
+            rw.send(Http::Code::Bad_Request, "Failed To Remove");
+
+    }
+    else if(r.has_value())
+        rw.send(Http::Code::Bad_Request, "Failed To Remove");
+    else
+        rw.send(Http::Code::Service_Unavailable, "No Available Connection");
+    
+}
+
+void RequestHandler::DeleteBlog(const pr::Request& rq, ph::ResponseWriter rw)
+{
+    json delet = json::parse(std::move(rq.body()));
+    std::cout << delet << '\n';
+    auto dumper = id_dumper_t(delet);
+    std::cout << QueriesConsts::delete_blog << '\n';
+    auto r = pool.executeQuery(QueriesConsts::is_blog_author, dumper("userid"));
+    if(r.has_value() && r->size() > 0)
+    {
+        auto r1 = pool.executeQuery(QueriesConsts::delete_posts_comments, dumper("blogid"));
+        auto r2 = pool.executeQuery(QueriesConsts::delete_blogs_posts, dumper("blogid"));
+        auto r3 = pool.executeQuery(QueriesConsts::delete_blog, dumper("blogid"));
+        if(r1.has_value() && r2.has_value() && r3.has_value())
+            rw.send(Http::Code::Ok, "Removed");
+        else
+            rw.send(Http::Code::Bad_Request, "Failed To Remove");
+
+    }
+    else if(r.has_value())
+        rw.send(Http::Code::Bad_Request, "Failed To Remove");
+    else
+        rw.send(Http::Code::Service_Unavailable, "No Available Connection");
+}
 
 
 
@@ -273,6 +319,10 @@ void RequestHandler::setRoutes(Rest::Router& r)
     Rest::Routes::Post(r, RoutingConsts::search, Rest::Routes::bind(&RequestHandler::Search, this));
     Rest::Routes::Post(r, RoutingConsts::get_post, Rest::Routes::bind(&RequestHandler::GetPost, this));
     Rest::Routes::Post(r, RoutingConsts::get_comments, Rest::Routes::bind(&RequestHandler::GetComments, this));
+    Rest::Routes::Post(r, RoutingConsts::delete_post, Rest::Routes::bind(&RequestHandler::DeletePost, this));
+    Rest::Routes::Post(r, RoutingConsts::delete_blog, Rest::Routes::bind(&RequestHandler::DeleteBlog, this));
+
+
 
 
 

@@ -30,6 +30,10 @@ struct RequestHandler
     void Search(const pr::Request& rq, ph::ResponseWriter rw);
     void GetPost(const pr::Request& rq, ph::ResponseWriter rw);
     void GetComments(const pr::Request& rq, ph::ResponseWriter rw);
+    void DeletePost(const pr::Request& rq, ph::ResponseWriter rw);
+    void DeleteBlog(const pr::Request& rq, ph::ResponseWriter rw);
+
+
 
 
     void setRoutes(pr::Router& r);

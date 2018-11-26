@@ -45,6 +45,21 @@ public class Microblog {
     @Getter(value = AccessLevel.PUBLIC)
     @Setter(value = AccessLevel.PUBLIC)
     private String privacy;
+    @SerializedName("username")
+    @Expose
+    @Getter(value = AccessLevel.PUBLIC)
+    @Setter(value = AccessLevel.PUBLIC)
+    private String username;
+    @SerializedName("tags")
+    @Expose
+    @Getter(value = AccessLevel.PUBLIC)
+    @Setter(value = AccessLevel.PUBLIC)
+    private String tags;
+    @SerializedName("count")
+    @Expose
+    @Getter(value = AccessLevel.PUBLIC)
+    @Setter(value = AccessLevel.PUBLIC)
+    private int count;
 
 
 }

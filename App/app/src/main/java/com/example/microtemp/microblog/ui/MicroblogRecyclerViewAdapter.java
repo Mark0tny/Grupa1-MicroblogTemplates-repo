@@ -42,7 +42,11 @@ public class MicroblogRecyclerViewAdapter extends RecyclerView.Adapter<Microblog
 
         holder.textViewAuthor.setText(listItemMicroblog.getUsername().replaceAll("\"", ""));
         holder.textViewTitle.setText(listItemMicroblog.getName().replaceAll("\"", ""));
-        holder.textViewTags.setText(listItemMicroblog.getTags().replaceAll("\"", ""));
+        if(listItemMicroblog.getTags() != null)
+            holder.textViewTags.setText( listItemMicroblog.getTags().replaceAll("\"", ""));
+        else
+            holder.textViewTags.setText("");
+
         holder.textViewTime.setText(listItemMicroblog.getTimeCreated());
         //Objects.requireNonNull(holder).textViewFollowers.setText(listItemMicroblogList.size());
     }

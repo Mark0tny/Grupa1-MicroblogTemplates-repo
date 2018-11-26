@@ -61,7 +61,8 @@ public class UserProfileActivity extends AppCompatActivity {
         fab.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                finish();
+                Intent intent = new Intent(UserProfileActivity.this, SearchActivity.class);
+                startActivity(intent);
                 return false;
             }
         });

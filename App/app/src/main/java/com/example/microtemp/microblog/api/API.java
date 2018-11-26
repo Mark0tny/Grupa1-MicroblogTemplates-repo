@@ -4,6 +4,9 @@ import com.example.microtemp.microblog.model.User;
 import com.example.microtemp.microblog.ui.GetMicroblogResponse;
 import com.example.microtemp.microblog.ui.GetPostResponse;
 import com.google.gson.JsonObject;
+
+import org.json.JSONObject;
+
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -69,6 +72,16 @@ public interface API {
     @POST("/followers")
     Call<List<User>> getfollowers(
             @Body JsonObject jsonUsers
+    );
+
+    @POST("/search")
+    Call<List<GetPostResponse>> searchPost(
+            @Body JsonObject jsonPost
+    );
+
+    @POST("/search")
+    Call<List<GetMicroblogResponse>> searchBlog(
+            @Body JsonObject jsonPost
     );
 
 

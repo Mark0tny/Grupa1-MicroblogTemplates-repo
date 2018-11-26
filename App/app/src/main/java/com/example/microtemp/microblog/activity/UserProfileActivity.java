@@ -130,7 +130,7 @@ public class UserProfileActivity extends AppCompatActivity {
                         RecyclerItemClickListener(this, recyclerView, new MicroblogRecyclerViewAdapter.RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        Intent intent = new Intent(UserProfileActivity.this, PostActivity.class);
+                        Intent intent = new Intent(UserProfileActivity.this, PostListActivity.class);
                         intent.putExtra("name", microblogList.get(position).getName());
                         intent.putExtra("id", microblogList.get(position).getIdMicroblog());
                         startActivity(intent);

@@ -14,7 +14,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.microtemp.microblog.R;
-import com.example.microtemp.microblog.activity.CommentActivity;
+import com.example.microtemp.microblog.activity.PostActivity;
 import com.example.microtemp.microblog.api.RetrofitClient;
 import com.example.microtemp.microblog.api.GetPostResponse;
 import com.google.gson.JsonObject;
@@ -52,18 +52,8 @@ public class PostRecyclerViewAdapter extends RecyclerView.Adapter<PostRecyclerVi
         holder.textViewTitle.setText(listItemPost.getUsername().replaceAll("\"", ""));
         holder.textViewTags.setText(listItemPost.getTags().replaceAll("\"", ""));
         holder.textViewTime.setText(listItemPost.getTimeCreated().replaceAll("\"", ""));
-        holder.textViewContent.setText(listItemPost.getTags().replaceAll("\"", ""));
         holder.textViewLikes.setText(Integer.toString(listItemPost.getViews()));
         holder.textViewComments.setText(Integer.toString(listItemPost.getCount()));
-
-        holder.buttonComments.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, CommentActivity.class);
-                intent.putExtra("id_post", listItemPosts.get(position).getIdPost());
-                context.startActivity(intent);
-            }
-        });
 
         holder.buttonLike.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,12 +75,11 @@ public class PostRecyclerViewAdapter extends RecyclerView.Adapter<PostRecyclerVi
         public TextView textViewTime;
         public TextView textViewTitle;
         public TextView textViewTags;
-        public TextView textViewContent;
         public TextView textViewLikes;
         public TextView textViewComments;
 
         public Button buttonLike;
-        public Button buttonComments;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -98,11 +87,9 @@ public class PostRecyclerViewAdapter extends RecyclerView.Adapter<PostRecyclerVi
             textViewTime = itemView.findViewById(R.id.time_post);
             textViewTitle = itemView.findViewById(R.id.textViewTitlep);
             textViewTags = itemView.findViewById(R.id.textViewTagsp);
-            textViewContent = itemView.findViewById(R.id.text_post_content);
             textViewLikes = itemView.findViewById(R.id.text_like_count);
             textViewComments = itemView.findViewById(R.id.comm_count);
             buttonLike = itemView.findViewById(R.id.addlike);
-            buttonComments = itemView.findViewById(R.id.addcomment);
         }
     }
     public static class RecyclerItemClickListener implements RecyclerView.OnItemTouchListener {

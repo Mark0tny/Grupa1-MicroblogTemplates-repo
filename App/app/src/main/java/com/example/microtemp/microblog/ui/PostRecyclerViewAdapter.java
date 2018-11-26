@@ -107,7 +107,6 @@ public class PostRecyclerViewAdapter extends RecyclerView.Adapter<PostRecyclerVi
 
         }
     }
-
     public static class RecyclerItemClickListener implements RecyclerView.OnItemTouchListener {
         private PostRecyclerViewAdapter.RecyclerItemClickListener.OnItemClickListener mListener;
 

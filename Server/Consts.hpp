@@ -117,5 +117,7 @@ namespace QueriesConsts
     constexpr auto is_blog_author_query = "SELECT COUNT(*) FROM users u join microblog m on m.author = u.id_user WHERE id_user = $1";
     constexpr auto is_post_author = "is post author";
     constexpr auto is_post_author_query = "SELECT COUNT(*) FROM users u join post m on m.author = u.id_user WHERE id_user = $1";
+    constexpr auto delete_follows = "delete follows";
+    constexpr auto delete_follows_query = "DELETE FROM follow WHERE blogid = $1";
 
 }

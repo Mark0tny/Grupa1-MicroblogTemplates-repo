@@ -285,7 +285,8 @@ void RequestHandler::DeleteBlog(const pr::Request& rq, ph::ResponseWriter rw)
         auto r1 = pool.executeQuery(QueriesConsts::delete_posts_comments, dumper("blogid"));
         auto r2 = pool.executeQuery(QueriesConsts::delete_blogs_posts, dumper("blogid"));
         auto r3 = pool.executeQuery(QueriesConsts::delete_blog, dumper("blogid"));
-        if(r1.has_value() && r2.has_value() && r3.has_value())
+        auto r4 = pool.executeQuery(QueriesConsts::delete_follows, dumper("blogid"));
+        if(r1.has_value() && r2.has_value() && r3.has_value() && r4.has_value())
             rw.send(Http::Code::Ok, "Removed");
         else
             rw.send(Http::Code::Bad_Request, "Failed To Remove");

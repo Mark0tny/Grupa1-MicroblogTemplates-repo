@@ -55,10 +55,6 @@ public class UserProfileActivity extends AppCompatActivity {
         jsonMicroblog.addProperty("id", user.getId());
 
         loadMicroblogs(jsonMicroblog);
-
-        TextView txtViewResponeUsername = (TextView) findViewById(R.id.responseUsername);
-        txtViewResponeUsername.setText("Witaj " + user.getEmail());
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_profile);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +71,6 @@ public class UserProfileActivity extends AppCompatActivity {
                 return false;
             }
         });
-
         initNavBar();
 
     }

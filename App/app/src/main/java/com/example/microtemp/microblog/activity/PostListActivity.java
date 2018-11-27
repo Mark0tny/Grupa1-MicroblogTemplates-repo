@@ -43,8 +43,7 @@ public class PostListActivity extends AppCompatActivity {
         Intent intent = getIntent();
         final Integer id = intent.getIntExtra("id", 0);
         final String data = intent.getStringExtra("name");
-
-        User user = SessionManager.getInstance(this).getUser();
+        String microBlog = data;
         JsonObject jsonPost = new JsonObject();
         jsonPost.addProperty("id", id);
         loadPost(jsonPost);
@@ -59,7 +58,7 @@ public class PostListActivity extends AppCompatActivity {
             }
         });
         TextView txtViewResponeUsername = findViewById(R.id.responseMicroblogName);
-        txtViewResponeUsername.setText(data);
+        txtViewResponeUsername.setText(microBlog.replaceAll("\"", ""));
     }
 
     public void loadPost(JsonObject jsonPost) {

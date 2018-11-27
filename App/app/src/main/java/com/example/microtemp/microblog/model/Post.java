@@ -1,57 +1,40 @@
 package com.example.microtemp.microblog.model;
 
-import java.util.Date;
-import java.util.List;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
-@AllArgsConstructor(access=AccessLevel.PUBLIC)
+@Data
+@AllArgsConstructor(access = AccessLevel.PUBLIC)
 @ToString
 @EqualsAndHashCode
 public class Post {
 
-    @Getter(value = AccessLevel.PUBLIC)
-    @Setter(value = AccessLevel.PUBLIC)
-    private int id;
-    @Getter(value = AccessLevel.PUBLIC)
-    @Setter(value = AccessLevel.PUBLIC)
-    private int author;
-    @Getter(value = AccessLevel.PUBLIC)
-    @Setter(value = AccessLevel.PUBLIC)
-    private String title;
-    @Getter(value = AccessLevel.PUBLIC)
-    @Setter(value = AccessLevel.PUBLIC)
-    private Date timeCreated;
-    @Getter(value = AccessLevel.PUBLIC)
-    @Setter(value = AccessLevel.PUBLIC)
+    @SerializedName("content")
+    @Expose
     private String content;
-    @Getter(value = AccessLevel.PUBLIC)
-    @Setter(value = AccessLevel.PUBLIC)
-    private String picture;
-    @Getter(value = AccessLevel.PUBLIC)
-    @Setter(value = AccessLevel.PUBLIC)
-    private List<Comment> commentList;
-    @Getter(value = AccessLevel.PUBLIC)
-    @Setter(value = AccessLevel.PUBLIC)
-    private int views;
-    @Getter(value = AccessLevel.PUBLIC)
-    @Setter(value = AccessLevel.PUBLIC)
-    private List<Tag> tagList;
-    @Getter(value = AccessLevel.PUBLIC)
-    @Setter(value = AccessLevel.PUBLIC)
-    private int idMicroblog;
-    @Getter(value = AccessLevel.PUBLIC)
-    @Setter(value = AccessLevel.PUBLIC)
-    private int count;
-    @Getter(value = AccessLevel.PUBLIC)
-    @Setter(value = AccessLevel.PUBLIC)
+    @SerializedName("id_microblog")
+    @Expose
+    private Integer idMicroblog;
+    @SerializedName("id_post")
+    @Expose
+    private Integer idPost;
+    @SerializedName("tags")
+    @Expose
     private String tags;
-
-
+    @SerializedName("time_created")
+    @Expose
+    private String timeCreated;
+    @SerializedName("username")
+    @Expose
+    private String username;
+    @SerializedName("views")
+    @Expose
+    private Integer views;
 
 }

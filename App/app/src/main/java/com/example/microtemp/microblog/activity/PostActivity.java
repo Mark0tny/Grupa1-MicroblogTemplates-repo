@@ -1,8 +1,8 @@
 package com.example.microtemp.microblog.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -10,12 +10,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.microtemp.microblog.R;
 import com.example.microtemp.microblog.api.RetrofitClient;
 import com.example.microtemp.microblog.api.SessionManager;
 import com.example.microtemp.microblog.model.Comment;
+import com.example.microtemp.microblog.model.Post;
 import com.example.microtemp.microblog.model.User;
 import com.example.microtemp.microblog.ui.CommentsRecyclerViewAdapter;
 import com.google.gson.JsonObject;
@@ -33,6 +34,8 @@ public class PostActivity extends AppCompatActivity {
     private Button buttonAddComment;
     private EditText commentContent;
     private List<Comment> commentList = null;
+    private List<Post> postList;
+    private TextView authorTV, contentTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,24 +44,27 @@ public class PostActivity extends AppCompatActivity {
 
         buttonAddComment = findViewById(R.id.comment_post_btn);
         commentContent = findViewById(R.id.comment_field);
+        authorTV = findViewById(R.id.text_post_author);
+        contentTV = findViewById(R.id.text_post_content);
+        initPostContent();
         loadComments(initGetComments());
 
         buttonAddComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!TextUtils.isEmpty(commentContent.getText().toString().trim())){
-                    addComment(initAddComent(),initGetComments());
-                }else{
+                if (!TextUtils.isEmpty(commentContent.getText().toString().trim())) {
+                    addComment(initAddComent(), initGetComments());
+                } else {
                     commentContent.setError("Field can not be empty");
                     commentContent.requestFocus();
                     return;
 
-                    }
+                }
             }
         });
     }
 
-    private void addComment(JsonObject jsonAddComment,JsonObject jsonCommentList) {
+    private void addComment(JsonObject jsonAddComment, JsonObject jsonCommentList) {
         retrofit2.Call<JsonObject> call = RetrofitClient
                 .getmInstance()
                 .getAPI()
@@ -80,7 +86,8 @@ public class PostActivity extends AppCompatActivity {
         });
         loadComments(jsonCommentList);
     }
-    public void loadComments(JsonObject jsonCommentList){
+
+    public void loadComments(JsonObject jsonCommentList) {
         retrofit2.Call<List<Comment>> call = RetrofitClient
                 .getmInstance()
                 .getAPI()
@@ -96,16 +103,14 @@ public class PostActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "ERROR", Toast.LENGTH_LONG).show();
                 }
             }
+
             @Override
             public void onFailure(Call<List<Comment>> call, Throwable t) {
 
             }
         });
 
-
     }
-
-
 
     public void recyclerViewInit(final List<Comment> commentList) {
 
@@ -118,24 +123,57 @@ public class PostActivity extends AppCompatActivity {
 
     }
 
-    public JsonObject initAddComent(){
+    public JsonObject initAddComent() {
         Intent intent = getIntent();
-        final Integer id = intent.getIntExtra("id_post",0);
+        final Integer id = intent.getIntExtra("id_post", 0);
         User user = SessionManager.getInstance(this).getUser();
         JsonObject jsonAddComment = new JsonObject();
-        jsonAddComment.addProperty("post_id",id);
-        jsonAddComment.addProperty("content",commentContent.getText().toString().trim());
-        jsonAddComment.addProperty("author",user.getId());
-        return  jsonAddComment;
+        jsonAddComment.addProperty("post_id", id);
+        jsonAddComment.addProperty("content", commentContent.getText().toString().trim());
+        jsonAddComment.addProperty("author", user.getId());
+        return jsonAddComment;
 
 
     }
-    public JsonObject initGetComments(){
+
+    public JsonObject initGetComments() {
         Intent intent = getIntent();
-        final Integer id = intent.getIntExtra("id_post",0);
+        final Integer id = intent.getIntExtra("id_post", 0);
         JsonObject jsonCommentList = new JsonObject();
-        jsonCommentList.addProperty("id",id);
+        jsonCommentList.addProperty("id", id);
         return jsonCommentList;
     }
 
+    public void initPostContent() {
+        Intent intent = getIntent();
+        final Integer id = intent.getIntExtra("id_post", 0);
+        JsonObject jsonPost = new JsonObject();
+        jsonPost.addProperty("id", id);
+        retrofit2.Call<List<Post>> call = RetrofitClient
+                .getmInstance()
+                .getAPI()
+                .getPost(jsonPost);
+
+        call.enqueue(new Callback<List<Post>>() {
+            @Override
+            public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
+                if (response.isSuccessful()) {
+                    postList = response.body();
+                    if(postList.isEmpty()){
+                    }else{
+                        authorTV.setText( postList.get(0).getUsername().replaceAll("\"", ""));
+                        contentTV.setText(postList.get(0).getContent().replaceAll("\"", ""));
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "ERROR", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Post>> call, Throwable t) {
+
+            }
+        });
+
+    }
 }

@@ -100,7 +100,7 @@ public class CreatePostActivity extends AppCompatActivity {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Intent intent = new Intent(CreatePostActivity.this, Post.class);
+                        Intent intent = new Intent(CreatePostActivity.this, PostActivity.class);
                         startActivity(intent);
                     }
                 }, 1000);

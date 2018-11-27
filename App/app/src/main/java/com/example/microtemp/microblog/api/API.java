@@ -1,5 +1,6 @@
 package com.example.microtemp.microblog.api;
 import com.example.microtemp.microblog.model.Comment;
+import com.example.microtemp.microblog.model.Post;
 import com.example.microtemp.microblog.model.User;
 import com.google.gson.JsonObject;
 
@@ -37,6 +38,11 @@ public interface API {
 
     @POST("/getposts")
     Call<List<GetPostResponse>> getPosts(
+            @Body JsonObject jsonPost
+    );
+
+    @POST("/getpost")
+    Call<List<Post>> getPost(
             @Body JsonObject jsonPost
     );
 

@@ -1,5 +1,6 @@
 package com.example.microtemp.microblog.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,6 +28,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
+
 public class SearchActivity extends AppCompatActivity {
 
     private static Spinner spinner;
@@ -42,6 +45,7 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         recyclerView = findViewById(R.id.post_recyclerview);
+
 
         spinner = findViewById(R.id.spinner8);
         ArrayList<String> options = new ArrayList();
@@ -116,6 +120,11 @@ public class SearchActivity extends AppCompatActivity {
                         RecyclerItemClickListener(this, recyclerView, new PostRecyclerViewAdapter.RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
+                        Intent intent = new Intent(SearchActivity.this, PostActivity.class);
+                        intent.putExtra("id_post", postList.get(position).getIdPost());
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+
                     }
 
                     @Override
@@ -124,8 +133,6 @@ public class SearchActivity extends AppCompatActivity {
                     }
 
                 }));
-
-
     }
 
     public void recyclerViewInitBlog(final List<GetMicroblogResponse> blogList) {
@@ -139,6 +146,12 @@ public class SearchActivity extends AppCompatActivity {
                         RecyclerItemClickListener(this, recyclerView, new MicroblogRecyclerViewAdapter.RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
+                        Intent intent = new Intent(SearchActivity.this, PostListActivity.class);
+                        intent.putExtra("name", blogList.get(position).getName());
+                        intent.putExtra("id", blogList.get(position).getIdMicroblog());
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+
                     }
 
                     @Override
@@ -178,8 +191,9 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
-
+    @Override
     public void onBackPressed() {
         super.onBackPressed();
     }
+
 }

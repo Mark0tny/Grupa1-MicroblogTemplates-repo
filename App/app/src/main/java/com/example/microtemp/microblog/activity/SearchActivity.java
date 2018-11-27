@@ -37,14 +37,62 @@ public class SearchActivity extends AppCompatActivity {
     private static Button button;
     private static RecyclerView.Adapter adapter;
     private static EditText editText;
-    List<GetPostResponse> postList = null;
-    List<GetMicroblogResponse> blogList = null;
+    private static List<GetPostResponse> postList = new ArrayList<>();
+    private static List<GetMicroblogResponse> blogList = new ArrayList<>();
+    private static RecyclerView.OnItemTouchListener blogListener;
+    private static RecyclerView.OnItemTouchListener postListener;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         recyclerView = findViewById(R.id.post_recyclerview);
+
+        postListener = new PostRecyclerViewAdapter.
+                RecyclerItemClickListener(this, recyclerView, new PostRecyclerViewAdapter.RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(SearchActivity.this, PostActivity.class);
+                intent.putExtra("id_post", postList.get(position).getIdPost());
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+
+            }
+            @Override
+            public void onItemLongClick(View view, int position) {
+
+            }
+
+            @Override
+            public void onShowPress(View view, int position) {
+
+            }
+
+        });
+
+        blogListener = new MicroblogRecyclerViewAdapter.
+                RecyclerItemClickListener(this, recyclerView, new MicroblogRecyclerViewAdapter.RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(SearchActivity.this, PostListActivity.class);
+                intent.putExtra("name", blogList.get(position).getName());
+                intent.putExtra("id", blogList.get(position).getIdMicroblog());
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+
+            }
+
+            @Override
+            public void onShowPress(View view, int position) {
+            }
+
+        });
 
 
         spinner = findViewById(R.id.spinner8);
@@ -82,6 +130,8 @@ public class SearchActivity extends AppCompatActivity {
 
     public void loadPost(JsonObject jsonPost) {
 
+        postList.clear();
+
         retrofit2.Call<List<GetPostResponse>> call = RetrofitClient
                 .getmInstance()
                 .getAPI()
@@ -114,64 +164,30 @@ public class SearchActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setNestedScrollingEnabled(false);
         adapter = new PostRecyclerViewAdapter(postList, getApplicationContext());
-        recyclerView.setAdapter(adapter);
-        recyclerView.addOnItemTouchListener(
-                new PostRecyclerViewAdapter.
-                        RecyclerItemClickListener(this, recyclerView, new PostRecyclerViewAdapter.RecyclerItemClickListener.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                        Intent intent = new Intent(SearchActivity.this, PostActivity.class);
-                        intent.putExtra("id_post", postList.get(position).getIdPost());
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-
-                    }
-                    @Override
-                    public void onItemLongClick(View view, int position) {
-
-                    }
-
-                    @Override
-                    public void onShowPress(View view, int position) {
-
-                    }
-
-                }));
+        recyclerView.setAdapter(null);
+        recyclerView.swapAdapter(adapter, true);
+        recyclerView.getAdapter().notifyDataSetChanged();
+        recyclerView.removeOnItemTouchListener(blogListener);
+        recyclerView.addOnItemTouchListener(postListener);
     }
 
     public void recyclerViewInitBlog(final List<GetMicroblogResponse> blogList) {
+
+        recyclerView.setAdapter(null);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setNestedScrollingEnabled(false);
         adapter = new MicroblogRecyclerViewAdapter(blogList, getApplicationContext());
-        recyclerView.setAdapter(adapter);
-        recyclerView.addOnItemTouchListener(
-                new MicroblogRecyclerViewAdapter.
-                        RecyclerItemClickListener(this, recyclerView, new MicroblogRecyclerViewAdapter.RecyclerItemClickListener.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                        Intent intent = new Intent(SearchActivity.this, PostListActivity.class);
-                        intent.putExtra("name", blogList.get(position).getName());
-                        intent.putExtra("id", blogList.get(position).getIdMicroblog());
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-
-                    }
-
-                    @Override
-                    public void onItemLongClick(View view, int position) {
-
-                    }
-
-                    @Override
-                    public void onShowPress(View view, int position) {
-                    }
-
-                }));
+        recyclerView.setAdapter(null);
+        recyclerView.swapAdapter(adapter, true);
+        recyclerView.getAdapter().notifyDataSetChanged();
+        recyclerView.removeOnItemTouchListener(postListener);
+        recyclerView.addOnItemTouchListener(blogListener);
 
     }
 
     public void loadMicroblogs(JsonObject jsonMicroblog) {
+        blogList.clear();
 
         retrofit2.Call<List<GetMicroblogResponse>> call = RetrofitClient
                 .getmInstance()

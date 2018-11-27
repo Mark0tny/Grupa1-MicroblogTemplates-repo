@@ -126,6 +126,10 @@ public class SearchActivity extends AppCompatActivity {
                         startActivity(intent);
 
                     }
+                    @Override
+                    public void onItemLongClick(View view, int position) {
+
+                    }
 
                     @Override
                     public void onShowPress(View view, int position) {
@@ -151,6 +155,11 @@ public class SearchActivity extends AppCompatActivity {
                         intent.putExtra("id", blogList.get(position).getIdMicroblog());
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
+
+                    }
+
+                    @Override
+                    public void onItemLongClick(View view, int position) {
 
                     }
 
@@ -189,11 +198,6 @@ public class SearchActivity extends AppCompatActivity {
                 Log.d("ERROR", t.toString());
             }
         });
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
     }
 
 }

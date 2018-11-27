@@ -86,6 +86,16 @@ public interface API {
             @Body JsonObject jsonPost
     );
 
+    @POST("/deletepost")
+    Call<JsonObject> deletePost(
+            @Body JsonObject jsonPost
+    );
+
+    @POST("/deleteblog")
+    Call<JsonObject> deleteBlog(
+            @Body JsonObject jsonBlog
+    );
+
 
 
 

@@ -97,7 +97,7 @@ public class PostRecyclerViewAdapter extends RecyclerView.Adapter<PostRecyclerVi
 
         public interface OnItemClickListener {
             public void onItemClick(View view, int position);
-
+            public void onItemLongClick(View view, int position);
             public void onShowPress(View view, int position);
         }
         GestureDetector mGestureDetector;
@@ -108,6 +108,12 @@ public class PostRecyclerViewAdapter extends RecyclerView.Adapter<PostRecyclerVi
                 @Override
                 public boolean onSingleTapUp(MotionEvent e) {
                     return true;
+                }
+
+                @Override
+                public void onLongPress(MotionEvent e) {
+                    View child = recyclerView.findChildViewUnder(e.getX(), e.getY());
+                    mListener.onItemLongClick(child,recyclerView.getChildAdapterPosition(child));
                 }
 
                 @Override

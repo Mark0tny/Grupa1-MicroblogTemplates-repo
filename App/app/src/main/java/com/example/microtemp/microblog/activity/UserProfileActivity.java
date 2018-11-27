@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,14 +15,15 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.microtemp.microblog.R;
+import com.example.microtemp.microblog.api.GetMicroblogResponse;
 import com.example.microtemp.microblog.api.RetrofitClient;
 import com.example.microtemp.microblog.api.SessionManager;
 import com.example.microtemp.microblog.model.User;
-import com.example.microtemp.microblog.api.GetMicroblogResponse;
 import com.example.microtemp.microblog.ui.MicroblogRecyclerViewAdapter;
 import com.google.gson.JsonObject;
 
@@ -112,6 +114,25 @@ public class UserProfileActivity extends AppCompatActivity {
         });
     }
 
+    public void deleteMicroblog(JsonObject jsonMicroblog) {
+        retrofit2.Call<JsonObject> call = RetrofitClient
+                .getmInstance()
+                .getAPI()
+                .deleteBlog(jsonMicroblog);
+
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                Toast.makeText(getApplicationContext(), "MicroBlog deleted", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.d("ERROR", t.toString());
+            }
+        });
+    }
+
     public void recyclerViewInit(final List<GetMicroblogResponse> microblogList) {
         recyclerView = (RecyclerView) findViewById(R.id.microblog_recyclerview);
         recyclerView.setHasFixedSize(true);
@@ -132,6 +153,31 @@ public class UserProfileActivity extends AppCompatActivity {
                     }
 
                     @Override
+                    public void onItemLongClick(View view, final int position) {
+                        final AlertDialog dialog = new AlertDialog.Builder(UserProfileActivity.this)
+                                .setMessage("Are you sure?")
+                                .setPositiveButton("Yes", null)
+                                .setNegativeButton("No", null)
+                                .show();
+                        Button negativBtn = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+                        negativBtn.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                        Button positivBtn = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                        positivBtn.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                        positivBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                User user = SessionManager.getInstance(UserProfileActivity.this).getUser();
+                                JsonObject jsonMicroblog = new JsonObject();
+                                jsonMicroblog.addProperty("userid", user.getId());
+                                jsonMicroblog.addProperty("blogid", microblogList.get(position).getIdMicroblog());
+                                deleteMicroblog(jsonMicroblog);
+                                dialog.dismiss();
+                            }
+                        });
+
+                    }
+
+                    @Override
                     public void onShowPress(View view, int position) {
 
                     }
@@ -139,14 +185,15 @@ public class UserProfileActivity extends AppCompatActivity {
                 }));
 
     }
-    public void initNavBar(){
+
+    public void initNavBar() {
 
         navigation_view = findViewById(R.id.nav_view);
         mDrawerLayout = findViewById(R.id.drawer_layout);
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, 0, 0);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         drawerMenu = navigation_view.getMenu();
-        for(int i = 0; i < drawerMenu.size(); i++) {
+        for (int i = 0; i < drawerMenu.size(); i++) {
             drawerMenu.getItem(i).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
@@ -175,6 +222,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
 
     }
+
     public void onBackPressed() {
         //super.onBackPressed();
         logout();

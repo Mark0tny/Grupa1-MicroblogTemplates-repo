@@ -11,30 +11,34 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="Username"
+        android:textColor="@color/colorCommentAuthor"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/comment_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="Time"
+        android:textColor="@color/colorCommentAuthor"
         app:layout_constraintStart_toEndOf="@+id/comment_username"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/comment_message"
         android:layout_width="0dp"
-        android:layout_height="44dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:text="Loading Comment..."
         android:maxLines="6"
         android:singleLine="false"
+        android:text="Loading Comment..."
+        android:textColor="@color/colorCommentAuthor"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/comment_username" />

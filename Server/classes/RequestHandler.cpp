@@ -108,6 +108,7 @@ void RequestHandler::CreateMicroBlog(const Rest::Request& rq, Http::ResponseWrit
 
     auto result = pool.executeQuery(QueriesConsts::create_microblog, dumper("title"), 
                                     iddumper("id"),dumper("tags"), dumper("private") != "private" );
+    auto r2 = pool.executeQuery(QueriesConsts::follow, iddumper("id"), result->at(0).at(0).as<unsigned long long>());
 
     handle_result(result, rq, rw);
 

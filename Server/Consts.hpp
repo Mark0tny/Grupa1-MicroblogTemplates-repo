@@ -67,7 +67,14 @@ namespace QueriesConsts
     constexpr auto follow = "follow";
     constexpr auto follow_query = "INSERT INTO follow (userid, blogid) VALUES ($1, $2) RETURNING blogid";
     constexpr auto followed = "followed";
-    constexpr auto followed_query = "WITH T AS (SELECT * FROM microblog m inner join follow f on m.id_microblog = f.blogid where f.userid = $1) SELECT json_agg(T) FROM T";
+    constexpr auto followed_query = R"(SELECT COALESCE (json_agg(t), '[]'::json) FROM (
+            SELECT DIStinct m.name, u.username, m.time_created::timestamp(0), m.tags, m.id_microblog, m.author  
+            FROM follow f
+            Join microblog m on m.id_microblog = f.blogid
+            JOIN users u on u.id_user = f.userid
+            WHERE f.userid = $1
+            ORDER BY m.time_created::timestamp(0)
+        ) t)";
     constexpr auto get_followers = "get_followers";
     constexpr auto get_followers_query = "SELECT COALESCE (json_agg(t), '[]'::json) FROM (SELECT username FROM users u inner join follow f on f.userid = u.id_user where f.blogid = $1) t";
     constexpr auto search_blogs = "search blogs";

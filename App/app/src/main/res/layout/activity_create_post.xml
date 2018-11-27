@@ -18,7 +18,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_gravity="center_vertical"
-            android:text="Artykuł" />
+            android:text="Artykuł"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
+            android:textColor="@color/colorCommentAuthor" />
 
         <Switch
             android:id="@+id/post_switch"
@@ -41,7 +43,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Tytuł" />
+            android:text="Tytuł"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
+            android:textColor="@color/colorCommentAuthor" />
 
         <EditText
             android:id="@+id/edit_post_name"
@@ -64,7 +68,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Treść" />
+            android:text="Treść"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
+            android:textColor="@color/colorCommentAuthor" />
 
         <EditText
             android:id="@+id/edit_post_content"
@@ -87,7 +93,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Tagi" />
+            android:text="Tagi"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
+            android:textColor="@color/colorCommentAuthor" />
 
         <EditText
             android:id="@+id/edit_tag"

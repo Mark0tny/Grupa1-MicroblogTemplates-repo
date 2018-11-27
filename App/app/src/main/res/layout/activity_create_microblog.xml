@@ -18,7 +18,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Tytuł" />
+            android:text="Tytuł"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
+            android:textColor="@color/colorCommentAuthor" />
 
         <EditText
             android:id="@+id/edit_microblog_name"
@@ -42,7 +44,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Tagi" />
+            android:text="Tagi"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
+            android:textColor="@color/colorCommentAuthor" />
 
         <EditText
             android:id="@+id/edit_tag"
@@ -66,7 +70,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Typ bloga" />
+            android:text="Typ bloga"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
+            android:textColor="@color/colorCommentAuthor" />
 
         <android.support.v7.widget.AppCompatSpinner
             android:id="@+id/privacy_spinner"

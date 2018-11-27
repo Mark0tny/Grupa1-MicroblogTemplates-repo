@@ -148,7 +148,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void nextActivity() {
-
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

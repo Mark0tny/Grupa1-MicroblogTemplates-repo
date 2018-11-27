@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import com.example.microtemp.microblog.R;
 import com.example.microtemp.microblog.api.RetrofitClient;
+import com.example.microtemp.microblog.api.SessionManager;
+import com.example.microtemp.microblog.model.User;
 import com.google.gson.JsonObject;
 
 import java.util.regex.Matcher;
@@ -54,8 +56,6 @@ public class RegisterActivity extends AppCompatActivity {
         password = findViewById(R.id.password_register);
         registerBtn = findViewById(R.id.send_request_button);
         registerBackBtn = findViewById(R.id.register_back_button);
-
-
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,8 +65,6 @@ public class RegisterActivity extends AppCompatActivity {
 
             }
         });
-
-
         registerBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,6 +121,11 @@ public class RegisterActivity extends AppCompatActivity {
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
                     if (response.code() == 200) {
+                        int userID = Integer.parseInt(response.body().get("id_user").toString());
+                        User user = new User();
+                        user.setId(userID);
+                        user.setUsername(response.body().get("username").toString());
+                        SessionManager.getInstance(RegisterActivity.this).saveUser(user);
                         Toast.makeText(getApplicationContext(), "Registration SUCCESS", Toast.LENGTH_LONG).show();
                         regSucces = true;
                         nextActivity();
@@ -141,7 +144,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
-
     public static void hideKeyboardFrom(Context context, View view) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
@@ -151,17 +153,19 @@ public class RegisterActivity extends AppCompatActivity {
         Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
         return matcher.find();
     }
-
     public void nextActivity(){
         if(regSucces) {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     progressBar.setVisibility(View.INVISIBLE);
-                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                    startActivity(intent);
+                    if (!SessionManager.getInstance(RegisterActivity.this).isLoggedIn()) {
+                        Intent intent = new Intent(RegisterActivity.this, UserProfileActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    }
                 }
-            }, 2000);
+            }, 1000);
         }
     }
 

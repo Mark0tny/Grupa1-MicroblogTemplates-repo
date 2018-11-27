@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import com.example.microtemp.microblog.R;
 import com.example.microtemp.microblog.api.RetrofitClient;
 import com.example.microtemp.microblog.api.GetMicroblogResponse;
@@ -20,15 +19,12 @@ import com.example.microtemp.microblog.api.GetPostResponse;
 import com.example.microtemp.microblog.ui.MicroblogRecyclerViewAdapter;
 import com.example.microtemp.microblog.ui.PostRecyclerViewAdapter;
 import com.google.gson.JsonObject;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
 
 public class SearchActivity extends AppCompatActivity {
 

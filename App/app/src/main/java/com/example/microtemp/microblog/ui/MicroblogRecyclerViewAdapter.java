@@ -3,6 +3,7 @@ package com.example.microtemp.microblog.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -11,11 +12,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.microtemp.microblog.R;
 import com.example.microtemp.microblog.activity.FollowersActivity;
+import com.example.microtemp.microblog.activity.UserProfileActivity;
 import com.example.microtemp.microblog.api.RetrofitClient;
 import com.example.microtemp.microblog.api.SessionManager;
 import com.example.microtemp.microblog.api.GetMicroblogResponse;
@@ -83,6 +86,18 @@ public class MicroblogRecyclerViewAdapter extends RecyclerView.Adapter<Microblog
                 context.startActivity(intent);
             }
         });
+
+        holder.blogInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                User user = SessionManager.getInstance(context).getUser();
+                JsonObject jsonMicroblog = new JsonObject();
+                jsonMicroblog.addProperty("userid", user.getId());
+                jsonMicroblog.addProperty("blogid", listItemMicroblogList.get(position).getIdMicroblog());
+                deleteMicroblog(jsonMicroblog);
+                Toast.makeText(context, "MicroBlog deleted", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
@@ -97,6 +112,7 @@ public class MicroblogRecyclerViewAdapter extends RecyclerView.Adapter<Microblog
         public TextView textViewFollowers;
         public TextView textViewTime;
         public TextView textFollowers;
+        public LinearLayout blogInfo;
         public Button buttonFollow;
 
 
@@ -110,6 +126,7 @@ public class MicroblogRecyclerViewAdapter extends RecyclerView.Adapter<Microblog
             textViewFollowers = itemView.findViewById(R.id.follow_count);
             textFollowers = itemView.findViewById(R.id.textFollowers);
             buttonFollow = itemView.findViewById(R.id.follow_blog);
+            blogInfo = itemView.findViewById(R.id.blog_info_layout);
         }
     }
 
@@ -211,6 +228,24 @@ public class MicroblogRecyclerViewAdapter extends RecyclerView.Adapter<Microblog
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Toast.makeText(context, "Microlog followed", Toast.LENGTH_LONG).show();
                 Log.d("GOOD", t.getMessage());
+            }
+        });
+    }
+
+    public void deleteMicroblog(JsonObject jsonMicroblog) {
+        retrofit2.Call<JsonObject> call = RetrofitClient
+                .getmInstance()
+                .getAPI()
+                .deleteBlog(jsonMicroblog);
+
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+
             }
         });
     }

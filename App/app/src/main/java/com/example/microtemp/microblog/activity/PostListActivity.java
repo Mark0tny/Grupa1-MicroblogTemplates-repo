@@ -1,7 +1,6 @@
 package com.example.microtemp.microblog.activity;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -16,10 +15,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.microtemp.microblog.R;
+import com.example.microtemp.microblog.api.GetPostResponse;
 import com.example.microtemp.microblog.api.RetrofitClient;
 import com.example.microtemp.microblog.api.SessionManager;
 import com.example.microtemp.microblog.model.User;
-import com.example.microtemp.microblog.api.GetPostResponse;
 import com.example.microtemp.microblog.ui.MicroblogRecyclerViewAdapter;
 import com.example.microtemp.microblog.ui.PostRecyclerViewAdapter;
 import com.google.gson.JsonObject;
@@ -89,24 +88,7 @@ public class PostListActivity extends AppCompatActivity {
         });
     }
 
-    private void deletePost(JsonObject jsonPost) {
-        retrofit2.Call<JsonObject> call = RetrofitClient
-                .getmInstance()
-                .getAPI()
-                .deletePost(jsonPost);
 
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                Toast.makeText(getApplicationContext(), "Post deleted", Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.d("ERROR", t.toString());
-            }
-        });
-    }
 
     public void recyclerViewInit(final List<GetPostResponse> postList) {
 
@@ -129,26 +111,6 @@ public class PostListActivity extends AppCompatActivity {
 
                     @Override
                     public void onItemLongClick(View view, final int position) {
-                      final AlertDialog dialog = new AlertDialog.Builder(PostListActivity.this)
-                              .setMessage("Are you sure?")
-                              .setPositiveButton("Yes", null)
-                              .setNegativeButton("No", null)
-                              .show();
-                        Button negativBtn = dialog.getButton(android.support.v7.app.AlertDialog.BUTTON_NEGATIVE);
-                        negativBtn.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
-                        Button positivBtn = dialog.getButton(android.support.v7.app.AlertDialog.BUTTON_POSITIVE);
-                        positivBtn.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
-                        positivBtn.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                User user = SessionManager.getInstance(PostListActivity.this).getUser();
-                                JsonObject jsonPost = new JsonObject();
-                                jsonPost.addProperty("userid", user.getId());
-                                jsonPost.addProperty("postid", postList.get(position).getIdPost());
-                                deletePost(jsonPost);
-                                dialog.dismiss();
-                            }
-                        });
                     }
 
                     @Override
@@ -158,7 +120,6 @@ public class PostListActivity extends AppCompatActivity {
 
                 }));
     }
-
 
 
 }

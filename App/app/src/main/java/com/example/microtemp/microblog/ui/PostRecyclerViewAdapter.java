@@ -11,13 +11,19 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.microtemp.microblog.R;
 import com.example.microtemp.microblog.activity.PostActivity;
+import com.example.microtemp.microblog.activity.PostListActivity;
 import com.example.microtemp.microblog.api.RetrofitClient;
 import com.example.microtemp.microblog.api.GetPostResponse;
+import com.example.microtemp.microblog.api.SessionManager;
+import com.example.microtemp.microblog.model.User;
 import com.google.gson.JsonObject;
+
+import java.util.LinkedHashSet;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -62,6 +68,19 @@ public class PostRecyclerViewAdapter extends RecyclerView.Adapter<PostRecyclerVi
                 holder.buttonLike.setEnabled(false);
             }
         });
+
+        holder.postInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                User user = SessionManager.getInstance(context).getUser();
+                JsonObject jsonPost = new JsonObject();
+                jsonPost.addProperty("userid", user.getId());
+                jsonPost.addProperty("postid", listItemPosts.get(position).getIdPost());
+                deletePost(jsonPost);
+                Toast.makeText(context, "Post deleted", Toast.LENGTH_LONG).show();
+            }
+        });
+
     }
 
     @Override
@@ -77,7 +96,7 @@ public class PostRecyclerViewAdapter extends RecyclerView.Adapter<PostRecyclerVi
         public TextView textViewTags;
         public TextView textViewLikes;
         public TextView textViewComments;
-
+        public LinearLayout postInfo;
         public Button buttonLike;
 
 
@@ -90,6 +109,7 @@ public class PostRecyclerViewAdapter extends RecyclerView.Adapter<PostRecyclerVi
             textViewLikes = itemView.findViewById(R.id.text_like_count);
             textViewComments = itemView.findViewById(R.id.comm_count);
             buttonLike = itemView.findViewById(R.id.addlike);
+            postInfo = itemView.findViewById(R.id.postinfo);
         }
     }
     public static class RecyclerItemClickListener implements RecyclerView.OnItemTouchListener {
@@ -162,6 +182,25 @@ public class PostRecyclerViewAdapter extends RecyclerView.Adapter<PostRecyclerVi
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Toast.makeText(context, "Post LIKE", Toast.LENGTH_LONG).show();
                 Log.d("GOOD", t.getMessage());
+            }
+        });
+    }
+
+    private void deletePost(JsonObject jsonPost) {
+        retrofit2.Call<JsonObject> call = RetrofitClient
+                .getmInstance()
+                .getAPI()
+                .deletePost(jsonPost);
+
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.d("ERROR", t.toString());
             }
         });
     }

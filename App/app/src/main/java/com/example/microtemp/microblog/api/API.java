@@ -31,6 +31,11 @@ public interface API {
             @Body JsonObject jsonMicrolog
     );
 
+    @POST("/followed")
+    Call<List<GetMicroblogResponse>> getfollowedblogs(
+            @Body JsonObject jsonFollow
+    );
+
     @POST("/addpost")
     Call<JsonObject> createPost(
             @Body JsonObject jsonPost
@@ -66,10 +71,7 @@ public interface API {
             @Body JsonObject jsonFollow
     );
 
-    @POST("/followed")
-    Call<JsonObject> getfollowedblogs(
-            @Body JsonObject jsonFollow
-    );
+
 
     @POST("/followers")
     Call<List<User>> getfollowers(

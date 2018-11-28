@@ -281,7 +281,7 @@ void RequestHandler::DeleteBlog(const pr::Request& rq, ph::ResponseWriter rw)
     auto dumper = id_dumper_t(delet);
     std::cout << QueriesConsts::delete_blog << '\n';
     auto r = pool.executeQuery(QueriesConsts::is_blog_author, dumper("userid"));
-    if(r.has_value() && r->size() > 0)
+    if(r.has_value() && r->size() > 0 && r->at(0).at(0).as<unsigned long long>() > 0)
     {
         auto r4 = pool.executeQuery(QueriesConsts::delete_follows, dumper("blogid"));
         auto r1 = pool.executeQuery(QueriesConsts::delete_posts_comments, dumper("blogid"));

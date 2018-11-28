@@ -152,16 +152,11 @@ public class MicroblogRecyclerViewAdapter extends RecyclerView.Adapter<Microblog
 
                 @Override
                 public void onLongPress(MotionEvent e) {
-                    View child = recyclerView.findChildViewUnder(e.getX(), e.getY());
-                     mListener.onItemLongClick(child,recyclerView.getChildAdapterPosition(child));
                 }
 
                 @Override
                 public void onShowPress(MotionEvent e) {
-                    View child = recyclerView.findChildViewUnder(e.getX(), e.getY());
-                    if (child != null && mListener != null) {
-                        mListener.onShowPress(child, recyclerView.getChildAdapterPosition(child));
-                    }
+
                 }
             });
         }

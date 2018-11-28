@@ -76,12 +76,10 @@ public class SearchActivity extends AppCompatActivity {
                 intent.putExtra("id", blogList.get(position).getIdMicroblog());
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
-
             }
 
             @Override
             public void onItemLongClick(View view, int position) {
-
             }
 
             @Override
@@ -184,7 +182,6 @@ public class SearchActivity extends AppCompatActivity {
 
     public void loadMicroblogs(JsonObject jsonMicroblog) {
         blogList.clear();
-
         retrofit2.Call<List<GetMicroblogResponse>> call = RetrofitClient
                 .getmInstance()
                 .getAPI()
@@ -210,6 +207,12 @@ public class SearchActivity extends AppCompatActivity {
                 Log.d("ERROR", t.toString());
             }
         });
+    }
+
+    public void onBackPressed() {
+        //super.onBackPressed();
+        Intent intent = new Intent(this, UserProfileActivity.class);
+        startActivity(intent);
     }
 
 }

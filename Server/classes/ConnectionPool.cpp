@@ -9,7 +9,7 @@ ConnectionPool::ConnectionPool()
     mapSetup();
     std::cout << "Preparing connections...";
     for(int i = 0; i < size; ++i)
-        pool.emplace_back(std::make_shared<pqxx::lazyconnection>("hostaddr=127.0.0.1 port=5433 dbname=MicroBlog user=postgres password=blog"));
+        pool.emplace_back(std::make_shared<pqxx::lazyconnection>("hostaddr=127.0.0.1 port=5432 dbname=MicroBlog user=postgres password=blog"));
     for(auto & c : pool)
         for(const auto& [k, v] : queries)
             c->prepare(k, v);

@@ -255,9 +255,9 @@ void RequestHandler::DeletePost(const pr::Request& rq, ph::ResponseWriter rw)
     json delet = json::parse(std::move(rq.body()));
     auto dumper = id_dumper_t(delet);
     std::cout << QueriesConsts::delete_post << '\n';
-    auto r = pool.executeQuery(QueriesConsts::is_post_author, dumper("userid"));
+    auto r = pool.executeQuery(QueriesConsts::is_post_author, dumper("userid"), dumper("postid"));
 
-    if(r.has_value() && r->size() > 0)
+    if(r.has_value() && r->size() > 0 && r->at(0).at(0).as<unsigned long long>() > 0)
     {
         auto r1 = pool.executeQuery(QueriesConsts::delete_comments, dumper("postid"));
         auto r2 = pool.executeQuery(QueriesConsts::delete_post, dumper("postid"));
@@ -280,7 +280,8 @@ void RequestHandler::DeleteBlog(const pr::Request& rq, ph::ResponseWriter rw)
     std::cout << delet << '\n';
     auto dumper = id_dumper_t(delet);
     std::cout << QueriesConsts::delete_blog << '\n';
-    auto r = pool.executeQuery(QueriesConsts::is_blog_author, dumper("userid"));
+    auto r = pool.executeQuery(QueriesConsts::is_blog_author, dumper("userid"), dumper("blogid"));
+    std::cout << r->at(0).at(0).as<unsigned long long>() << '\n';
     if(r.has_value() && r->size() > 0 && r->at(0).at(0).as<unsigned long long>() > 0)
     {
         auto r4 = pool.executeQuery(QueriesConsts::delete_follows, dumper("blogid"));

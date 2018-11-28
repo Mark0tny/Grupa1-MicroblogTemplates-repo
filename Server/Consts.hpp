@@ -121,9 +121,9 @@ namespace QueriesConsts
     constexpr auto delete_blog = "delete blog";
     constexpr auto delete_blog_query = "DELETE FROM microblog WHERE id_microblog = $1";
     constexpr auto is_blog_author = "is blog author";
-    constexpr auto is_blog_author_query = "SELECT COUNT(*) FROM users u join microblog m on m.author = u.id_user WHERE id_user = $1";
+    constexpr auto is_blog_author_query = "SELECT COUNT(*) FROM users u join microblog m on m.author = u.id_user WHERE id_user = $1 AND m.id_microblog = $2";
     constexpr auto is_post_author = "is post author";
-    constexpr auto is_post_author_query = "SELECT COUNT(*) FROM users u join post m on m.author = u.id_user WHERE id_user = $1";
+    constexpr auto is_post_author_query = "SELECT COUNT(*) FROM users u join post m on m.author = u.id_user WHERE id_user = $1 AND m.id_post = $2";
     constexpr auto delete_follows = "delete follows";
     constexpr auto delete_follows_query = "DELETE FROM follow WHERE blogid = $1";
 

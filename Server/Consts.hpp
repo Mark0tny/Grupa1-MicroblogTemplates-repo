@@ -51,7 +51,7 @@ namespace QueriesConsts
     
     constexpr auto get_posts_by_id = "get posts by id";
     constexpr auto get_posts_by_id_query = R"(SELECT COALESCE (json_agg(t), '[]'::json) FROM (
-                                                SELECT u.username, p.views, p.tags, COUNT(c.id_comment), p.time_created::timestamp(0), p.id_post, p.id_microblog
+                                                SELECT u.username, p.views, p.tags, COUNT(c.id_comment), p.time_created::timestamp(0), p.id_post, p.id_microblog, p.title
                                                 FROM post p join users u on p.author = u.id_user
                                                 left join comments c on c.post_id = p.id_post
                                                 WHERE p.id_microblog = $1
@@ -71,7 +71,7 @@ namespace QueriesConsts
             SELECT DIStinct m.name, u.username, m.time_created::timestamp(0), m.tags, m.id_microblog, m.author  
             FROM follow f
             Join microblog m on m.id_microblog = f.blogid
-            JOIN users u on u.id_user = f.userid
+            JOIN users u on u.id_user = m.author
             WHERE f.userid = $1
             ORDER BY m.time_created::timestamp(0)
         ) t)";
